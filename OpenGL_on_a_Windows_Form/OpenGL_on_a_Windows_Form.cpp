@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "OpenGLViewer.h"
+#include <iostream>
 
 using namespace OpenGL_on_a_Windows_Form;
 
@@ -14,6 +15,6 @@ int main(array<System::String ^> ^args)
 
 	// Create the main window and run it
 	Application::Run(gcnew OpenGLViewer());
-
+	std::cout << "Hello world!" << std::endl;
 	return 0;
 }
