@@ -47,6 +47,9 @@
     <ClInclude Include="Exporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="simple_svg_1.0.0.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">
