@@ -126,6 +126,7 @@
     </ClInclude>
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="simple_svg_1.0.0.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
