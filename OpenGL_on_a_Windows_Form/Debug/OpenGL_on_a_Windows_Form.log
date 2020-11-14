@@ -4,12 +4,14 @@ cl : command line warning D9035: option 'clr:pure' has been deprecated and will 
   stdafx.cpp
 cl : command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
   AssemblyInfo.cpp
-C:\Users\Onyx\Desktop\24780\Scratchwork\OpenGL_on_a_Windows_Form_V2\OpenGL_on_a_Windows_Form\AssemblyInfo.cpp(40,29): warning C4947: 'System::Security::Permissions::SecurityAction::RequestMinimum': marked as obsolete
-C:\Users\Onyx\Desktop\24780\Scratchwork\OpenGL_on_a_Windows_Form_V2\OpenGL_on_a_Windows_Form\AssemblyInfo.cpp(40,29): message : Message: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'
+C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\AssemblyInfo.cpp(40,29): warning C4947: 'System::Security::Permissions::SecurityAction::RequestMinimum': marked as obsolete
+C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\AssemblyInfo.cpp(40,29): message : Message: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'
+  Exporter.cpp
   OpenGL.cpp
   OpenGL_on_a_Windows_Form.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\yvals.h(230): warning STL4001: /clr:pure is deprecated and will be REMOVED.
   OtherForm.cpp
   .NETFramework,Version=v4.0.AssemblyAttributes.cpp
   Generating Code...
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  OpenGL_on_a_Windows_Form.vcxproj -> C:\Users\Onyx\Desktop\24780\Scratchwork\OpenGL_on_a_Windows_Form_V2\Debug\OpenGL_on_a_Windows_Form.exe
+  OpenGL_on_a_Windows_Form.vcxproj -> C:\Users\Onyx\Desktop\24780\Group Project\Debug\OpenGL_on_a_Windows_Form.exe
