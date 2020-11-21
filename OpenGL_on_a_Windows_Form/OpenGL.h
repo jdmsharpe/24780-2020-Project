@@ -35,7 +35,6 @@ namespace OpenGLForm
 
 			// Create as a child of the specified parent and make OpenGL compliant (no clipping)
 			this->CreateParams->Style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-
 			m_hDC = GetDC((HWND)this->Handle.ToPointer());
 
 			if (m_hDC)

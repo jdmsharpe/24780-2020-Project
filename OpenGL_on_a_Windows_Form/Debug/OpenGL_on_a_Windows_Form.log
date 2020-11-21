@@ -1,5 +1,5 @@
 ﻿cl : command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
   Exporter.cpp
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\yvals.h(230): warning STL4001: /clr:pure is deprecated and will be REMOVED.
-  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  OpenGL_on_a_Windows_Form.vcxproj -> C:\Users\Onyx\Desktop\24780\Group Project\Debug\OpenGL_on_a_Windows_Form.exe
+C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\Exporter.cpp(7,1): error C2512: 'svg::Document': no appropriate default constructor available
+C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\simple_svg_1.0.0.hpp(662,11): message : see declaration of 'svg::Document'
