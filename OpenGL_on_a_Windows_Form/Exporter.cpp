@@ -19,7 +19,7 @@ void Exporter::ExportSVG()
 	// Create document with input filename and dimensions
 	Document doc(filename, Layout(dimensions, Layout::BottomLeft));
 	// Draw rectangle around drawing representing the boundaries of the material
-	doc << Rectangle(Point(0, 0), dimensions.width, dimensions.height, 
+	doc << Rectangle(Point(0, dimensions.height), dimensions.width, dimensions.height, 
 				Color::Transparent, Stroke(strokeWidth, Color::Black));
 	// Draw the gears
 	for (int i = 0; i < numGears; i++) {
@@ -32,7 +32,7 @@ void Exporter::ExportSVG()
 		pathObject << PathPoint(150, 250, "L"); // Draw straight line between old and new position
 		pathObject << PathPoint(70, 60, "M") << PathPoint(70, 80, "C") <<
 					  PathPoint(110, 80) << PathPoint(110, 60); // Bezier curve (bit hacky)
-		// There are several other options. Final script will probably utilize a method
+		// There are several other options. Final script will utilize a method
 		// to programmatically determine Bezier curves to draw for both gear body and teeth.
 		// This will be based around the same method used in gearGenerator to draw the gear.
 		// If gears are filled in, this task becomes a good bit easier.
