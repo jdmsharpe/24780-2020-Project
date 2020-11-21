@@ -1,7 +1,7 @@
 // OpenGL_on_a_Windows_Form.cpp : main project file.
 
 #include "stdafx.h"
-#include "OpenGLViewer.h"
+#include "GearWorksGUI.h"
 #include <iostream>
 
 using namespace OpenGL_on_a_Windows_Form;
@@ -14,6 +14,9 @@ int main(array<System::String ^> ^args)
 	Application::SetCompatibleTextRenderingDefault(false); 
 
 	// Create the main window and run it
-	Application::Run(gcnew OpenGLViewer());
+	Application::Run(gcnew GearWorksGUI());
 	return 0;
 }
+
+
+
