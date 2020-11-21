@@ -128,6 +128,14 @@ namespace svg
         return optional<Point>(max);
     }
 
+    struct PathPoint
+    {
+        PathPoint(double x = 0, double y = 0, std::string prefix = "") : specifier(prefix), x(x), y(y) { }
+        std::string specifier;
+        double x;
+        double y;
+    };
+
     // Defines the dimensions, scale, origin, and origin offset of the document.
     struct Layout
     {
@@ -461,9 +469,9 @@ namespace svg
         {
             startNewSubPath();
         }
-        Path& operator<<(Point const& point)
+        Path& operator<<(PathPoint const& pathPoint)
         {
-            paths.back().push_back(point);
+            paths.back().push_back(pathPoint);
             return *this;
         }
 
@@ -484,10 +492,10 @@ namespace svg
                 if (subpath.empty())
                     continue;
 
-                ss << "M";
                 for (auto const& point : subpath)
-                    ss << translateX(point.x, layout) << "," << translateY(point.y, layout) << " ";
-                ss << "z ";
+                    ss << point.specifier << " " << translateX(point.x, layout) 
+                       << " " << translateY(point.y, layout) << " ";
+                //ss << "z ";
             }
             ss << "\" ";
             ss << "fill-rule=\"evenodd\" ";
@@ -506,7 +514,7 @@ namespace svg
                 }
         }
     private:
-        std::vector<std::vector<Point>> paths;
+        std::vector<std::vector<PathPoint>> paths;
     };
 
     class Polyline : public Shape
