@@ -1,21 +1,9 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.MetaGen.targets(91,5): warning : Required file "C:\USERS\SAM\DESKTOP\ENGINEERING COMPUTATION\CODE\24780-2020-PROJECT\OPENGL_ON_A_WINDOWS_FORM\INTEROP\INTEROP.WMPLIB.1.0.DLL" is missing.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.MetaGen.targets(91,5): warning : Required file "C:\USERS\SAM\DESKTOP\ENGINEERING COMPUTATION\CODE\24780-2020-PROJECT\OPENGL_ON_A_WINDOWS_FORM\INTEROP\AXINTEROP.WMPLIB.1.0.DLL" is missing.
-cl : command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
-  stdafx.cpp
-cl : command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
-  AssemblyInfo.cpp
-C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\AssemblyInfo.cpp(40,29): warning C4947: 'System::Security::Permissions::SecurityAction::RequestMinimum': marked as obsolete
-C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\AssemblyInfo.cpp(40,29): message : Message: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'
+﻿cl : command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
   Exporter.cpp
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\yvals.h(230): warning STL4001: /clr:pure is deprecated and will be REMOVED.
-C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\Exporter.cpp(31,17): error C3861: 'PathPoint': identifier not found
-C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\Exporter.cpp(32,17): error C3861: 'PathPoint': identifier not found
-C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\Exporter.cpp(33,17): error C3861: 'PathPoint': identifier not found
-C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\Exporter.cpp(33,43): error C3861: 'PathPoint': identifier not found
-C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\Exporter.cpp(34,8): error C3861: 'PathPoint': identifier not found
-C:\Users\Onyx\Desktop\24780\Group Project\OpenGL_on_a_Windows_Form\Exporter.cpp(34,30): error C3861: 'PathPoint': identifier not found
-  OpenGL.cpp
-  OpenGL_on_a_Windows_Form.cpp
+  ViewManager.cpp
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\yvals.h(230): warning STL4001: /clr:pure is deprecated and will be REMOVED.
-  .NETFramework,Version=v4.0.AssemblyAttributes.cpp
   Generating Code...
+  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+Exporter.obj : warning LNK4248: unresolved typeref token (0100001A) for 'ViewManager'; image may not run
+  OpenGL_on_a_Windows_Form.vcxproj -> C:\Users\Onyx\Desktop\24780\Group Project\Debug\OpenGL_on_a_Windows_Form.exe
