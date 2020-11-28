@@ -28,9 +28,10 @@ namespace OpenGL_on_a_Windows_Form {
 		{
 			InitializeComponent();
 			OpenGL = gcnew COpenGL(this, openGLPanel->Left, openGLPanel->Top, openGLPanel->Width, openGLPanel->Height);
-		
+			unitsComboBox->SelectedIndex = 0;
+			hubComboBox->SelectedIndex = 0;
 		}
-	private: System::Windows::Forms::TableLayoutPanel^ designerLayoutTable;
+
 	public:
 	private: System::Windows::Forms::Panel^ gearParametersPanel;
 	private: System::Windows::Forms::Button^ addGearButton;
@@ -50,7 +51,7 @@ namespace OpenGL_on_a_Windows_Form {
 	private: System::Windows::Forms::Label^ pitchLabel;
 	private: System::Windows::Forms::GroupBox^ unitsGroupBox;
 	private: System::Windows::Forms::ComboBox^ unitsComboBox;
-	private: System::Windows::Forms::Panel^ visualizerPanel;
+
 	private: System::Windows::Forms::Panel^ openGLPanel;
 	private: System::Windows::Forms::Panel^ visualizerControlPanel;
 	private: System::Windows::Forms::Button^ exportButton;
@@ -60,6 +61,14 @@ namespace OpenGL_on_a_Windows_Form {
 	private: System::Windows::Forms::Label^ gearTableCol2Label;
 	private: System::Windows::Forms::Label^ gearTableCol3Label;
 	private: System::Windows::Forms::SaveFileDialog^ saveFileDialog1;
+	private: System::Windows::Forms::TextBox^ materialHeightInput;
+	private: System::Windows::Forms::Label^ materialHeightLabel;
+
+	private: System::Windows::Forms::TextBox^ materialWidthInput;
+	private: System::Windows::Forms::Label^ materialWidthLabel;
+
+	private: System::Windows::Forms::Panel^ gearListScrollPanel;
+
 
 
 	// temporary
@@ -79,9 +88,9 @@ namespace OpenGL_on_a_Windows_Form {
 	private: System::ComponentModel::IContainer^ components;
 	protected:
 	private: System::Windows::Forms::Timer^ timer1;
-	private: System::Windows::Forms::TabControl^ tabControl;
-	private: System::Windows::Forms::TabPage^ designerTab;
-	private: System::Windows::Forms::TabPage^ layoutTab;
+
+
+
 
 
 
@@ -102,11 +111,13 @@ namespace OpenGL_on_a_Windows_Form {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::Windows::Forms::GroupBox^ ExportBox;
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(GearWorksGUI::typeid));
+			this->materialHeightInput = (gcnew System::Windows::Forms::TextBox());
+			this->materialHeightLabel = (gcnew System::Windows::Forms::Label());
+			this->materialWidthInput = (gcnew System::Windows::Forms::TextBox());
+			this->materialWidthLabel = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->tabControl = (gcnew System::Windows::Forms::TabControl());
-			this->designerTab = (gcnew System::Windows::Forms::TabPage());
-			this->designerLayoutTable = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->gearParametersPanel = (gcnew System::Windows::Forms::Panel());
 			this->addGearButton = (gcnew System::Windows::Forms::Button());
 			this->hubGroupBox = (gcnew System::Windows::Forms::GroupBox());
@@ -125,81 +136,90 @@ namespace OpenGL_on_a_Windows_Form {
 			this->pitchLabel = (gcnew System::Windows::Forms::Label());
 			this->unitsGroupBox = (gcnew System::Windows::Forms::GroupBox());
 			this->unitsComboBox = (gcnew System::Windows::Forms::ComboBox());
-			this->visualizerPanel = (gcnew System::Windows::Forms::Panel());
 			this->openGLPanel = (gcnew System::Windows::Forms::Panel());
 			this->visualizerControlPanel = (gcnew System::Windows::Forms::Panel());
 			this->exportButton = (gcnew System::Windows::Forms::Button());
 			this->gearListPanel = (gcnew System::Windows::Forms::Panel());
+			this->gearListScrollPanel = (gcnew System::Windows::Forms::Panel());
 			this->gearListTable = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->gearTableCol1Label = (gcnew System::Windows::Forms::Label());
-			this->layoutTab = (gcnew System::Windows::Forms::TabPage());
 			this->gearTableCol2Label = (gcnew System::Windows::Forms::Label());
 			this->gearTableCol3Label = (gcnew System::Windows::Forms::Label());
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
-			this->tabControl->SuspendLayout();
-			this->designerTab->SuspendLayout();
-			this->designerLayoutTable->SuspendLayout();
+			ExportBox = (gcnew System::Windows::Forms::GroupBox());
+			ExportBox->SuspendLayout();
 			this->gearParametersPanel->SuspendLayout();
 			this->hubGroupBox->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->hubPictureBox))->BeginInit();
 			this->gearGroupBox->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->teethInput))->BeginInit();
 			this->unitsGroupBox->SuspendLayout();
-			this->visualizerPanel->SuspendLayout();
-			this->visualizerControlPanel->SuspendLayout();
 			this->gearListPanel->SuspendLayout();
+			this->gearListScrollPanel->SuspendLayout();
 			this->gearListTable->SuspendLayout();
 			this->SuspendLayout();
+			// 
+			// ExportBox
+			// 
+			ExportBox->AutoSize = true;
+			ExportBox->Controls->Add(this->materialHeightInput);
+			ExportBox->Controls->Add(this->materialHeightLabel);
+			ExportBox->Controls->Add(this->materialWidthInput);
+			ExportBox->Controls->Add(this->materialWidthLabel);
+			ExportBox->Dock = System::Windows::Forms::DockStyle::Bottom;
+			ExportBox->Location = System::Drawing::Point(0, 495);
+			ExportBox->Name = L"ExportBox";
+			ExportBox->Size = System::Drawing::Size(294, 139);
+			ExportBox->TabIndex = 1;
+			ExportBox->TabStop = false;
+			ExportBox->Text = L"Material Size";
+			// 
+			// materialHeightInput
+			// 
+			this->materialHeightInput->Dock = System::Windows::Forms::DockStyle::Top;
+			this->materialHeightInput->Location = System::Drawing::Point(3, 106);
+			this->materialHeightInput->Name = L"materialHeightInput";
+			this->materialHeightInput->Size = System::Drawing::Size(288, 30);
+			this->materialHeightInput->TabIndex = 3;
+			// 
+			// materialHeightLabel
+			// 
+			this->materialHeightLabel->AutoSize = true;
+			this->materialHeightLabel->Dock = System::Windows::Forms::DockStyle::Top;
+			this->materialHeightLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->materialHeightLabel->Location = System::Drawing::Point(3, 81);
+			this->materialHeightLabel->Name = L"materialHeightLabel";
+			this->materialHeightLabel->Size = System::Drawing::Size(74, 25);
+			this->materialHeightLabel->TabIndex = 2;
+			this->materialHeightLabel->Text = L"Height:";
+			this->materialHeightLabel->Click += gcnew System::EventHandler(this, &GearWorksGUI::label2_Click);
+			// 
+			// materialWidthInput
+			// 
+			this->materialWidthInput->Dock = System::Windows::Forms::DockStyle::Top;
+			this->materialWidthInput->Location = System::Drawing::Point(3, 51);
+			this->materialWidthInput->Name = L"materialWidthInput";
+			this->materialWidthInput->Size = System::Drawing::Size(288, 30);
+			this->materialWidthInput->TabIndex = 1;
+			// 
+			// materialWidthLabel
+			// 
+			this->materialWidthLabel->AutoSize = true;
+			this->materialWidthLabel->Dock = System::Windows::Forms::DockStyle::Top;
+			this->materialWidthLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->materialWidthLabel->Location = System::Drawing::Point(3, 26);
+			this->materialWidthLabel->Name = L"materialWidthLabel";
+			this->materialWidthLabel->Size = System::Drawing::Size(69, 25);
+			this->materialWidthLabel->TabIndex = 0;
+			this->materialWidthLabel->Text = L"Width:";
 			// 
 			// timer1
 			// 
 			this->timer1->Enabled = true;
 			this->timer1->Interval = 50;
 			this->timer1->Tick += gcnew System::EventHandler(this, &GearWorksGUI::timer1_Tick);
-			// 
-			// tabControl
-			// 
-			this->tabControl->Controls->Add(this->designerTab);
-			this->tabControl->Controls->Add(this->layoutTab);
-			this->tabControl->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->tabControl->Location = System::Drawing::Point(0, 0);
-			this->tabControl->Name = L"tabControl";
-			this->tabControl->SelectedIndex = 0;
-			this->tabControl->Size = System::Drawing::Size(1262, 673);
-			this->tabControl->TabIndex = 0;
-			// 
-			// designerTab
-			// 
-			this->designerTab->Controls->Add(this->designerLayoutTable);
-			this->designerTab->Location = System::Drawing::Point(4, 34);
-			this->designerTab->Name = L"designerTab";
-			this->designerTab->Padding = System::Windows::Forms::Padding(3);
-			this->designerTab->Size = System::Drawing::Size(1254, 635);
-			this->designerTab->TabIndex = 0;
-			this->designerTab->Text = L"Designer";
-			this->designerTab->UseVisualStyleBackColor = true;
-			// 
-			// designerLayoutTable
-			// 
-			this->designerLayoutTable->ColumnCount = 3;
-			this->designerLayoutTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				200)));
-			this->designerLayoutTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				100)));
-			this->designerLayoutTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				300)));
-			this->designerLayoutTable->Controls->Add(this->gearParametersPanel, 0, 0);
-			this->designerLayoutTable->Controls->Add(this->visualizerPanel, 1, 0);
-			this->designerLayoutTable->Controls->Add(this->gearListPanel, 2, 0);
-			this->designerLayoutTable->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->designerLayoutTable->Location = System::Drawing::Point(3, 3);
-			this->designerLayoutTable->Name = L"designerLayoutTable";
-			this->designerLayoutTable->RowCount = 1;
-			this->designerLayoutTable->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent,
-				100)));
-			this->designerLayoutTable->Size = System::Drawing::Size(1248, 629);
-			this->designerLayoutTable->TabIndex = 0;
-			this->designerLayoutTable->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &GearWorksGUI::tableLayoutPanel1_Paint);
 			// 
 			// gearParametersPanel
 			// 
@@ -208,10 +228,10 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearParametersPanel->Controls->Add(this->hubGroupBox);
 			this->gearParametersPanel->Controls->Add(this->gearGroupBox);
 			this->gearParametersPanel->Controls->Add(this->unitsGroupBox);
-			this->gearParametersPanel->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->gearParametersPanel->Location = System::Drawing::Point(3, 3);
+			this->gearParametersPanel->Dock = System::Windows::Forms::DockStyle::Left;
+			this->gearParametersPanel->Location = System::Drawing::Point(0, 0);
 			this->gearParametersPanel->Name = L"gearParametersPanel";
-			this->gearParametersPanel->Size = System::Drawing::Size(194, 623);
+			this->gearParametersPanel->Size = System::Drawing::Size(194, 673);
 			this->gearParametersPanel->TabIndex = 1;
 			// 
 			// addGearButton
@@ -387,6 +407,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->pitchInput->Name = L"pitchInput";
 			this->pitchInput->Size = System::Drawing::Size(188, 30);
 			this->pitchInput->TabIndex = 1;
+			this->pitchInput->TextChanged += gcnew System::EventHandler(this, &GearWorksGUI::pitchInput_TextChanged);
 			// 
 			// pitchLabel
 			// 
@@ -411,7 +432,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->unitsGroupBox->Size = System::Drawing::Size(194, 62);
 			this->unitsGroupBox->TabIndex = 0;
 			this->unitsGroupBox->TabStop = false;
-			this->unitsGroupBox->Text = L"Unit System";
+			this->unitsGroupBox->Text = L"Units";
 			this->unitsGroupBox->Enter += gcnew System::EventHandler(this, &GearWorksGUI::unitsGroupBox_Enter);
 			// 
 			// unitsComboBox
@@ -421,48 +442,39 @@ namespace OpenGL_on_a_Windows_Form {
 			this->unitsComboBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->unitsComboBox->FormattingEnabled = true;
-			this->unitsComboBox->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"English", L"Metric" });
+			this->unitsComboBox->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Inches", L"Millimeters" });
 			this->unitsComboBox->Location = System::Drawing::Point(3, 26);
 			this->unitsComboBox->Name = L"unitsComboBox";
 			this->unitsComboBox->Size = System::Drawing::Size(188, 33);
 			this->unitsComboBox->TabIndex = 0;
 			this->unitsComboBox->SelectedIndexChanged += gcnew System::EventHandler(this, &GearWorksGUI::unitsComboBox_SelectedIndexChanged);
 			// 
-			// visualizerPanel
-			// 
-			this->visualizerPanel->Controls->Add(this->openGLPanel);
-			this->visualizerPanel->Controls->Add(this->visualizerControlPanel);
-			this->visualizerPanel->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->visualizerPanel->Location = System::Drawing::Point(203, 3);
-			this->visualizerPanel->Name = L"visualizerPanel";
-			this->visualizerPanel->Size = System::Drawing::Size(742, 623);
-			this->visualizerPanel->TabIndex = 2;
-			// 
 			// openGLPanel
 			// 
 			this->openGLPanel->BackColor = System::Drawing::Color::Gray;
 			this->openGLPanel->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->openGLPanel->Location = System::Drawing::Point(0, 45);
+			this->openGLPanel->Location = System::Drawing::Point(194, 0);
 			this->openGLPanel->Name = L"openGLPanel";
-			this->openGLPanel->Size = System::Drawing::Size(742, 578);
+			this->openGLPanel->Size = System::Drawing::Size(1068, 673);
 			this->openGLPanel->TabIndex = 1;
+			this->openGLPanel->Visible = false;
 			// 
 			// visualizerControlPanel
 			// 
 			this->visualizerControlPanel->AutoSize = true;
 			this->visualizerControlPanel->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			this->visualizerControlPanel->Controls->Add(this->exportButton);
 			this->visualizerControlPanel->Dock = System::Windows::Forms::DockStyle::Top;
-			this->visualizerControlPanel->Location = System::Drawing::Point(0, 0);
+			this->visualizerControlPanel->Location = System::Drawing::Point(194, 0);
 			this->visualizerControlPanel->Name = L"visualizerControlPanel";
-			this->visualizerControlPanel->Size = System::Drawing::Size(742, 45);
+			this->visualizerControlPanel->Size = System::Drawing::Size(774, 0);
 			this->visualizerControlPanel->TabIndex = 0;
 			// 
 			// exportButton
 			// 
-			this->exportButton->Location = System::Drawing::Point(3, 3);
+			this->exportButton->Dock = System::Windows::Forms::DockStyle::Bottom;
+			this->exportButton->Location = System::Drawing::Point(0, 634);
 			this->exportButton->Name = L"exportButton";
-			this->exportButton->Size = System::Drawing::Size(103, 39);
+			this->exportButton->Size = System::Drawing::Size(294, 39);
 			this->exportButton->TabIndex = 0;
 			this->exportButton->Text = L"Export";
 			this->exportButton->UseVisualStyleBackColor = true;
@@ -470,18 +482,33 @@ namespace OpenGL_on_a_Windows_Form {
 			// 
 			// gearListPanel
 			// 
-			this->gearListPanel->AutoScroll = true;
-			this->gearListPanel->Controls->Add(this->gearListTable);
-			this->gearListPanel->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->gearListPanel->Location = System::Drawing::Point(951, 3);
+			this->gearListPanel->BackColor = System::Drawing::Color::Transparent;
+			this->gearListPanel->Controls->Add(this->gearListScrollPanel);
+			this->gearListPanel->Controls->Add(ExportBox);
+			this->gearListPanel->Controls->Add(this->exportButton);
+			this->gearListPanel->Dock = System::Windows::Forms::DockStyle::Right;
+			this->gearListPanel->Location = System::Drawing::Point(968, 0);
+			this->gearListPanel->MinimumSize = System::Drawing::Size(200, 0);
 			this->gearListPanel->Name = L"gearListPanel";
-			this->gearListPanel->Size = System::Drawing::Size(294, 623);
+			this->gearListPanel->Size = System::Drawing::Size(294, 673);
 			this->gearListPanel->TabIndex = 3;
+			// 
+			// gearListScrollPanel
+			// 
+			this->gearListScrollPanel->AutoScroll = true;
+			this->gearListScrollPanel->AutoSize = true;
+			this->gearListScrollPanel->Controls->Add(this->gearListTable);
+			this->gearListScrollPanel->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->gearListScrollPanel->Location = System::Drawing::Point(0, 0);
+			this->gearListScrollPanel->Name = L"gearListScrollPanel";
+			this->gearListScrollPanel->Size = System::Drawing::Size(294, 495);
+			this->gearListScrollPanel->TabIndex = 4;
 			// 
 			// gearListTable
 			// 
 			this->gearListTable->AutoSize = true;
 			this->gearListTable->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			this->gearListTable->BackColor = System::Drawing::Color::Transparent;
 			this->gearListTable->ColumnCount = 3;
 			this->gearListTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				40)));
@@ -493,12 +520,14 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearListTable->Controls->Add(this->gearTableCol3Label, 2, 0);
 			this->gearListTable->Dock = System::Windows::Forms::DockStyle::Top;
 			this->gearListTable->Location = System::Drawing::Point(0, 0);
+			this->gearListTable->MaximumSize = System::Drawing::Size(500, 600);
 			this->gearListTable->Name = L"gearListTable";
 			this->gearListTable->RowCount = 2;
 			this->gearListTable->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 36)));
 			this->gearListTable->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 36)));
 			this->gearListTable->Size = System::Drawing::Size(294, 72);
 			this->gearListTable->TabIndex = 3;
+			this->gearListTable->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &GearWorksGUI::gearListTable_Paint);
 			// 
 			// gearTableCol1Label
 			// 
@@ -511,16 +540,6 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearTableCol1Label->TabIndex = 0;
 			this->gearTableCol1Label->Text = L"#";
 			this->gearTableCol1Label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			// 
-			// layoutTab
-			// 
-			this->layoutTab->Location = System::Drawing::Point(4, 34);
-			this->layoutTab->Name = L"layoutTab";
-			this->layoutTab->Padding = System::Windows::Forms::Padding(3);
-			this->layoutTab->Size = System::Drawing::Size(1254, 635);
-			this->layoutTab->TabIndex = 1;
-			this->layoutTab->Text = L"Layout";
-			this->layoutTab->UseVisualStyleBackColor = true;
 			// 
 			// gearTableCol2Label
 			// 
@@ -548,17 +567,20 @@ namespace OpenGL_on_a_Windows_Form {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(13, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(1262, 673);
-			this->Controls->Add(this->tabControl);
+			this->Controls->Add(this->visualizerControlPanel);
+			this->Controls->Add(this->gearListPanel);
+			this->Controls->Add(this->openGLPanel);
+			this->Controls->Add(this->gearParametersPanel);
 			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->Margin = System::Windows::Forms::Padding(6);
 			this->MinimumSize = System::Drawing::Size(1000, 480);
 			this->Name = L"GearWorksGUI";
 			this->Text = L"GearWorks";
-			this->tabControl->ResumeLayout(false);
-			this->designerTab->ResumeLayout(false);
-			this->designerLayoutTable->ResumeLayout(false);
+			ExportBox->ResumeLayout(false);
+			ExportBox->PerformLayout();
 			this->gearParametersPanel->ResumeLayout(false);
 			this->gearParametersPanel->PerformLayout();
 			this->hubGroupBox->ResumeLayout(false);
@@ -568,14 +590,14 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearGroupBox->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->teethInput))->EndInit();
 			this->unitsGroupBox->ResumeLayout(false);
-			this->visualizerPanel->ResumeLayout(false);
-			this->visualizerPanel->PerformLayout();
-			this->visualizerControlPanel->ResumeLayout(false);
 			this->gearListPanel->ResumeLayout(false);
 			this->gearListPanel->PerformLayout();
+			this->gearListScrollPanel->ResumeLayout(false);
+			this->gearListScrollPanel->PerformLayout();
 			this->gearListTable->ResumeLayout(false);
 			this->gearListTable->PerformLayout();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -682,6 +704,14 @@ private: System::Void addGearButton_Click(System::Object^ sender, System::EventA
 private: System::Void exportButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	saveFileDialog1->ShowDialog();
 }
+private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void gearListTable_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+private: System::Void pitchInput_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	
+}
+
 };
 }
 
