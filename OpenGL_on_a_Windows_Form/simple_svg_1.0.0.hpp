@@ -35,6 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <fstream>
 
 #include <iostream>
+#include <memory>
+#include <iomanip>
 
 namespace svg
 {
@@ -128,12 +130,47 @@ namespace svg
         return optional<Point>(max);
     }
 
-    struct PathPoint
+    class PathPoint
     {
-        PathPoint(double x = 0, double y = 0, std::string prefix = "") : specifier(prefix), x(x), y(y) { }
-        std::string specifier;
+    public:
         double x;
         double y;
+        std::string specifier;
+
+        PathPoint(double x = 0, double y = 0, std::string specifier = "") : x(x), y(y), specifier(specifier) {}
+
+        virtual bool isArcPoint() const { return false; }
+
+        virtual std::string asString() const
+        {
+            std::string toReturn = specifier + " " + std::to_string(x) + " " + std::to_string(y) + " ";
+            return toReturn;
+        }
+    };
+
+    class ArcPoint : public PathPoint
+    {
+    public:
+        double rx;
+        double ry;
+        double xrot;
+        bool largeArcFlag;
+        bool sweepFlag;
+
+        ArcPoint(double rx = 0, double ry = 0, double xrot = 0, bool largeArcFlag = 0,
+            bool sweepFlag = 1, double x = 0, double y = 0) : rx(rx), ry(ry), xrot(xrot),
+            largeArcFlag(largeArcFlag), sweepFlag(sweepFlag), PathPoint(x, y) { }
+
+        virtual bool isArcPoint() const { return true; }
+
+        virtual std::string asString() const
+        {
+            std::string toReturn = "A " + std::to_string(rx) + " " + std::to_string(ry) + " "
+                + std::to_string(xrot) + " " + std::to_string(largeArcFlag)
+                + " " + std::to_string(sweepFlag) + " " + std::to_string(x)
+                + " " + std::to_string(y) + " ";
+            return toReturn;
+        }
     };
 
     // Defines the dimensions, scale, origin, and origin offset of the document.
@@ -471,7 +508,12 @@ namespace svg
         }
         Path& operator<<(PathPoint const& pathPoint)
         {
-            paths.back().push_back(pathPoint);
+            paths.back().push_back(std::make_unique<PathPoint>(pathPoint));
+            return *this;
+        }
+        Path& operator<<(ArcPoint const& arcPoint)
+        {
+            paths.back().push_back(std::make_unique<ArcPoint>(arcPoint));
             return *this;
         }
 
@@ -493,11 +535,9 @@ namespace svg
                     continue;
 
                 for (auto const& point : subpath)
-                    ss << point.specifier << " " << translateX(point.x, layout)
-                    << " " << translateY(point.y, layout) << " ";
-                //ss << "z ";
+                    ss << point->asString();
             }
-            ss << "\" ";
+            ss << "Z " << "\" ";
             ss << "fill-rule=\"evenodd\" ";
 
             ss << fill.toString(layout) << stroke.toString(layout) << emptyElemEnd();
@@ -509,12 +549,12 @@ namespace svg
             for (auto& subpath : paths)
                 for (auto& point : subpath)
                 {
-                    point.x += offset.x;
-                    point.y += offset.y;
+                    point->x += offset.x;
+                    point->y += offset.y;
                 }
         }
     private:
-        std::vector<std::vector<PathPoint>> paths;
+        std::vector<std::vector<std::unique_ptr<PathPoint>>> paths;
     };
 
     class Polyline : public Shape
