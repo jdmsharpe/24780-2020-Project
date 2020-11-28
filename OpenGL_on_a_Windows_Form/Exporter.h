@@ -2,24 +2,28 @@
 #define SVG_EXPORTER_H
 
 #define PI 3.14159265358979
+#define INCH_TO_PX 96
+#define MM_TO_PX 3.7795
 
 #include "simple_svg_1.0.0.hpp"
+#include "ViewManager.h"
 
 using namespace svg;
 
-class ViewManager; // Predefine
 class GearGenerator;
 
 class Exporter
 {
 private:
 	std::string filename;
+	UnitSystem unitSys;
 	double strokeWidth;
-	int lineResolution;
+	int lineResolution; 
+	double clearance;
 
 public:
-	Exporter(std::string name, int lineResolution, double strokeWidth) :
-		filename(filename), lineResolution(lineResolution), strokeWidth(strokeWidth) {}
+	Exporter(std::string filename, UnitSystem unitsys) :
+		filename(filename), unitSys(unitSys), lineResolution(20), strokeWidth(0.5), clearance(0.03) {}
 
 	~Exporter();
 

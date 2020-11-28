@@ -6,6 +6,8 @@
 #define WINDOW_WIDTH 800 // (!) Update me
 #define WINDOW_HEIGHT 600
 
+enum UnitSystem { imperial = 0, metric = 1 };
+
 class GearGenerator; // (!) Remove and replace with include
 
 class ViewManager
@@ -26,6 +28,8 @@ private:
 	int xOrigin, yOrigin; // screen coords of model coords 0,0
 	int prevLocX, prevLocY; // for zoom and pan, and for node edit
 	double viewScale; // must be greater than zero
+
+	UnitSystem unitSys;
 
 public:
 	ViewManager();

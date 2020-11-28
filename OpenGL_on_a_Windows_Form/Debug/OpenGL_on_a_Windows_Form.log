@@ -5,5 +5,4 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\yvals.h(230): warning STL4001: /clr:pure is deprecated and will be REMOVED.
   Generating Code...
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-Exporter.obj : warning LNK4248: unresolved typeref token (0100001A) for 'ViewManager'; image may not run
   OpenGL_on_a_Windows_Form.vcxproj -> C:\Users\Onyx\Desktop\24780\Group Project\Debug\OpenGL_on_a_Windows_Form.exe
