@@ -30,9 +30,19 @@ namespace OpenGL_on_a_Windows_Form {
 			OpenGL = gcnew COpenGL(this, openGLPanel->Left, openGLPanel->Top, openGLPanel->Width, openGLPanel->Height);
 			unitsComboBox->SelectedIndex = 0;
 			hubComboBox->SelectedIndex = 0;
+			pitchInput->Text = "16";
+			pressureInput->Text = "20";
+			teethInput->Text = "32";
+			materialWidthInput->Text = "12";
+			materialHeightInput->Text = "12";
 		}
 
 	public:
+		// temporary
+		int gearNum = 0;
+
+
+
 	private: System::Windows::Forms::Panel^ gearParametersPanel;
 	private: System::Windows::Forms::Button^ addGearButton;
 	private: System::Windows::Forms::GroupBox^ hubGroupBox;
@@ -63,16 +73,10 @@ namespace OpenGL_on_a_Windows_Form {
 	private: System::Windows::Forms::SaveFileDialog^ saveFileDialog1;
 	private: System::Windows::Forms::TextBox^ materialHeightInput;
 	private: System::Windows::Forms::Label^ materialHeightLabel;
-
 	private: System::Windows::Forms::TextBox^ materialWidthInput;
 	private: System::Windows::Forms::Label^ materialWidthLabel;
-
 	private: System::Windows::Forms::Panel^ gearListScrollPanel;
 
-
-
-	// temporary
-	int gearNum = 0;
 
 	protected:
 		/// <summary>
@@ -88,13 +92,6 @@ namespace OpenGL_on_a_Windows_Form {
 	private: System::ComponentModel::IContainer^ components;
 	protected:
 	private: System::Windows::Forms::Timer^ timer1;
-
-
-
-
-
-
-
 
 	private:
 		/// <summary>
@@ -177,10 +174,13 @@ namespace OpenGL_on_a_Windows_Form {
 			// materialHeightInput
 			// 
 			this->materialHeightInput->Dock = System::Windows::Forms::DockStyle::Top;
+			this->materialHeightInput->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 			this->materialHeightInput->Location = System::Drawing::Point(3, 106);
 			this->materialHeightInput->Name = L"materialHeightInput";
 			this->materialHeightInput->Size = System::Drawing::Size(288, 30);
 			this->materialHeightInput->TabIndex = 3;
+			this->materialHeightInput->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::materialHeightInput_KeyPress);
 			// 
 			// materialHeightLabel
 			// 
@@ -193,15 +193,17 @@ namespace OpenGL_on_a_Windows_Form {
 			this->materialHeightLabel->Size = System::Drawing::Size(74, 25);
 			this->materialHeightLabel->TabIndex = 2;
 			this->materialHeightLabel->Text = L"Height:";
-			this->materialHeightLabel->Click += gcnew System::EventHandler(this, &GearWorksGUI::label2_Click);
 			// 
 			// materialWidthInput
 			// 
 			this->materialWidthInput->Dock = System::Windows::Forms::DockStyle::Top;
+			this->materialWidthInput->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->materialWidthInput->Location = System::Drawing::Point(3, 51);
 			this->materialWidthInput->Name = L"materialWidthInput";
 			this->materialWidthInput->Size = System::Drawing::Size(288, 30);
 			this->materialWidthInput->TabIndex = 1;
+			this->materialWidthInput->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::materialWidthInput_KeyPress);
 			// 
 			// materialWidthLabel
 			// 
@@ -269,10 +271,13 @@ namespace OpenGL_on_a_Windows_Form {
 			// hubInputB
 			// 
 			this->hubInputB->Dock = System::Windows::Forms::DockStyle::Top;
+			this->hubInputB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->hubInputB->Location = System::Drawing::Point(3, 250);
 			this->hubInputB->Name = L"hubInputB";
 			this->hubInputB->Size = System::Drawing::Size(188, 30);
 			this->hubInputB->TabIndex = 5;
+			this->hubInputB->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::hubInputB_KeyPress);
 			// 
 			// hubLabelB
 			// 
@@ -289,10 +294,13 @@ namespace OpenGL_on_a_Windows_Form {
 			// hubInputA
 			// 
 			this->hubInputA->Dock = System::Windows::Forms::DockStyle::Top;
+			this->hubInputA->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->hubInputA->Location = System::Drawing::Point(3, 195);
 			this->hubInputA->Name = L"hubInputA";
 			this->hubInputA->Size = System::Drawing::Size(188, 30);
 			this->hubInputA->TabIndex = 3;
+			this->hubInputA->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::hubInputA_KeyPress);
 			// 
 			// hubLabelA
 			// 
@@ -331,7 +339,6 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubComboBox->Name = L"hubComboBox";
 			this->hubComboBox->Size = System::Drawing::Size(188, 33);
 			this->hubComboBox->TabIndex = 0;
-			this->hubComboBox->SelectedIndexChanged += gcnew System::EventHandler(this, &GearWorksGUI::hubComboBox_SelectedIndexChanged);
 			// 
 			// gearGroupBox
 			// 
@@ -385,6 +392,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->pressureInput->Name = L"pressureInput";
 			this->pressureInput->Size = System::Drawing::Size(188, 30);
 			this->pressureInput->TabIndex = 3;
+			this->pressureInput->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::pressureInput_KeyPress);
 			// 
 			// pressureLabel
 			// 
@@ -407,7 +415,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->pitchInput->Name = L"pitchInput";
 			this->pitchInput->Size = System::Drawing::Size(188, 30);
 			this->pitchInput->TabIndex = 1;
-			this->pitchInput->TextChanged += gcnew System::EventHandler(this, &GearWorksGUI::pitchInput_TextChanged);
+			this->pitchInput->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::pitchInput_KeyPress);
 			// 
 			// pitchLabel
 			// 
@@ -433,7 +441,6 @@ namespace OpenGL_on_a_Windows_Form {
 			this->unitsGroupBox->TabIndex = 0;
 			this->unitsGroupBox->TabStop = false;
 			this->unitsGroupBox->Text = L"Units";
-			this->unitsGroupBox->Enter += gcnew System::EventHandler(this, &GearWorksGUI::unitsGroupBox_Enter);
 			// 
 			// unitsComboBox
 			// 
@@ -447,7 +454,6 @@ namespace OpenGL_on_a_Windows_Form {
 			this->unitsComboBox->Name = L"unitsComboBox";
 			this->unitsComboBox->Size = System::Drawing::Size(188, 33);
 			this->unitsComboBox->TabIndex = 0;
-			this->unitsComboBox->SelectedIndexChanged += gcnew System::EventHandler(this, &GearWorksGUI::unitsComboBox_SelectedIndexChanged);
 			// 
 			// openGLPanel
 			// 
@@ -496,7 +502,6 @@ namespace OpenGL_on_a_Windows_Form {
 			// gearListScrollPanel
 			// 
 			this->gearListScrollPanel->AutoScroll = true;
-			this->gearListScrollPanel->AutoSize = true;
 			this->gearListScrollPanel->Controls->Add(this->gearListTable);
 			this->gearListScrollPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->gearListScrollPanel->Location = System::Drawing::Point(0, 0);
@@ -507,14 +512,13 @@ namespace OpenGL_on_a_Windows_Form {
 			// gearListTable
 			// 
 			this->gearListTable->AutoSize = true;
-			this->gearListTable->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			this->gearListTable->BackColor = System::Drawing::Color::Transparent;
 			this->gearListTable->ColumnCount = 3;
 			this->gearListTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
 				40)));
-			this->gearListTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				70)));
 			this->gearListTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
+			this->gearListTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				211)));
 			this->gearListTable->Controls->Add(this->gearTableCol1Label, 0, 0);
 			this->gearListTable->Controls->Add(this->gearTableCol2Label, 1, 0);
 			this->gearListTable->Controls->Add(this->gearTableCol3Label, 2, 0);
@@ -527,7 +531,6 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearListTable->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 36)));
 			this->gearListTable->Size = System::Drawing::Size(294, 72);
 			this->gearListTable->TabIndex = 3;
-			this->gearListTable->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &GearWorksGUI::gearListTable_Paint);
 			// 
 			// gearTableCol1Label
 			// 
@@ -548,18 +551,19 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearTableCol2Label->Location = System::Drawing::Point(43, 3);
 			this->gearTableCol2Label->Margin = System::Windows::Forms::Padding(3);
 			this->gearTableCol2Label->Name = L"gearTableCol2Label";
-			this->gearTableCol2Label->Size = System::Drawing::Size(64, 30);
+			this->gearTableCol2Label->Size = System::Drawing::Size(57, 30);
 			this->gearTableCol2Label->TabIndex = 1;
 			this->gearTableCol2Label->Text = L"QTY";
 			// 
 			// gearTableCol3Label
 			// 
+			this->gearTableCol3Label->AutoEllipsis = true;
 			this->gearTableCol3Label->AutoSize = true;
 			this->gearTableCol3Label->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->gearTableCol3Label->Location = System::Drawing::Point(113, 3);
+			this->gearTableCol3Label->Location = System::Drawing::Point(106, 3);
 			this->gearTableCol3Label->Margin = System::Windows::Forms::Padding(3);
 			this->gearTableCol3Label->Name = L"gearTableCol3Label";
-			this->gearTableCol3Label->Size = System::Drawing::Size(178, 30);
+			this->gearTableCol3Label->Size = System::Drawing::Size(205, 30);
 			this->gearTableCol3Label->TabIndex = 2;
 			this->gearTableCol3Label->Text = L"Gear Description";
 			// 
@@ -601,7 +605,7 @@ namespace OpenGL_on_a_Windows_Form {
 
 		}
 #pragma endregion
-	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
+private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 	{
 		UNREFERENCED_PARAMETER(sender);
 		UNREFERENCED_PARAMETER(e);
@@ -643,16 +647,6 @@ namespace OpenGL_on_a_Windows_Form {
 	}
 
 	}
-private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-private: System::Void unitsGroupBox_Enter(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void unitsComboBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-
-private: System::Void hubComboBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-
 private: System::Void addGearButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	gearNum++;
 
@@ -689,29 +683,92 @@ private: System::Void addGearButton_Click(System::Object^ sender, System::EventA
 	output += ", T: ";
 	output += teethInput->Text->ToString();
 	output += ", Hub: ";
-	output += hubComboBox->SelectedText->ToString();
+	output += hubComboBox->Text->ToString();
 
 	Label^ gearDescription = gcnew Label();
-	gearDescription->AutoSize = true;
 	gearDescription->Dock = System::Windows::Forms::DockStyle::Fill;
 	gearDescription->Location = System::Drawing::Point(3, 3);
 	gearDescription->Margin = System::Windows::Forms::Padding(3);
-	gearDescription->Size = System::Drawing::Size(34, 30);
 	gearDescription->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 	gearDescription->Text = output;
+	gearDescription->AutoEllipsis = true;
 	gearListTable->Controls->Add(gearDescription, 2, gearNum);
 }
 private: System::Void exportButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	saveFileDialog1->ShowDialog();
 }
-private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void gearListTable_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-private: System::Void pitchInput_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	
-}
+private: System::Void pitchInput_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	// https://stackoverflow.com/questions/24491883/visual-c-2010-only-allow-numbers-in-textbox
+	if (e->KeyChar == '.') {
+		if (this->pitchInput->Text->Contains(".") && !this->pitchInput->SelectedText->Contains("."))
+			e->Handled = true;
+	}
 
+	// Accept only digits "." and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+}
+private: System::Void pressureInput_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	// https://stackoverflow.com/questions/24491883/visual-c-2010-only-allow-numbers-in-textbox
+	if (e->KeyChar == '.') {
+		if (this->pressureInput->Text->Contains(".") && !this->pressureInput->SelectedText->Contains("."))
+			e->Handled = true;
+	}
+
+	// Accept only digits "." and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+}
+private: System::Void hubInputA_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	// https://stackoverflow.com/questions/24491883/visual-c-2010-only-allow-numbers-in-textbox
+	if (e->KeyChar == '.') {
+		if (this->hubInputA->Text->Contains(".") && !this->hubInputA->SelectedText->Contains("."))
+			e->Handled = true;
+	}
+
+	// Accept only digits "." and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+}
+private: System::Void hubInputB_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	// https://stackoverflow.com/questions/24491883/visual-c-2010-only-allow-numbers-in-textbox
+	if (e->KeyChar == '.') {
+		if (this->hubInputB->Text->Contains(".") && !this->hubInputB->SelectedText->Contains("."))
+			e->Handled = true;
+	}
+
+	// Accept only digits "." and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+}
+private: System::Void materialWidthInput_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	// https://stackoverflow.com/questions/24491883/visual-c-2010-only-allow-numbers-in-textbox
+	if (e->KeyChar == '.') {
+		if (this->materialWidthInput->Text->Contains(".") && !this->materialWidthInput->SelectedText->Contains("."))
+			e->Handled = true;
+	}
+
+	// Accept only digits "." and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+}
+private: System::Void materialHeightInput_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	// https://stackoverflow.com/questions/24491883/visual-c-2010-only-allow-numbers-in-textbox
+	if (e->KeyChar == '.') {
+		if (this->materialHeightInput->Text->Contains(".") && !this->materialHeightInput->SelectedText->Contains("."))
+			e->Handled = true;
+	}
+
+	// Accept only digits "." and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+}
 };
 }
 
