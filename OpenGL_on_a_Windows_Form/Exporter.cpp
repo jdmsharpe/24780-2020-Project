@@ -7,7 +7,16 @@ void Exporter::ExportSVG(ViewManager &aManager)
 	//std::vector<GearGenerator> gears = aManager.getGearInfo();
 	//int numGears = (int)gears.size();
 	int numGears = 1;
-	//Dimensions dimensions(aManager.width, aManager.height);
+
+	//if (unitSys == imperial) {
+	//	int width = aManager.width * INCH_TO_PX;
+	//	int height = aManager.height * INCH_TO_PX;
+	//}
+	//else if (unitSys == metric) {
+	//	int width = aManager.width * MM_TO_PX;
+	//	int height = aManager.height * MM_TO_PX;
+	//}
+	//Dimensions dimensions(width, height);
 	Dimensions dimensions(500, 500); // Until ready to incorporate ViewManager
 
 	// Create document with input filename and dimensions
@@ -24,24 +33,30 @@ void Exporter::ExportSVG(ViewManager &aManager)
 
 		// Fetch gear parameters for drawing calculations
 		//int numTeeth = gears[i].getNumTeeth();
+		//if (unitSys == imperial) {
+			//double pitch = gears[i].getPitch() * INCH_TO_PX;
+		//} 
+		//else if (unitSys == metric) {
+			//double pitch = gears[i].getPitch() * MM_TO_PX;
+		//}
+		//double pressureAngle = gears[i].getPressureAngle();
 		//std::pair<double, double> offset = gears[i].getPosition();
-		//double outerRadius = gears[i].getOuterRadius(); // Will need to calculate
-		//double pitchRadius = gears[i].getPitchRadius(); // Will need to calculate
-		//double pitch = gears[i].getPitch();
-		//double pressureAngle = gears[i].getPressureAngle(); // Will need to calculate?
-		//double clearance = gears[i].getClearance(); // Will need to calculate?
+
+		//double diametralPitch = PI / pitch;
+		//double pitchRadius = (numTeeth / diametralPitch) / 2.0;
+		//double addendum = 1.0 / diametralPitch;
+		//double outsideRadius = pitchRadius + addendum;
 		int numTeeth = 25;
 		std::pair<double, double> offset = { 250.0, 250.0 };
 		double outerRadius = 68.0;
 		double pitchRadius = 64.0;
 		double pitch = 15.0;
 		double pressureAngle = 20.0 * (PI / 180.0);
-		double clearance = 0.03;
 
 		// Calculate additional parameters
-		double diff = pitch / PI;
+		double inverseDiametralPitch = pitch / PI;
 		double baseRadius = pitchRadius * std::cos(pressureAngle);
-		double footRadius = pitchRadius - diff;
+		double footRadius = pitchRadius - inverseDiametralPitch;
 
 		double toothMax = std::acos(baseRadius / outerRadius);
 		double toothMin = (footRadius < baseRadius) ? 0 : std::acos(baseRadius / footRadius);
