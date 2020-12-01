@@ -114,6 +114,8 @@
     <ClCompile Include="DrawingUtilNG.cpp" />
     <ClCompile Include="Exporter.cpp" />
     <ClCompile Include="Fssimplewindow.cpp" />
+    <ClCompile Include="gear.cpp" />
+    <ClCompile Include="gearglut.cpp" />
     <ClCompile Include="main_optimizer.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="OpenGL.cpp" />
@@ -128,6 +130,7 @@
     <ClInclude Include="DrawingUtilNG.h" />
     <ClInclude Include="Exporter.h" />
     <ClInclude Include="Fssimplewindow.h" />
+    <ClInclude Include="gear.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ViewManager.h" />
     <ClInclude Include="OpenGL.h" />
