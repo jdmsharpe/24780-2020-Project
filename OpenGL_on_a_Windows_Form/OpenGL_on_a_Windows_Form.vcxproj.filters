@@ -45,6 +45,12 @@
     <ClCompile Include="DrawingUtilNG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gearglut.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -75,6 +81,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="DrawingUtilNG.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gear.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
