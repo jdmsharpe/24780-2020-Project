@@ -50,6 +50,16 @@ public:
 	// given model coordinates, function adds a vertex on screen
 	// after converting for translation and scale
 
+
+
+	//Optimizer
+	vector<Node> fileread();
+	vector<Node> optimize(vector <Node> Nodes);
+	vector<Node> center(vector <Node> Nodes);
+	bool checkintersection(vector<Node> Nodes);
+	void draw(vector<Node> Nodes);
+	// End Optimizer
+
 private:
 	void load();
 	// asks for a filename and loads a file into model
