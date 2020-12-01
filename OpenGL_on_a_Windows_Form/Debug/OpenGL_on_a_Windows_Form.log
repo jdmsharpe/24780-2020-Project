@@ -1,9 +1,2 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2705,5): warning MSB3305: Processing COM reference "WMPLib.1.0.dll" from path "C:\WINDOWS\system32\wmp.dll". Type library importer encountered a property getter 'sessionPlaylistCount' on type 'WMPLib.IWMPNowPlayingHelperDispatch' without a valid return type.  The importer will attempt to import this property as a method instead.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(2705,5): warning MSB3305: Processing COM reference "WMPLib.1.0.dll" from path "C:\WINDOWS\system32\wmp.dll". At least one of the arguments for 'IWMPGraphEventHandler.NotifyAcquireCredentials' cannot be marshaled by the runtime marshaler.  Such arguments will therefore be passed as a pointer and may require unsafe code to manipulate.
-cl : command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
-  OpenGL.cpp
-  OpenGL_on_a_Windows_Form.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\yvals.h(230): warning STL4001: /clr:pure is deprecated and will be REMOVED.
-  Generating Code...
-  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+﻿  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   OpenGL_on_a_Windows_Form.vcxproj -> C:\Users\Onyx\Desktop\24780\Group Project\Debug\OpenGL_on_a_Windows_Form.exe
