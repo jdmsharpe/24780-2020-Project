@@ -1,8 +1,2 @@
-﻿cl : command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
-  Exporter.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\yvals.h(230): warning STL4001: /clr:pure is deprecated and will be REMOVED.
-  ViewManager.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\yvals.h(230): warning STL4001: /clr:pure is deprecated and will be REMOVED.
-  Generating Code...
-  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+﻿  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   OpenGL_on_a_Windows_Form.vcxproj -> C:\Users\Onyx\Desktop\24780\Group Project\Debug\OpenGL_on_a_Windows_Form.exe

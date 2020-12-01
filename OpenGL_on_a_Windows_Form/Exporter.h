@@ -18,12 +18,12 @@ private:
 	std::string filename;
 	UnitSystem unitSys;
 	double strokeWidth;
-	int lineResolution; 
+	int pointResolution; 
 	double clearance;
 
 public:
 	Exporter(std::string filename, UnitSystem unitsys) :
-		filename(filename), unitSys(unitSys), lineResolution(20), strokeWidth(0.5), clearance(0.03) {}
+		filename(filename), unitSys(unitSys), pointResolution(20), strokeWidth(0.5), clearance(0.03) {}
 
 	~Exporter();
 

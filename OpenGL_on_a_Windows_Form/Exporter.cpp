@@ -86,7 +86,7 @@ void Exporter::ExportSVG(ViewManager &aManager)
 
 			for (auto const &point : toothProfile)
 			{
-				// Draw first line to root of gear
+				// Draw first curve to root of gear
 				pathObject << PathPoint(point.second * std::cos(alpha + point.first) + offset.first,
 										point.second * std::sin(alpha + point.first) + offset.second, "L");
 			}
@@ -100,7 +100,7 @@ void Exporter::ExportSVG(ViewManager &aManager)
 								   footRadius * std::sin(alpha) + offset.second);
 
 			for (auto const &point : toothProfile) {
-				// Draw last line to outer part of next tooth
+				// Draw last curve to outer part of next tooth
 				pathObject << PathPoint(point.second * std::cos(alpha - point.first) + offset.first,
 										point.second * std::sin(alpha - point.first) + offset.second, "L");
 			}
@@ -117,8 +117,8 @@ void Exporter::ExportSVG(ViewManager &aManager)
 std::vector<std::pair<double, double>> Exporter::getToothProfile(double toothMax, double toothMin, double baseRadius)
 {
 	std::vector<std::pair<double, double>> toothProfile;
-	for (int u = 0; u < lineResolution; u++) {
-		double t = (1 - u / lineResolution) * (-toothMax) + (u / lineResolution) * (-toothMin);
+	for (int u = 0; u < pointResolution; u++) {
+		double t = (1 - u / pointResolution) * (-toothMax) + (u / pointResolution) * (-toothMin);
 		toothProfile.push_back(std::make_pair(std::tan(t) - t, baseRadius / std::cos(t)));
 	}
 	return toothProfile;
