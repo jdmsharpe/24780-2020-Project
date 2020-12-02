@@ -110,7 +110,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\HW7\HW7\StringPlus.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="DrawingUtilNG.cpp" />
     <ClCompile Include="Exporter.cpp" />
@@ -125,7 +124,6 @@
     <ClCompile Include="ViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\HW7\HW7\StringPlus.h" />
     <ClInclude Include="DrawingUtilNG.h" />
     <ClInclude Include="Exporter.h" />
     <ClInclude Include="gear.h" />

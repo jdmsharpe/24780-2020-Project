@@ -42,9 +42,6 @@
     <ClCompile Include="gear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\HW7\HW7\StringPlus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -66,9 +63,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ViewManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\HW7\HW7\StringPlus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gear.h">

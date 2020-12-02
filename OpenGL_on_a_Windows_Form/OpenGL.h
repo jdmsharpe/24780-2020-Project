@@ -3,6 +3,9 @@
 #include <windows.h>
 #include <GL/gl.h>   // these are the OpenGL libraries
 #include <GL/glu.h>
+#include <winuser.h>
+
+#include "ViewManager.h"
 
 using namespace System::Windows::Forms;
 
@@ -45,12 +48,18 @@ namespace OpenGLForm
 			}
 			rtri = 0.0f;
 			rquad = 0.0f;
+
+			theManager = new ViewManager();
 		}
 
 		System::Void Render(System::Void)
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear screen and depth buffer
 			glLoadIdentity();									// Reset the current modelview matrix
+
+			theManager->draw();
+
+			glLoadIdentity();
 			glTranslatef(-1.5f, 0.0f, -6.0f);						// Move left 1.5 units and into the screen 6.0
 			glRotatef(rtri, 0.0f, 1.0f, 0.0f);						// Rotate the triangle on the y axis 
 			glBegin(GL_TRIANGLES);								// Start drawing a triangle
@@ -135,10 +144,13 @@ namespace OpenGLForm
 		GLfloat	rtri;				// Angle for the triangle
 		GLfloat	rquad;				// Angle for the quad
 
+		ViewManager *theManager;
+
 	protected:
 		~COpenGL(System::Void)
 		{
 			this->DestroyHandle();
+			delete theManager;
 		}
 
 		GLint MySetPixelFormat(HDC hdc)
@@ -151,7 +163,7 @@ namespace OpenGLForm
 				PFD_SUPPORT_OPENGL |						// Format Must Support OpenGL
 				PFD_DOUBLEBUFFER,							// Must Support Double Buffering
 				PFD_TYPE_RGBA,								// Request An RGBA Format
-				16,										// Select Our Color Depth
+				16,											// Select Our Color Depth
 				0, 0, 0, 0, 0, 0,							// Color Bits Ignored
 				0,											// No Alpha Buffer
 				0,											// Shift Bit Ignored
@@ -193,14 +205,13 @@ namespace OpenGLForm
 				return 0;
 			}
 
-
 			return 1;
 		}
 
 		bool InitGL(GLvoid)										// All setup for opengl goes here
 		{
 			glShadeModel(GL_SMOOTH);							// Enable smooth shading
-			glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black background
+			glClearColor(0.97f, 0.97f, 0.97f, 0.5f);			// Grey background
 			glClearDepth(1.0f);									// Depth buffer setup
 			glEnable(GL_DEPTH_TEST);							// Enables depth testing
 			glDepthFunc(GL_LEQUAL);								// The type of depth testing to do

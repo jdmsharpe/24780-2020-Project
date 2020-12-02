@@ -4,19 +4,19 @@
 #include <vector>
 
 #include "Node.h"
-#include "StringPlus.h"
+#include "gear.h"
 
 #define WINDOW_WIDTH 800 // (!) Update me
 #define WINDOW_HEIGHT 600
 
 enum UnitSystem { imperial = 0, metric = 1 };
 
-class GearGenerator; // (!) Remove and replace with include
+class gear; // (!) Remove and replace with include
 
 class ViewManager
 {
 private:
-	std::vector<GearGenerator> theGears;
+	//std::vector<gear> theGears;
 
 	int panChange;
 	double zoomFactor;
@@ -53,8 +53,6 @@ public:
 	// given model coordinates, function adds a vertex on screen
 	// after converting for translation and scale
 
-
-
 	//Optimizer
 	std::vector<Node> fileread();
 	std::vector<Node> optimize(std::vector <Node> Nodes);
@@ -62,6 +60,8 @@ public:
 	bool checkintersection(std::vector<Node> Nodes);
 	void draw(std::vector<Node> Nodes);
 	// End Optimizer
+
+	void draw(); // Only for testing
 
 private:
 	void load();

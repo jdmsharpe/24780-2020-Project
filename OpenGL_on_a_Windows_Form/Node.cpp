@@ -1,6 +1,5 @@
 #include "Node.h"
 #include "DrawingUtilNG.h"
-//#include "ysglfontdata.h"
 #include "ViewManager.h"
 #include <vector>
 
