@@ -1,37 +1,32 @@
 #include "ViewManager.h"
 
-//For optimizer
+// For optimizer
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
 #include <math.h>
-#include <string>
-#include <vector>
-#include "Node.h"
-// Optimizer
 
-
-vector<Node> ViewManager::fileread()
+std::vector<Node> ViewManager::fileread()
 {
-	vector<Node> readNodes;
-	string currLine;
-	stringstream currStream;
-	string inFileName = "Circle.fem";
-	ifstream inFile;
+	std::vector<Node> readNodes;
+	std::string currLine;
+	std::stringstream currStream;
+	std::string inFileName = "Circle.fem";
+	std::ifstream inFile;
 	inFile.open(inFileName);
 	if (inFile.is_open())
 	{
 		while (!inFile.eof())
 		{
-			getline(inFile, currLine);
+			std::getline(inFile, currLine);
 
-			if (currLine.find("Circles:") != string::npos)
+			if (currLine.find("Circles:") != std::string::npos)
 			{
-				string label;
+				std::string label;
 				double xCoord, yCoord, zCoord, rad;
 				getline(inFile, currLine);
-				while (!inFile.eof() && currLine.find("End Circles:") == string::npos)
+				while (!inFile.eof() && currLine.find("End Circles:") == std::string::npos)
 				{
 					currStream.str(currLine);
 					currStream >> label >> xCoord >> yCoord >> zCoord >> rad;
@@ -43,18 +38,18 @@ vector<Node> ViewManager::fileread()
 				}
 			}
 		}
-		cout << "File Reading Done....." << endl;
+		std::cout << "File Reading Done....." << std::endl;
 	}
 	else
 	{
-		cout << "Was not able to open " << inFileName << " for input. " << endl;
+		std::cout << "Was not able to open " << inFileName << " for input. " << std::endl;
 	}
 
 	inFile.close();
 	return readNodes;
 }
 
-vector<Node> ViewManager::optimize(vector<Node> Nodes)
+std::vector<Node> ViewManager::optimize(std::vector<Node> Nodes)
 {
 	int signx, signy;
 	for (int i = 0; i < Nodes.size(); i++)
@@ -129,7 +124,7 @@ vector<Node> ViewManager::optimize(vector<Node> Nodes)
 	return Nodes;
 }
 
-vector<Node> ViewManager::center(vector<Node> Nodes)
+std::vector<Node> ViewManager::center(std::vector<Node> Nodes)
 {
 	for (int i = 0; i < Nodes.size(); i++)
 	{
@@ -145,7 +140,7 @@ vector<Node> ViewManager::center(vector<Node> Nodes)
 	return Nodes;
 }
 
-bool ViewManager::checkintersection(vector<Node> Nodes)
+bool ViewManager::checkintersection(std::vector<Node> Nodes)
 {
 	bool check;
 	bool allchecks = true;
@@ -185,7 +180,7 @@ bool ViewManager::checkintersection(vector<Node> Nodes)
 
 }
 
-void ViewManager::draw(vector<Node> Nodes)
+void ViewManager::draw(std::vector<Node> Nodes)
 {
 
 	for (int i = 0; i < Nodes.size(); i++)

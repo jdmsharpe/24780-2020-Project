@@ -36,19 +36,13 @@
     <ClCompile Include="Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main_optimizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Fssimplewindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DrawingUtilNG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gearglut.cpp">
+    <ClCompile Include="gear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gear.cpp">
+    <ClCompile Include="..\..\HW7\HW7\StringPlus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,17 +68,17 @@
     <ClInclude Include="ViewManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Fssimplewindow.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawingUtilNG.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\..\HW7\HW7\StringPlus.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gear.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingUtilNG.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

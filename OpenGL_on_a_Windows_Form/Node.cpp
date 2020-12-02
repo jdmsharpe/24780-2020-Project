@@ -4,10 +4,7 @@
 #include "ViewManager.h"
 #include <vector>
 
-
 using namespace std;
-
-
 
 Node::Node(const string& aLabel, double xCoord, double yCoord, double zCoord, double defl)
 {
@@ -15,7 +12,6 @@ Node::Node(const string& aLabel, double xCoord, double yCoord, double zCoord, do
 	x = xCoord; y = yCoord; z = zCoord;
 	Radius = defl;
 }
-
 
 void Node::draw(Node node, bool showLabel)
 {
@@ -29,13 +25,11 @@ void Node::draw(Node node, bool showLabel)
 	screenY = -node.getY() + WINDOW_HEIGHT;
 	r = node.getRadius();
 
-
 	glVertex2f(screenX - halfSize, screenY);
 	glVertex2f(screenX, screenY + halfSize);
 	glVertex2f(screenX + halfSize, screenY);
 	glVertex2f(screenX, screenY - halfSize);
 	glEnd();
-
 
 	const double pi = 3.1415927;
 
@@ -53,11 +47,5 @@ void Node::draw(Node node, bool showLabel)
 	}
 
 	glEnd();
-
-
-	if (showLabel) {
-		glRasterPos2i(screenX + 2 * size, screenY + 2 * size + 10);
-		YsGlDrawFontBitmap6x10(label.c_str());
-	}
 
 }

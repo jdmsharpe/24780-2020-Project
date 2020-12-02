@@ -110,13 +110,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\HW7\HW7\StringPlus.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="DrawingUtilNG.cpp" />
     <ClCompile Include="Exporter.cpp" />
-    <ClCompile Include="Fssimplewindow.cpp" />
     <ClCompile Include="gear.cpp" />
-    <ClCompile Include="gearglut.cpp" />
-    <ClCompile Include="main_optimizer.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGL_on_a_Windows_Form.cpp" />
@@ -127,9 +125,9 @@
     <ClCompile Include="ViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\HW7\HW7\StringPlus.h" />
     <ClInclude Include="DrawingUtilNG.h" />
     <ClInclude Include="Exporter.h" />
-    <ClInclude Include="Fssimplewindow.h" />
     <ClInclude Include="gear.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ViewManager.h" />

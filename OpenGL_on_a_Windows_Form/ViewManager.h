@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+#include "Node.h"
+#include "StringPlus.h"
+
 #define WINDOW_WIDTH 800 // (!) Update me
 #define WINDOW_HEIGHT 600
 
@@ -53,11 +56,11 @@ public:
 
 
 	//Optimizer
-	vector<Node> fileread();
-	vector<Node> optimize(vector <Node> Nodes);
-	vector<Node> center(vector <Node> Nodes);
-	bool checkintersection(vector<Node> Nodes);
-	void draw(vector<Node> Nodes);
+	std::vector<Node> fileread();
+	std::vector<Node> optimize(std::vector <Node> Nodes);
+	std::vector<Node> center(std::vector <Node> Nodes);
+	bool checkintersection(std::vector<Node> Nodes);
+	void draw(std::vector<Node> Nodes);
 	// End Optimizer
 
 private:
