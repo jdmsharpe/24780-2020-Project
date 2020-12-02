@@ -7,6 +7,10 @@
 #include <unordered_map>
 #include <math.h>
 
+ViewManager::ViewManager()
+{
+}
+
 std::vector<Node> ViewManager::fileread()
 {
 	std::vector<Node> readNodes;
@@ -31,7 +35,7 @@ std::vector<Node> ViewManager::fileread()
 					currStream.str(currLine);
 					currStream >> label >> xCoord >> yCoord >> zCoord >> rad;
 					currStream.clear();
-					label = StringPlus::trim(label);
+					//label = StringPlus::trim(label);
 					Node newNode(label, xCoord * 20, yCoord * 20, zCoord, rad);
 					readNodes.push_back(newNode);
 					getline(inFile, currLine);
@@ -52,11 +56,11 @@ std::vector<Node> ViewManager::fileread()
 std::vector<Node> ViewManager::optimize(std::vector<Node> Nodes)
 {
 	int signx, signy;
-	for (int i = 0; i < Nodes.size(); i++)
+	for (int i = 0; i < (int)Nodes.size(); i++)
 	{
-		for (int j = 0; j < Nodes.size(); j++)
+		for (int j = 0; j < (int)Nodes.size(); j++)
 		{
-			if (j > Nodes.size())
+			if (j > (int)Nodes.size())
 			{
 				j = 0;
 			}
@@ -126,7 +130,7 @@ std::vector<Node> ViewManager::optimize(std::vector<Node> Nodes)
 
 std::vector<Node> ViewManager::center(std::vector<Node> Nodes)
 {
-	for (int i = 0; i < Nodes.size(); i++)
+	for (int i = 0; i < (int)Nodes.size(); i++)
 	{
 		double x = Nodes[i].getX();
 		double y = Nodes[i].getY();
@@ -144,11 +148,11 @@ bool ViewManager::checkintersection(std::vector<Node> Nodes)
 {
 	bool check;
 	bool allchecks = true;
-	for (int i = 0; i < Nodes.size(); i++)
+	for (int i = 0; i < (int)Nodes.size(); i++)
 	{
-		for (int j = 0; j < Nodes.size(); j++)
+		for (int j = 0; j < (int)Nodes.size(); j++)
 		{
-			if (j > Nodes.size())
+			if (j > (int)Nodes.size())
 			{
 				j = 0;
 			}
@@ -183,8 +187,40 @@ bool ViewManager::checkintersection(std::vector<Node> Nodes)
 void ViewManager::draw(std::vector<Node> Nodes)
 {
 
-	for (int i = 0; i < Nodes.size(); i++)
+	for (int i = 0; i < (int)Nodes.size(); i++)
 	{
 		Nodes[i].draw(Nodes[i], 0);
 	}
+}
+
+void ViewManager::draw() // Only for testing
+{
+	glLoadIdentity();
+	glTranslatef(0.0f, 0.0f, -10.0f);						// Move left 1.5 units and into the screen 6.0
+	glBegin(GL_TRIANGLES);								// Start drawing a triangle
+	glColor3f(1.0f, 1.0f, 1.0f);						// Red
+	glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (front)
+	glColor3f(0.0f, 1.0f, 0.0f);						// Green
+	glVertex3f(-1.0f, -1.0f, 1.0f);					// Left of triangle (front)
+	glColor3f(0.0f, 0.0f, 1.0f);						// Blue
+	glVertex3f(1.0f, -1.0f, 1.0f);					// Right of triangle (front)
+	glColor3f(1.0f, 0.0f, 0.0f);						// Red
+	glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (right)
+	glColor3f(0.0f, 0.0f, 1.0f);						// Blue
+	glVertex3f(1.0f, -1.0f, 1.0f);					// Left of triangle (right)
+	glColor3f(0.0f, 1.0f, 0.0f);						// Green
+	glVertex3f(1.0f, -1.0f, -1.0f);					// Right of triangle (right)
+	glColor3f(1.0f, 0.0f, 0.0f);						// Red
+	glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (back)
+	glColor3f(0.0f, 1.0f, 0.0f);						// Green
+	glVertex3f(1.0f, -1.0f, -1.0f);					// Left of triangle (back)
+	glColor3f(0.0f, 0.0f, 1.0f);						// Blue
+	glVertex3f(-1.0f, -1.0f, -1.0f);					// Right of triangle (back)
+	glColor3f(1.0f, 0.0f, 0.0f);						// Red
+	glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (left)
+	glColor3f(0.0f, 0.0f, 1.0f);						// Blue
+	glVertex3f(-1.0f, -1.0f, -1.0f);					// Left of triangle (left)
+	glColor3f(0.0f, 1.0f, 0.0f);						// Green
+	glVertex3f(-1.0f, -1.0f, 1.0f);					// Right of triangle (left)
+	glEnd();											// Done drawing the pyramid
 }
