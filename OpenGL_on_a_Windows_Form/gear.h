@@ -21,4 +21,4 @@ public:
 	void setPosition(double xi, double yi, double thetai);
 	int getN() const;
 	void draw();
-}; #pragma once
+};

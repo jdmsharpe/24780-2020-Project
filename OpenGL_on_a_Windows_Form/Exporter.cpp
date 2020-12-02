@@ -23,7 +23,7 @@ void Exporter::ExportSVG(ViewManager &aManager)
 	Document doc(filename, Layout(dimensions, Layout::BottomLeft));
 
 	// Draw rectangle around drawing representing the boundaries of the material
-	doc << Rectangle(Point(0, dimensions.height), dimensions.width, dimensions.height, 
+	doc << svg::Rectangle(Point(0, dimensions.height), dimensions.width, dimensions.height, 
 				Color::Transparent, Stroke(strokeWidth, Color::Black));
 
 	// Draw the gears
