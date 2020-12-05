@@ -1,9 +1,18 @@
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <unordered_map>
+#include <math.h>
+#include <string>
+#include <vector>
+#include <filesystem> 
 #include <windows.h>  
 #include "DrawingUtilNG.h"
 #include "fssimplewindow.h"
 #include "StringPlus.h"
 #include "Node.h"
-#include "ViewManager.h"
+#include "manager.h"
 
 
 using namespace std;
@@ -38,10 +47,10 @@ int main(void)
 
 	FsSwapBuffers();
 	FsPollDevice();
-	tempNodes = aManager.center(theNodes);
-
+	tempNodes = aManager.setinitposition(theNodes);
+	//optimizedNodes = tempNodes;
 	optimizedNodes = aManager.optimize(tempNodes);
-
+	int itr = 0;
 	while (!optimized)
 	{
 
@@ -56,15 +65,19 @@ int main(void)
 		}
 
 		optimizedNodes = aManager.optimize(tempNodes);
-
+		itr++;
+		/*if (itr > 5)
+		{
+			break;
+		}*/
 	}
 
 	aManager.draw(optimizedNodes);
 
-	for (int i = 0; i < optimizedNodes.size(); i++)
-	{
-		optimizedNodes[i].draw(optimizedNodes[i], 0);
-	}
+	//for (int i = 0; i < optimizedNodes.size(); i++)
+	//{
+	//	optimizedNodes[i].draw(optimizedNodes[i],0);
+	//}
 
 	FsSwapBuffers();
 	FsPollDevice();
@@ -74,3 +87,5 @@ int main(void)
 	while (getchar() != '\n');
 	getchar();
 }
+
+

@@ -6,61 +6,84 @@
 #include <sstream>
 #include <unordered_map>
 #include <math.h>
+#include <string>
+#include <vector>
+//#include <gl\gl.h> 
+//#include <gl\glu.h> 
+#include "Node.h"
+#include "ViewManager.h"
+
+using namespace std;
 
 ViewManager::ViewManager()
 {
 }
 
-std::vector<Node> ViewManager::fileread()
+
+
+vector<Node> ViewManager::fileread()
 {
-	std::vector<Node> readNodes;
-	std::string currLine;
-	std::stringstream currStream;
-	std::string inFileName = "Circle.fem";
-	std::ifstream inFile;
+	vector<Node> readNodes;
+	string currLine;
+	stringstream currStream;
+	string inFileName = "Circle.fem";
+	ifstream inFile;
 	inFile.open(inFileName);
 	if (inFile.is_open())
 	{
 		while (!inFile.eof())
 		{
-			std::getline(inFile, currLine);
+			getline(inFile, currLine);
 
-			if (currLine.find("Circles:") != std::string::npos)
+			if (currLine.find("Circles:") != string::npos)
 			{
-				std::string label;
+				string label;
 				double xCoord, yCoord, zCoord, rad;
 				getline(inFile, currLine);
-				while (!inFile.eof() && currLine.find("End Circles:") == std::string::npos)
+				while (!inFile.eof() && currLine.find("End Circles:") == string::npos)
 				{
 					currStream.str(currLine);
 					currStream >> label >> xCoord >> yCoord >> zCoord >> rad;
 					currStream.clear();
-					//label = StringPlus::trim(label);
 					Node newNode(label, xCoord * 20, yCoord * 20, zCoord, rad);
 					readNodes.push_back(newNode);
 					getline(inFile, currLine);
 				}
 			}
 		}
-		std::cout << "File Reading Done....." << std::endl;
+		cout << "File Reading Done....." << endl;
 	}
 	else
 	{
-		std::cout << "Was not able to open " << inFileName << " for input. " << std::endl;
+		cout << "Was not able to open " << inFileName << " for input. " << endl;
 	}
 
 	inFile.close();
 	return readNodes;
 }
 
-std::vector<Node> ViewManager::optimize(std::vector<Node> Nodes)
+vector<Node> ViewManager::setinitposition(vector<Node> Nodes)
+{
+	for (int i = 0; i < Nodes.size(); i++)
+	{
+		double x1 = Nodes[i].getX();
+		double y1 = Nodes[i].getY();
+		double r1 = Nodes[i].getRadius();
+		Nodes[i].setX(r1);
+		Nodes[i].setY(r1);
+	}
+	
+	return Nodes;
+}
+
+vector<Node> ViewManager::optimize(vector<Node> Nodes)
 {
 	int signx, signy;
-	for (int i = 0; i < (int)Nodes.size(); i++)
+	for (int i = 0; i < Nodes.size(); i++)
 	{
-		for (int j = 0; j < (int)Nodes.size(); j++)
+		for (int j = 0; j < Nodes.size(); j++)
 		{
-			if (j > (int)Nodes.size())
+			if (j > Nodes.size())
 			{
 				j = 0;
 			}
@@ -79,8 +102,8 @@ std::vector<Node> ViewManager::optimize(std::vector<Node> Nodes)
 				}
 				else
 				{
-					int randomx = 5 * (rand() % 10);
-					int randomy = 5 * (rand() % 10);
+					int randomx = 3 * (rand() % 10);
+					int randomy = 3 * (rand() % 10);
 					if (randomx % 2 == 0)
 					{
 						signx = 1;
@@ -105,15 +128,19 @@ std::vector<Node> ViewManager::optimize(std::vector<Node> Nodes)
 					{
 						//signx = 1;
 						//signy = 1;
-						x1 = WINDOW_WIDTH / 2;
-						y1 = WINDOW_HEIGHT / 2;
+						/*x1 = WINDOW_WIDTH/2;
+						y1 = WINDOW_HEIGHT/2;*/
+						x1 = r1;
+						y1 = r1;
 					}
-					if ((x1 + r1) > WINDOW_WIDTH || (y1 + r1) > WINDOW_HEIGHT)
+					if ((x1 + r1) > WINDOW_WIDTH || (y1 + r1) > WINDOW_HEIGHT || (y1 - r1) < -WINDOW_HEIGHT)
 					{
 						//signx = -1;
 						//signy = -1;
-						x1 = WINDOW_WIDTH / 2;
-						y1 = WINDOW_HEIGHT / 2;
+						/*x1 = WINDOW_WIDTH/2;
+						y1 = WINDOW_HEIGHT/2;*/
+						x1 = r1;
+						y1 = r1;
 					}
 					//x1 = x1 + signx * randomx;
 					//y1 = y1 + signy * randomy;
@@ -128,9 +155,9 @@ std::vector<Node> ViewManager::optimize(std::vector<Node> Nodes)
 	return Nodes;
 }
 
-std::vector<Node> ViewManager::center(std::vector<Node> Nodes)
+vector<Node> ViewManager::center(vector<Node> Nodes)
 {
-	for (int i = 0; i < (int)Nodes.size(); i++)
+	for (int i = 0; i < Nodes.size(); i++)
 	{
 		double x = Nodes[i].getX();
 		double y = Nodes[i].getY();
@@ -144,15 +171,15 @@ std::vector<Node> ViewManager::center(std::vector<Node> Nodes)
 	return Nodes;
 }
 
-bool ViewManager::checkintersection(std::vector<Node> Nodes)
+bool ViewManager::checkintersection(vector<Node> Nodes)
 {
 	bool check;
 	bool allchecks = true;
-	for (int i = 0; i < (int)Nodes.size(); i++)
+	for (int i = 0; i < Nodes.size(); i++)
 	{
-		for (int j = 0; j < (int)Nodes.size(); j++)
+		for (int j = 0; j < Nodes.size(); j++)
 		{
-			if (j > (int)Nodes.size())
+			if (j > Nodes.size())
 			{
 				j = 0;
 			}
@@ -184,14 +211,15 @@ bool ViewManager::checkintersection(std::vector<Node> Nodes)
 
 }
 
-void ViewManager::draw(std::vector<Node> Nodes)
+void ViewManager::draw(vector<Node> Nodes)
 {
 
-	for (int i = 0; i < (int)Nodes.size(); i++)
+	for (int i = 0; i < Nodes.size(); i++)
 	{
 		Nodes[i].draw(Nodes[i], 0);
 	}
 }
+
 
 void ViewManager::draw() // Only for testing
 {
