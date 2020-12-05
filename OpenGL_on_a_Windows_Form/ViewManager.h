@@ -55,6 +55,7 @@ public:
 
 	//Optimizer
 	std::vector<Node> fileread();
+	std::vector<Node> setinitposition(std::vector<Node> Nodes);
 	std::vector<Node> optimize(std::vector <Node> Nodes);
 	std::vector<Node> center(std::vector <Node> Nodes);
 	bool checkintersection(std::vector<Node> Nodes);
