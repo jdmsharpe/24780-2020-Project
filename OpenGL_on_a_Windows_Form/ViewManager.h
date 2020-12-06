@@ -5,6 +5,7 @@
 
 #include "Node.h"
 #include "gear.h"
+//#include "OpenGL.h"
 
 #define WINDOW_WIDTH 775 // (!) Update me
 #define WINDOW_HEIGHT 675
