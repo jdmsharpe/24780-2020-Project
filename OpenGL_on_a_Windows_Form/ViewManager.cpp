@@ -18,6 +18,12 @@
 using namespace std;
 
 vector<Node> Nodes;
+vector <Node> theNodes;
+vector <Node> optimizedNodes;
+vector <Node> tempNodes;
+bool read = true;
+bool notoptimized = true;
+bool optimized = false;
 
 ViewManager::ViewManager()
 {
@@ -50,7 +56,8 @@ vector<Node> ViewManager::fileread()
 					currStream >> label >> xCoord >> yCoord >> zCoord >> rad;
 					currStream.clear();
 					Node newNode(label, xCoord * 20, yCoord * 20, zCoord, rad);
-					readNodes.push_back(newNode);
+					//readNodes.push_back(newNode);
+					Nodes.push_back(newNode);
 					getline(inFile, currLine);
 				}
 			}
@@ -63,7 +70,7 @@ vector<Node> ViewManager::fileread()
 	}
 
 	inFile.close();
-	return readNodes;
+	return Nodes;
 }
 
 vector<Node> ViewManager::setinitposition()
@@ -80,7 +87,7 @@ vector<Node> ViewManager::setinitposition()
 	return Nodes;
 }
 
-vector<Node> ViewManager::optimize()
+vector<Node> ViewManager::optimize(std::vector <Node> Nodes)
 {
 	int signx, signy;
 	for (int i = 0; i < Nodes.size(); i++)
@@ -159,7 +166,7 @@ vector<Node> ViewManager::optimize()
 	return Nodes;
 }
 
-vector<Node> ViewManager::center()
+vector<Node> ViewManager::center(std::vector <Node> Nodes)
 {
 	for (int i = 0; i < Nodes.size(); i++)
 	{
@@ -175,7 +182,7 @@ vector<Node> ViewManager::center()
 	return Nodes;
 }
 
-bool ViewManager::checkintersection()
+bool ViewManager::checkintersection(std::vector <Node> Nodes)
 {
 	bool check;
 	bool allchecks = true;
@@ -223,7 +230,7 @@ bool ViewManager::checkintersection()
 //		Nodes[i].draw(Nodes[i], 0);
 //	}
 //}
-bool read = true;
+
 
 void ViewManager::draw() // Only for testing
 {
@@ -233,33 +240,55 @@ void ViewManager::draw() // Only for testing
 		read = false;
 	}
 
+	if (notoptimized)
+	{
+		tempNodes = this->setinitposition();
+		optimizedNodes = this->optimize(tempNodes);
+		while (!optimized)
+		{
 
+			optimized = this->checkintersection(optimizedNodes);
+			if (optimized)
+			{
+				notoptimized = false;
+				break;
+			}
+			else
+			{
+				tempNodes = optimizedNodes;
+			}
 
-	for (int i = 0; i < Nodes.size(); i++)
+			optimizedNodes = this->optimize(tempNodes);
+		
+		}
+	}
+
+	for (int i = 0; i < optimizedNodes.size(); i++)
 	{
 		/*Nodes[i].draw(Nodes[i], 0);*/
 		int size = 2;
 		double halfSize = size * sqrt(2.);
-
-		glBegin(GL_QUADS);
-
+		double x_test = optimizedNodes[i].getX();
+		double y_test = optimizedNodes[i].getY();
+		/*glBegin(GL_QUADS);*/
+		glColor3f(1.0f, 1.0f, 1.0f);
 		double screenX, screenY, r;
-		screenX = Nodes[i].getX() + 0;
-		screenY = -Nodes[i].getY() + WINDOW_HEIGHT;
-		r = Nodes[i].getRadius();
+		screenX = optimizedNodes[i].getX() + 0;
+		screenY = -optimizedNodes[i].getY() + WINDOW_HEIGHT;
+		r = optimizedNodes[i].getRadius();
 
 
-		glVertex2f(screenX - halfSize, screenY);
+	/*	glVertex2f(screenX - halfSize, screenY);
 		glVertex2f(screenX, screenY + halfSize);
 		glVertex2f(screenX + halfSize, screenY);
 		glVertex2f(screenX, screenY - halfSize);
-		glEnd();
+		glEnd();*/
 
 
 		const double pi = 3.1415927;
 
 		glBegin(GL_LINE_LOOP);
-
+		glColor3f(1.0f, 1.0f, 1.0f);
 		for (int i = 0; i < 64; i++)
 		{
 			double angle = (double)i * pi / 32.0;
@@ -270,6 +299,7 @@ void ViewManager::draw() // Only for testing
 			glVertex2d(x_new, y_new);
 
 		}
+		glEnd();
 	}
 	
 
@@ -300,5 +330,5 @@ void ViewManager::draw() // Only for testing
 	//glVertex3f(-1.0f, -1.0f, -1.0f);					// Left of triangle (left)
 	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
 	//glVertex3f(-1.0f, -1.0f, 1.0f);					// Right of triangle (left)
-	glEnd();											// Done drawing the pyramid
+											// Done drawing the pyramid
 }

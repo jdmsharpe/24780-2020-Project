@@ -3,6 +3,7 @@
 //#include "ysglfontdata.h"
 //#include "manager.h"
 #include <vector>
+#include "ViewManager.h"
 //#include <gl\gl.h> 
 //#include <gl\glu.h> 
 
