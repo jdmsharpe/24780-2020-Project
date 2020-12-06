@@ -4,6 +4,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
+
 #include <winuser.h>
 
 #include <GL/gl.h>
@@ -89,3 +90,5 @@ private:
 	void centerOnScreen();
 	// sets view parameters so that the model is centered on screen
 };
+
+#endif

@@ -1,4 +1,5 @@
-# include "gear.h"
+#include "gear.h"
+#include "ViewManager.h"
 
 const double Pi = 3.142;
 
