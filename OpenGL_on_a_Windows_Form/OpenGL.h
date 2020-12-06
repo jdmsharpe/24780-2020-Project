@@ -1,10 +1,5 @@
 #pragma once
 
-#include <windows.h>
-#include <GL/gl.h>   // these are the OpenGL libraries
-#include <GL/glu.h>
-#include <winuser.h>
-
 #include "ViewManager.h"
 
 using namespace System::Windows::Forms;
