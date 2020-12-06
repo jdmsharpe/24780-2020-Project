@@ -13,6 +13,9 @@
 #include "Node.h"
 #include "ViewManager.h"
 
+#ifndef M_PI
+#define M_PI 3.14159265
+#endif
 
 
 using namespace std;
@@ -21,6 +24,7 @@ vector<Node> Nodes;
 vector <Node> theNodes;
 vector <Node> optimizedNodes;
 vector <Node> tempNodes;
+vector <gear> theGears;
 bool read = true;
 bool notoptimized = true;
 bool optimized = false;
@@ -48,16 +52,18 @@ vector<Node> ViewManager::fileread()
 			if (currLine.find("Circles:") != string::npos)
 			{
 				string label;
-				double xCoord, yCoord, zCoord, rad;
+				double xCoord, yCoord, zCoord, rad, irad, T, TD;
 				getline(inFile, currLine);
 				while (!inFile.eof() && currLine.find("End Circles:") == string::npos)
 				{
 					currStream.str(currLine);
-					currStream >> label >> xCoord >> yCoord >> zCoord >> rad;
+					currStream >> label >> xCoord >> yCoord >> zCoord >> rad >> irad >> T >> TD;
 					currStream.clear();
 					Node newNode(label, xCoord * 20, yCoord * 20, zCoord, rad);
+					gear newGear(label, xCoord * 20, yCoord * 20, zCoord, rad, irad, T, TD);
 					//readNodes.push_back(newNode);
 					Nodes.push_back(newNode);
+					theGears.push_back(newGear);
 					getline(inFile, currLine);
 				}
 			}
@@ -265,6 +271,7 @@ void ViewManager::draw() // Only for testing
 
 	for (int i = 0; i < optimizedNodes.size(); i++)
 	{
+		theGears[i].setPosition(optimizedNodes[i].getX(), optimizedNodes[i].getY(), 0);
 		/*Nodes[i].draw(Nodes[i], 0);*/
 		int size = 2;
 		double halfSize = size * sqrt(2.);
@@ -302,7 +309,68 @@ void ViewManager::draw() // Only for testing
 		glEnd();
 	}
 	
+	for (int k = 0; k < theGears.size(); k++)
+	{
+		int i;
+		float r0, r1, r2;
+		float angle, da;
+		float u, v, len;
 
+		r0 = theGears[k].getInner_radius();
+		r1 = theGears[k].getOuter_radius() - theGears[k].getTD() / 2.0;
+		r2 = theGears[k].getOuter_radius() + theGears[k].getTD() / 2.0;
+		double x = theGears[k].getX();
+		double y = theGears[k].getY();
+		double teeth = theGears[k].getT();
+
+		da = 2.0 * M_PI / teeth / 4.0;
+
+		//glShadeModel(GL_FLAT);
+
+		glNormal3f(0.0, 0.0, 1.0);
+
+		/* draw front face */
+		glBegin(GL_QUAD_STRIP);
+		for (i = 0; i <= teeth; i++) {
+			angle = i * 2.0 * M_PI / teeth;
+			glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
+			glVertex3f(x + r1 * cos(angle), y + r1 * sin(angle), 0);
+			if (i < teeth) {
+				glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
+				glVertex3f(x + r1 * cos(angle + 3 * da), y + r1 * sin(angle + 3 * da), 0);
+			}
+		}
+		glEnd();
+
+		/* draw front sides of teeth */
+		glBegin(GL_QUADS);
+		da = 2.0 * M_PI / teeth / 4.0;
+		for (i = 0; i < teeth; i++) {
+			angle = i * 2.0 * M_PI / teeth;
+
+			glVertex3f(x + r1 * cos(angle), y + r1 * sin(angle), 0);
+			glVertex3f(x + r2 * cos(angle + da), y + r2 * sin(angle + da), 0);
+			glVertex3f(x + r2 * cos(angle + 2 * da), y + r2 * sin(angle + 2 * da), 0);
+			glVertex3f(x + r1 * cos(angle + 3 * da), y + r1 * sin(angle + 3 * da), 0);
+			/* for (int i = 0; i < 100; ++i) {
+				 glVertex3f(outer_radius * (cos(rad(i)) + (rad(i) * sin(rad(i)))), outer_radius * (sin(rad(i)) - (rad(i) * cos(rad(i)))), 0);
+			 }*/
+		}
+		glEnd();
+
+		glNormal3f(0.0, 0.0, -1.0);
+
+
+		/* draw inside radius cylinder */
+		glBegin(GL_QUAD_STRIP);
+		for (i = 0; i <= teeth; i++) {
+			angle = i * 2.0 * M_PI / teeth;
+			glNormal3f(-cos(angle), -sin(angle), 0.0);
+			glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
+			glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
+		}
+		glEnd();
+	}
 	//glLoadIdentity();
 	//glTranslatef(0.0f, 0.0f, -10.0f);						// Move left 1.5 units and into the screen 6.0
 	//glBegin(GL_TRIANGLES);								// Start drawing a triangle
