@@ -1,11 +1,19 @@
-#pragma once
+#ifndef VIEWMANAGER_H
+#define VIEWMANAGER_H
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
+#include <winuser.h>
+
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 #include <string>
 #include <vector>
 
 #include "Node.h"
 #include "gear.h"
-//#include "OpenGL.h"
 
 #define WINDOW_WIDTH 775 // (!) Update me
 #define WINDOW_HEIGHT 675

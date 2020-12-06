@@ -1,5 +1,5 @@
 # include "gear.h"
-#include <cmath>
+
 const double Pi = 3.142;
 
 #ifndef M_PI

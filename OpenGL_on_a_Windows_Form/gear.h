@@ -1,9 +1,8 @@
 #pragma once
 #include <math.h>
-#include "fssimplewindow.h"
 #include <cmath>
 #include <string>
-//#include "OpenGL.h"
+
 extern const double Pi;
 
 class gear

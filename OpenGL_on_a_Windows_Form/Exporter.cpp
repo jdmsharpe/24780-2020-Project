@@ -2,7 +2,7 @@
 
 using namespace svg;
 
-void Exporter::ExportSVG(ViewManager &aManager)
+void Exporter::exportSVG(ViewManager& aManager)
 {
 	//std::vector<GearGenerator> gears = aManager.getGearInfo();
 	//int numGears = (int)gears.size();
@@ -23,8 +23,8 @@ void Exporter::ExportSVG(ViewManager &aManager)
 	Document doc(filename, Layout(dimensions, Layout::BottomLeft));
 
 	// Draw rectangle around drawing representing the boundaries of the material
-	doc << svg::Rectangle(Point(0, dimensions.height), dimensions.width, dimensions.height, 
-				Color::Transparent, Stroke(strokeWidth, Color::Black));
+	doc << svg::Rectangle(Point(0, dimensions.height), dimensions.width, dimensions.height,
+		Color::Transparent, Stroke(strokeWidth, Color::Black));
 
 	// Draw the gears
 	for (int i = 0; i < numGears; i++) {
@@ -69,8 +69,8 @@ void Exporter::ExportSVG(ViewManager &aManager)
 		std::vector<std::pair<double, double>> toothProfile = getToothProfile(toothMax, toothMin, baseRadius);
 
 		// Move to starting point to begin drawing
-		pathObject << PathPoint(outerRadius * std::cos(alpha) + offset.first, 
-								outerRadius * std::sin(alpha) + offset.second, "M");
+		pathObject << PathPoint(outerRadius * std::cos(alpha) + offset.first,
+			outerRadius * std::sin(alpha) + offset.second, "M");
 
 		//Loop through each tooth and draw the path between
 		for (int j = 0; j < numTeeth; j++) {
@@ -80,36 +80,47 @@ void Exporter::ExportSVG(ViewManager &aManager)
 
 			// Draw first arc (outer part of tooth)
 			pathObject << ArcPoint(outerRadius, outerRadius, 0, 0, 1, outerRadius * std::cos(alpha) + offset.first,
-								   outerRadius * std::sin(alpha) + offset.second);
+				outerRadius * std::sin(alpha) + offset.second);
 
 			alpha += std::tan(toothMax) - toothMax;
 
-			for (auto const &point : toothProfile)
+			for (auto const& point : toothProfile)
 			{
 				// Draw first curve to root of gear
 				pathObject << PathPoint(point.second * std::cos(alpha + point.first) + offset.first,
-										point.second * std::sin(alpha + point.first) + offset.second, "L");
+					point.second * std::sin(alpha + point.first) + offset.second, "L");
 			}
 
-			pathObject << PathPoint(footRadius * std::cos(alpha) + offset.first, 
-									footRadius * std::sin(alpha) + offset.second, "L");
+			pathObject << PathPoint(footRadius * std::cos(alpha) + offset.first,
+				footRadius * std::sin(alpha) + offset.second, "L");
 
 			alpha = startingAlpha + (2 * PI) / numTeeth - deport + topMax;
 
 			pathObject << ArcPoint(footRadius, footRadius, 0, 0, 1, footRadius * std::cos(alpha) + offset.first,
-								   footRadius * std::sin(alpha) + offset.second);
+				footRadius * std::sin(alpha) + offset.second);
 
-			for (auto const &point : toothProfile) {
+			for (auto const& point : toothProfile) {
 				// Draw last curve to outer part of next tooth
 				pathObject << PathPoint(point.second * std::cos(alpha - point.first) + offset.first,
-										point.second * std::sin(alpha - point.first) + offset.second, "L");
+					point.second * std::sin(alpha - point.first) + offset.second, "L");
 			}
 
 			alpha = startingAlpha + (2 * PI) / numTeeth;
 		}
 		// Append path object to document
 		doc << pathObject;
+
+		// Draw circular or rectangular hub
+		//if (gears[i].getHubShape == circle) {
+		//	doc << svg::Circle(Point(offset.first, offset.second), gears[i].hubDiameter, false,
+		//				Color::Transparent, Stroke(strokeWidth, Color::Black));
+		//}
+		//else if (gears[i].getHubShape == rectangle) {
+		//	doc << svg::Rectangle(Point(offset.first - gears[i].hubWidth / 2.0, offset.second + gears[i].hubHeight / 2.0),
+		//				gears[i].hubWidth, gears[i].hubHeight, Color::Transparent, Stroke(strokeWidth, Color::Black));
+		//}
 	}
+
 	// Save document to .svg file
 	doc.save();
 }
