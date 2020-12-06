@@ -111,15 +111,12 @@ namespace OpenGLForm
 			//glVertex3f(-1.0f, -1.0f, 1.0f);					// Bottom right of the quad (left)
 			//glColor3f(1.0f, 0.0f, 1.0f);						// Set The color to violet
 			//glVertex3f(1.0f, 1.0f, -1.0f);					// Top Right of the quad (right)
-			//glVertex3f(1.0f, 1.0f, 1.0f);					// Top Left of the quad (right)
+			//glVertex3f(1.0f, 1.0f, 1.0f);						// Top Left of the quad (right)
 			//glVertex3f(1.0f, -1.0f, 1.0f);					// Bottom left of the quad (right)
 			//glVertex3f(1.0f, -1.0f, -1.0f);					// Bottom right of the quad (right)
 			//glEnd();											// Done drawing the quad
 
 			theManager->draw();
-
-			rtri += 0.2f;											// Increase the rotation variable for the triangle
-			rquad -= 0.15f;										// Decrease the rotation variable for the quad
 
 			//POINT mouse;                        // Stores The X And Y Coords For The Current Mouse Position
 			//GetCursorPos(&mouse);                    // Gets The Current Cursor Coordinates (Mouse Coordinates)
@@ -131,13 +128,11 @@ namespace OpenGLForm
 			SwapBuffers(m_hDC);
 		}
 
+		ViewManager* theManager;
+
 	private:
 		HDC m_hDC;
 		HGLRC m_hglrc;
-		GLfloat	rtri;				// Angle for the triangle
-		GLfloat	rquad;				// Angle for the quad
-
-		ViewManager *theManager;
 
 	protected:
 		~COpenGL(System::Void)
