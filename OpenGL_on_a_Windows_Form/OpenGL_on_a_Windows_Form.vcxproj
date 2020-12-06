@@ -167,6 +167,9 @@
       <Isolated>false</Isolated>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Interop\Circle.fem" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
