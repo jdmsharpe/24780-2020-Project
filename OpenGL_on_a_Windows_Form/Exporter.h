@@ -18,7 +18,7 @@ private:
 	std::string filename;
 	UnitSystem unitSys;
 	double strokeWidth;
-	int pointResolution; 
+	int pointResolution;
 	double clearance;
 
 public:
@@ -27,7 +27,7 @@ public:
 
 	~Exporter();
 
-	void ExportSVG(ViewManager &aManager);
+	void exportSVG(ViewManager& aManager);
 
 	std::vector<std::pair<double, double>> getToothProfile(double toothMax, double toothMin, double baseRadius);
 };
