@@ -461,7 +461,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->openGLPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->openGLPanel->Location = System::Drawing::Point(194, 0);
 			this->openGLPanel->Name = L"openGLPanel";
-			this->openGLPanel->Size = System::Drawing::Size(800, 675); // Resized from original
+			this->openGLPanel->Size = System::Drawing::Size(775, 675); // Resized from original
 			this->openGLPanel->TabIndex = 1;
 			this->openGLPanel->Visible = false;
 			// 

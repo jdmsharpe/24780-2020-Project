@@ -1,7 +1,7 @@
 #include "Node.h"
 #include "DrawingUtilNG.h"
 //#include "ysglfontdata.h"
-#include "ViewManager.h"
+//#include "manager.h"
 #include <vector>
 //#include <gl\gl.h> 
 //#include <gl\glu.h> 
@@ -28,7 +28,7 @@ void Node::draw(Node node, bool showLabel)
 
 	double screenX, screenY, r;
 	screenX = node.getX() + 0;
-	screenY = -node.getY() + WINDOW_HEIGHT;
+	screenY = -node.getY();// +WINDOW_HEIGHT;
 	r = node.getRadius();
 
 
@@ -54,13 +54,7 @@ void Node::draw(Node node, bool showLabel)
 
 	}
 
-	//glEnd();
-
-
-	/*if (showLabel) {
-		glRasterPos2i(screenX + 2 * size, screenY + 2 * size + 10);
-		YsGlDrawFontBitmap6x10(label.c_str());
-	}*/
+	glEnd();
 
 }
 
