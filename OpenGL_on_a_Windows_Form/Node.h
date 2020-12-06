@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "DrawingUtilNG.h"
-#include "fssimplewindow.h"
+//#include "DrawingUtilNG.h"
+//#include "fssimplewindow.h"
 //#include <gl\gl.h> 
 //#include <gl\glu.h> 
 

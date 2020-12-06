@@ -13,7 +13,11 @@
 #include "Node.h"
 #include "ViewManager.h"
 
+
+
 using namespace std;
+
+vector<Node> Nodes;
 
 ViewManager::ViewManager()
 {
@@ -62,7 +66,7 @@ vector<Node> ViewManager::fileread()
 	return readNodes;
 }
 
-vector<Node> ViewManager::setinitposition(vector<Node> Nodes)
+vector<Node> ViewManager::setinitposition()
 {
 	for (int i = 0; i < Nodes.size(); i++)
 	{
@@ -76,7 +80,7 @@ vector<Node> ViewManager::setinitposition(vector<Node> Nodes)
 	return Nodes;
 }
 
-vector<Node> ViewManager::optimize(vector<Node> Nodes)
+vector<Node> ViewManager::optimize()
 {
 	int signx, signy;
 	for (int i = 0; i < Nodes.size(); i++)
@@ -155,7 +159,7 @@ vector<Node> ViewManager::optimize(vector<Node> Nodes)
 	return Nodes;
 }
 
-vector<Node> ViewManager::center(vector<Node> Nodes)
+vector<Node> ViewManager::center()
 {
 	for (int i = 0; i < Nodes.size(); i++)
 	{
@@ -171,7 +175,7 @@ vector<Node> ViewManager::center(vector<Node> Nodes)
 	return Nodes;
 }
 
-bool ViewManager::checkintersection(vector<Node> Nodes)
+bool ViewManager::checkintersection()
 {
 	bool check;
 	bool allchecks = true;
@@ -211,44 +215,90 @@ bool ViewManager::checkintersection(vector<Node> Nodes)
 
 }
 
-void ViewManager::draw(vector<Node> Nodes)
-{
-
-	for (int i = 0; i < Nodes.size(); i++)
-	{
-		Nodes[i].draw(Nodes[i], 0);
-	}
-}
-
+//void ViewManager::draw(vector<Node> Nodes)
+//{
+//
+//	for (int i = 0; i < Nodes.size(); i++)
+//	{
+//		Nodes[i].draw(Nodes[i], 0);
+//	}
+//}
+bool read = true;
 
 void ViewManager::draw() // Only for testing
 {
-	glLoadIdentity();
-	glTranslatef(0.0f, 0.0f, -10.0f);						// Move left 1.5 units and into the screen 6.0
-	glBegin(GL_TRIANGLES);								// Start drawing a triangle
-	glColor3f(1.0f, 1.0f, 1.0f);						// Red
-	glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (front)
-	glColor3f(0.0f, 1.0f, 0.0f);						// Green
-	glVertex3f(-1.0f, -1.0f, 1.0f);					// Left of triangle (front)
-	glColor3f(0.0f, 0.0f, 1.0f);						// Blue
-	glVertex3f(1.0f, -1.0f, 1.0f);					// Right of triangle (front)
-	glColor3f(1.0f, 0.0f, 0.0f);						// Red
-	glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (right)
-	glColor3f(0.0f, 0.0f, 1.0f);						// Blue
-	glVertex3f(1.0f, -1.0f, 1.0f);					// Left of triangle (right)
-	glColor3f(0.0f, 1.0f, 0.0f);						// Green
-	glVertex3f(1.0f, -1.0f, -1.0f);					// Right of triangle (right)
-	glColor3f(1.0f, 0.0f, 0.0f);						// Red
-	glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (back)
-	glColor3f(0.0f, 1.0f, 0.0f);						// Green
-	glVertex3f(1.0f, -1.0f, -1.0f);					// Left of triangle (back)
-	glColor3f(0.0f, 0.0f, 1.0f);						// Blue
-	glVertex3f(-1.0f, -1.0f, -1.0f);					// Right of triangle (back)
-	glColor3f(1.0f, 0.0f, 0.0f);						// Red
-	glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (left)
-	glColor3f(0.0f, 0.0f, 1.0f);						// Blue
-	glVertex3f(-1.0f, -1.0f, -1.0f);					// Left of triangle (left)
-	glColor3f(0.0f, 1.0f, 0.0f);						// Green
-	glVertex3f(-1.0f, -1.0f, 1.0f);					// Right of triangle (left)
+	if (read)
+	{
+		this->fileread();
+		read = false;
+	}
+
+
+
+	for (int i = 0; i < Nodes.size(); i++)
+	{
+		/*Nodes[i].draw(Nodes[i], 0);*/
+		int size = 2;
+		double halfSize = size * sqrt(2.);
+
+		glBegin(GL_QUADS);
+
+		double screenX, screenY, r;
+		screenX = Nodes[i].getX() + 0;
+		screenY = -Nodes[i].getY() + WINDOW_HEIGHT;
+		r = Nodes[i].getRadius();
+
+
+		glVertex2f(screenX - halfSize, screenY);
+		glVertex2f(screenX, screenY + halfSize);
+		glVertex2f(screenX + halfSize, screenY);
+		glVertex2f(screenX, screenY - halfSize);
+		glEnd();
+
+
+		const double pi = 3.1415927;
+
+		glBegin(GL_LINE_LOOP);
+
+		for (int i = 0; i < 64; i++)
+		{
+			double angle = (double)i * pi / 32.0;
+			double x_new = (double)screenX + cos(angle) * (double)r;
+			double y_new = (double)screenY + sin(angle) * (double)r;
+
+			glColor3d(0.5, 0.8, 0.7);
+			glVertex2d(x_new, y_new);
+
+		}
+	}
+	
+
+	//glLoadIdentity();
+	//glTranslatef(0.0f, 0.0f, -10.0f);						// Move left 1.5 units and into the screen 6.0
+	//glBegin(GL_TRIANGLES);								// Start drawing a triangle
+	//glColor3f(1.0f, 1.0f, 1.0f);						// Red
+	//glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (front)
+	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
+	//glVertex3f(-1.0f, -1.0f, 1.0f);					// Left of triangle (front)
+	//glColor3f(0.0f, 0.0f, 1.0f);						// Blue
+	//glVertex3f(1.0f, -1.0f, 1.0f);					// Right of triangle (front)
+	//glColor3f(1.0f, 0.0f, 0.0f);						// Red
+	//glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (right)
+	//glColor3f(0.0f, 0.0f, 1.0f);						// Blue
+	//glVertex3f(1.0f, -1.0f, 1.0f);					// Left of triangle (right)
+	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
+	//glVertex3f(1.0f, -1.0f, -1.0f);					// Right of triangle (right)
+	//glColor3f(1.0f, 0.0f, 0.0f);						// Red
+	//glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (back)
+	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
+	//glVertex3f(1.0f, -1.0f, -1.0f);					// Left of triangle (back)
+	//glColor3f(0.0f, 0.0f, 1.0f);						// Blue
+	//glVertex3f(-1.0f, -1.0f, -1.0f);					// Right of triangle (back)
+	//glColor3f(1.0f, 0.0f, 0.0f);						// Red
+	//glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (left)
+	//glColor3f(0.0f, 0.0f, 1.0f);						// Blue
+	//glVertex3f(-1.0f, -1.0f, -1.0f);					// Left of triangle (left)
+	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
+	//glVertex3f(-1.0f, -1.0f, 1.0f);					// Right of triangle (left)
 	glEnd();											// Done drawing the pyramid
 }

@@ -360,3 +360,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/OpenGL_on_a_Windows_Form/Interop/AxInterop.WMPLib.1.0.dll
+/OpenGL_on_a_Windows_Form/Interop/Interop.WMPLib.1.0.dll
+/OpenGL_on_a_Windows_Form/Interop/Circle.fem
