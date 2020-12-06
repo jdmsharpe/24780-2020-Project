@@ -21,12 +21,10 @@
 
 enum UnitSystem { imperial = 0, metric = 1 };
 
-class gear; // (!) Remove and replace with include
-
 class ViewManager
 {
 private:
-	//std::vector<gear> theGears;
+	std::vector<gear> theGears;
 
 	int panChange;
 	double zoomFactor;
@@ -47,7 +45,6 @@ private:
 public:
 	ViewManager();
 	
-
 	bool manage();
 
 	void getScreenCoords(double modelX, double modelY,
