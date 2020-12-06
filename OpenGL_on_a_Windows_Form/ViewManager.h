@@ -62,9 +62,9 @@ public:
 	//bool checkintersection(std::vector<Node> Nodes);
 	//void draw(std::vector<Node> Nodes);
 	std::vector<Node> setinitposition();
-	std::vector<Node> optimize();
-	std::vector<Node> center();
-	bool checkintersection();
+	std::vector<Node> optimize(std::vector <Node> Nodes);
+	std::vector<Node> center(std::vector <Node> Nodes);
+	bool checkintersection(std::vector <Node> Nodes);
 	//void draw();
 	// End Optimizer
 

@@ -86,6 +86,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Interop\Circle.fem" />
+    <None Include="Circle.fem" />
   </ItemGroup>
 </Project>
