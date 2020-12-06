@@ -6,8 +6,8 @@
 #include "Node.h"
 #include "gear.h"
 
-#define WINDOW_WIDTH 800 // (!) Update me
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 775 // (!) Update me
+#define WINDOW_HEIGHT 675
 
 enum UnitSystem { imperial = 0, metric = 1 };
 
