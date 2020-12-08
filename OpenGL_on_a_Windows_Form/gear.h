@@ -16,7 +16,7 @@ protected:
 	double R, OR;
 	double w;
 	int r, g, b;
-	double inner_radius, outer_radius, teeth, tooth_depth;
+	double teeth, tooth_depth;
 	HubShape shape;
 	double shapeParameter[2];
 
@@ -24,6 +24,8 @@ public:
 	gear();
 	gear(const std::string& aLabel, double xCoord, double yCoord,
 		double zCoord, double rad, double irad, int T, double TD);
+	//pitch pressure angle teeth hubshape
+	gear(const std::string& aLabel, double xCoord = 0, double yCoord = 0, double pitch = 0, double pr_angle = 0, int N = 0, HubShape gear_shape = none, double hub_radius = 0);
 	void setN(int Ni);
 	void setinner_radius(double rad) { R = rad; }
 	void setouter_radius(double rad) { OR = rad; }
