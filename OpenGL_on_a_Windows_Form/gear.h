@@ -39,7 +39,7 @@ public:
 	double getX() { return x; }
 	double getY() { return y; }
 	double getT() { return teeth; }
-	double getRadius() { return OR; }
+	double getRadius() { return OR + 5; }
 	void setX(double x_cord) { x = x_cord; }
 	void setY(double y_cord) { y = y_cord; }
 	int getN() const;

@@ -26,6 +26,8 @@ vector <gear> tempGears;
 bool read = true;
 bool notoptimized = true;
 bool optimized = false;
+int ini_size_theGears = 0;
+int size_theGears;
 
 ViewManager::ViewManager()
 {
@@ -71,15 +73,15 @@ vector<gear> ViewManager::optimize(std::vector<gear> Gears)
 				}
 				else
 				{
-					int randomx = 3 * (rand() % 10);
-					int randomy = 3 * (rand() % 10);
+					int randomx =  3*(rand() % 10);
+					int randomy =  3*(rand() % 10);
 					if (randomx % 2 == 0)
 					{
 						signx = 1;
 					}
 					else
 					{
-						signx = -1;
+						signx = 1;
 					}
 					if (randomy % 2 == 0)
 					{
@@ -87,7 +89,7 @@ vector<gear> ViewManager::optimize(std::vector<gear> Gears)
 					}
 					else
 					{
-						signy = -1;
+						signy = 1;
 					}
 
 					x1 = x1 + signx * randomx;
@@ -95,19 +97,23 @@ vector<gear> ViewManager::optimize(std::vector<gear> Gears)
 
 					if ((x1 - r1) < 0 || (y1 - r1) < 0)
 					{
-						//signx = 1;
-						//signy = 1;
+						/*signx = 1;
+						signy = 1;*/
 						/*x1 = WINDOW_WIDTH/2;
 						y1 = WINDOW_HEIGHT/2;*/
+						/*x1 = 20*rand();
+						y1 = 20*rand();*/
 						x1 = r1;
 						y1 = r1;
 					}
 					if ((x1 + r1) > WINDOW_WIDTH || (y1 + r1) > WINDOW_HEIGHT || (y1 - r1) < -WINDOW_HEIGHT)
 					{
-						//signx = -1;
-						//signy = -1;
+						/*signx = -1;
+						signy = -1;*/
 						/*x1 = WINDOW_WIDTH/2;
 						y1 = WINDOW_HEIGHT/2;*/
+						/*x1 = 20*rand();
+						y1 = 20*rand();*/
 						x1 = r1;
 						y1 = r1;
 					}
@@ -192,67 +198,75 @@ bool ViewManager::checkintersection(std::vector <gear> Gears)
 
 void ViewManager::draw() // Only for testing
 {
+	size_theGears = theGears.size();
+	if (ini_size_theGears != size_theGears)
+	{
+		notoptimized = true;
+	}
+	else
+	{
+		notoptimized = false;
+	}
+	ini_size_theGears = size_theGears;
+
 	if (notoptimized)
 	{
-		tempGears = this->setinitposition();
-		optimizedGears = this->optimize(tempGears);
+		theGears = this->setinitposition();
+		theGears = this->optimize(theGears);
+		optimized = this->checkintersection(theGears);
 		while (!optimized)
 		{
 
-			optimized = this->checkintersection(optimizedGears);
+			optimized = this->checkintersection(theGears);
 			if (optimized)
 			{
 				notoptimized = false;
 				break;
 			}
-			else
-			{
-				tempGears = optimizedGears;
-			}
 
-			optimizedGears = this->optimize(tempGears);
+			theGears = this->optimize(theGears);
 		
 		}
 	}
 
-	for (int i = 0; i < optimizedGears.size(); i++)
-	{
-		theGears[i].setPosition(optimizedGears[i].getX(), optimizedGears[i].getY(), 0);
-		/*Nodes[i].draw(Nodes[i], 0);*/
-		int size = 2;
-		double halfSize = size * sqrt(2.);
-		double x_test = optimizedGears[i].getX();
-		double y_test = optimizedGears[i].getY();
-		/*glBegin(GL_QUADS);*/
-		double screenX, screenY, r;
-		screenX = optimizedGears[i].getX() + 0;
-		screenY = -optimizedGears[i].getY() + WINDOW_HEIGHT;
-		r = optimizedGears[i].getRadius();
+	//for (int i = 0; i < optimizedGears.size(); i++)
+	//{
+	//	theGears[i].setPosition(optimizedGears[i].getX(), optimizedGears[i].getY(), 0);
+	//	/*Nodes[i].draw(Nodes[i], 0);*/
+	//	int size = 2;
+	//	double halfSize = size * sqrt(2.);
+	//	double x_test = optimizedGears[i].getX();
+	//	double y_test = optimizedGears[i].getY();
+	//	/*glBegin(GL_QUADS);*/
+	//	double screenX, screenY, r;
+	//	screenX = optimizedGears[i].getX() + 0;
+	//	screenY = -optimizedGears[i].getY() + WINDOW_HEIGHT;
+	//	r = optimizedGears[i].getRadius();
 
 
-	/*	glVertex2f(screenX - halfSize, screenY);
-		glVertex2f(screenX, screenY + halfSize);
-		glVertex2f(screenX + halfSize, screenY);
-		glVertex2f(screenX, screenY - halfSize);
-		glEnd();*/
+	///*	glVertex2f(screenX - halfSize, screenY);
+	//	glVertex2f(screenX, screenY + halfSize);
+	//	glVertex2f(screenX + halfSize, screenY);
+	//	glVertex2f(screenX, screenY - halfSize);
+	//	glEnd();*/
 
 
-		const double pi = 3.1415927;
+	//	const double pi = 3.1415927;
 
-		glBegin(GL_LINE_LOOP);
-		glColor3f(0.0f, 0.0f, 0.0f);
-		for (int i = 0; i < 64; i++)
-		{
-			double angle = (double)i * pi / 32.0;
-			double x_new = (double)screenX + cos(angle) * (double)r;
-			double y_new = (double)screenY + sin(angle) * (double)r;
+	//	glBegin(GL_LINE_LOOP);
+	//	glColor3f(0.0f, 0.0f, 0.0f);
+	//	for (int i = 0; i < 64; i++)
+	//	{
+	//		double angle = (double)i * pi / 32.0;
+	//		double x_new = (double)screenX + cos(angle) * (double)r;
+	//		double y_new = (double)screenY + sin(angle) * (double)r;
 
-			//glColor3d(0.5, 0.8, 0.7);
-			glVertex2d(x_new, y_new);
+	//		//glColor3d(0.5, 0.8, 0.7);
+	//		glVertex2d(x_new, y_new);
 
-		}
-		glEnd();
-	}
+	//	}
+	//	glEnd();
+	//}
 	
 	for (int k = 0; k < theGears.size(); k++)
 	{
