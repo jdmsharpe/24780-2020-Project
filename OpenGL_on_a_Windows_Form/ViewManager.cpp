@@ -81,7 +81,7 @@ vector<gear> ViewManager::optimize(std::vector<gear> Gears)
 					}
 					else
 					{
-						signx = 1;
+						signx = -1;
 					}
 					if (randomy % 2 == 0)
 					{
@@ -89,7 +89,7 @@ vector<gear> ViewManager::optimize(std::vector<gear> Gears)
 					}
 					else
 					{
-						signy = 1;
+						signy = -1;
 					}
 
 					x1 = x1 + signx * randomx;
