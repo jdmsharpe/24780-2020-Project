@@ -199,7 +199,7 @@ namespace OpenGLForm
 		bool InitGL(GLvoid)										// All setup for opengl goes here
 		{
 			glShadeModel(GL_SMOOTH);							// Enable smooth shading
-			glClearColor(0.97f, 0.97f, 0.97f, 0.5f);			// Grey background
+			glClearColor(0.0f, 0.0f, 0.0f, 0.5f);			// Grey background
 			glClearDepth(1.0f);									// Depth buffer setup
 			glEnable(GL_DEPTH_TEST);							// Enables depth testing
 			glDepthFunc(GL_LEQUAL);								// The type of depth testing to do

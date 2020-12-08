@@ -17,7 +17,7 @@
 #include "Node.h"
 #include "gear.h"
 
-#define WINDOW_WIDTH 775 // (!) Update me
+#define WINDOW_WIDTH 775
 #define WINDOW_HEIGHT 675
 
 enum UnitSystem { imperial = 0, metric = 1 };
@@ -25,7 +25,6 @@ enum UnitSystem { imperial = 0, metric = 1 };
 class ViewManager
 {
 private:
-	std::vector<gear> theGears;
 
 	int panChange;
 	double zoomFactor;
@@ -54,11 +53,12 @@ private:
 
 	std::vector<gearType> gearSpecifications;
 
+	std::vector<gear> theGears;
+
 public:
 	ViewManager();
 	
 	bool manage();
-
 
 	// addGear returns -1 if this is a new gear, else returns index of gear in vector 
 	int addGear(double pitch, double pressureAngle, int teeth, int qty, HubShape hub, 
@@ -72,6 +72,9 @@ public:
 		thisGear.hubD1 = hubD1;
 		thisGear.hubD2 = hubD2;
 		// add the gear only if it is not already in the list
+		gear thisGearForReal("hi", 300, 300, pitch, pressureAngle, teeth, hub, hubD1);
+		theGears.push_back(thisGearForReal);
+
 		int gearIndex = gearExists(thisGear);
 		if (gearIndex == -1) 
 			gearSpecifications.push_back(thisGear);
@@ -154,16 +157,15 @@ public:
 	// after converting for translation and scale
 
 	//Optimizer
-	std::vector<Node> fileread();
 	//std::vector<Node> setinitposition(std::vector<Node> Nodes);
 	//std::vector<Node> optimize(std::vector <Node> Nodes);
 	//std::vector<Node> center(std::vector <Node> Nodes);
 	//bool checkintersection(std::vector<Node> Nodes);
 	//void draw(std::vector<Node> Nodes);
-	std::vector<Node> setinitposition();
-	std::vector<Node> optimize(std::vector <Node> Nodes);
-	std::vector<Node> center(std::vector <Node> Nodes);
-	bool checkintersection(std::vector <Node> Nodes);
+	std::vector<gear> setinitposition();
+	std::vector<gear> optimize(std::vector<gear> Gears);
+	std::vector<gear> center(std::vector<gear> Gears);
+	bool checkintersection(std::vector<gear> Gears);
 	//void draw();
 	// End Optimizer
 
