@@ -36,6 +36,7 @@ namespace OpenGL_on_a_Windows_Form {
 			teethInput->Text = "32";
 			materialWidthInput->Text = "12";
 			materialHeightInput->Text = "12";
+			updateMaterial();
 		}
 
 	public:
@@ -340,6 +341,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubComboBox->Name = L"hubComboBox";
 			this->hubComboBox->Size = System::Drawing::Size(188, 33);
 			this->hubComboBox->TabIndex = 0;
+			this->hubComboBox->SelectedIndexChanged += gcnew System::EventHandler(this, &GearWorksGUI::hubComboBox_SelectedIndexChanged);
 			// 
 			// gearGroupBox
 			// 
@@ -462,7 +464,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->openGLPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->openGLPanel->Location = System::Drawing::Point(194, 0);
 			this->openGLPanel->Name = L"openGLPanel";
-			this->openGLPanel->Size = System::Drawing::Size(775, 675);
+			this->openGLPanel->Size = System::Drawing::Size(774, 673);
 			this->openGLPanel->TabIndex = 1;
 			this->openGLPanel->Visible = false;
 			// 
@@ -576,9 +578,9 @@ namespace OpenGL_on_a_Windows_Form {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(1262, 673);
+			this->Controls->Add(this->openGLPanel);
 			this->Controls->Add(this->visualizerControlPanel);
 			this->Controls->Add(this->gearListPanel);
-			this->Controls->Add(this->openGLPanel);
 			this->Controls->Add(this->gearParametersPanel);
 			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -586,6 +588,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->MinimumSize = System::Drawing::Size(1000, 480);
 			this->Name = L"GearWorksGUI";
 			this->Text = L"GearWorks";
+			this->SizeChanged += gcnew System::EventHandler(this, &GearWorksGUI::GearWorksGUI_SizeChanged);
 			ExportBox->ResumeLayout(false);
 			ExportBox->PerformLayout();
 			this->gearParametersPanel->ResumeLayout(false);
@@ -648,6 +651,9 @@ private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 		hubInputA->Show();
 		hubInputB->Show();
 	}
+
+	// update ViewManager
+	updateMaterial();
 
 	}
 private: System::Void addGearButton_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -832,6 +838,32 @@ private: System::Void materialHeightInput_KeyPress(System::Object^ sender, Syste
 	}
 }
 
+private: System::Void GearWorksGUI_SizeChanged(System::Object^ sender, System::EventArgs^ e) {
+	updateMaterial();
+}
+
+private: System::Void updateMaterial() {
+	// the openGl panel does not update size because it is not visible so the openGL area
+	// is calculated using the other objects on the screen. -18 accounts for margins etc
+	int width = this->Width - gearParametersPanel->Width - gearListScrollPanel->Width - 18;
+	int height = gearParametersPanel->Height;// this->Height;
+
+	double materialWidth = 0;
+	double materialHeight = 0;
+
+	if (materialWidthInput->TextLength != 0)
+		materialWidth = double::Parse(materialWidthInput->Text->ToString());
+	if (materialHeightInput->TextLength != 0)
+		materialHeight = double::Parse(materialHeightInput->Text->ToString());
+
+
+	OpenGL->theManager->defineMaterial(width, height, materialWidth, materialHeight);
+	// Resize the open gl window
+	OpenGL->ReSizeGLScene(width, height);
+}
+
+private: System::Void hubComboBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
 

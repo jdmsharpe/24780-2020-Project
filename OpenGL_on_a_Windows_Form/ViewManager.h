@@ -56,6 +56,17 @@ private:
 	std::vector<gear> theGears;
 
 public:
+	// defines the relationship of pixels/distance[in]
+	double conversion;
+	// define window size
+	double windowWidth;
+	double windowHeight;
+	// define material size
+	double materialWidth;
+	double materialHeight;
+	// define origin
+	double originX, originY;
+
 	ViewManager();
 	
 	bool manage();
@@ -140,6 +151,65 @@ public:
 			break;
 		}
 		return label.str();
+	}
+
+	void defineMaterial(double windowWidth, double windowHeight, double materialWidth, double materialHeight) {
+		// set public ViewManager variables
+		this->windowWidth = windowWidth;
+		this->windowHeight = windowHeight;
+		this->materialHeight = materialHeight;
+		this->materialWidth = materialWidth;
+		// determine ratio of material and window
+		double screenRatio = windowHeight / windowWidth;
+		double materialRatio = materialHeight / materialWidth;
+		// apply a margin of pixels so nothing goes to the edge of the screen
+		int margin = 10;
+		// the screen is relatively taller than the material
+		// width is the constrained dimension
+		if (screenRatio > materialRatio) {
+			conversion = (windowWidth - 2 * margin) / materialWidth; // pixels/in
+		}
+		// the screen is relatively wider than the material
+		// height is the constrained dimension
+		else {
+			conversion = (windowHeight - 2 * margin) / materialHeight; // pixels/in
+		}
+	}
+
+	// take an input of positions in inches and draw on screen
+	// makes necessary conversions for origin, scaling, etc
+	void makeVertex(double x, double y) {
+		// we should probably draw the gears always centered about 0,0
+		// and apply the translation here to move them to the correct spot. 
+
+		// scale point
+		// apply translation
+		// draw 
+
+		glVertex2d(x, y);
+	}
+
+	void drawMaterial() {
+		// center of material
+		int cx = windowWidth / 2;
+		int cy = windowHeight / 2;
+		// define the 4 corners of the material
+		int lx = cx - (materialWidth / 2) * conversion;
+		int rx = cx + (materialWidth / 2) * conversion;
+		int by = cy - (materialHeight / 2) * conversion;
+		int ty = cy + (materialHeight / 2) * conversion;
+		// update origin values
+		this->originX = lx;
+		this->originY = by;
+		
+		glLineWidth(3);
+		glBegin(GL_LINE_LOOP);
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glVertex2d(lx, by);
+		glVertex2d(lx, ty);
+		glVertex2d(rx, ty);
+		glVertex2d(rx, by);
+		glEnd();
 	}
 
 	void getScreenCoords(double modelX, double modelY,
