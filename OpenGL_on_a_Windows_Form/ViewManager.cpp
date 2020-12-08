@@ -15,11 +15,14 @@
 
 using namespace std;
 
-vector<Node> Nodes;
-vector <Node> theNodes;
-vector <Node> optimizedNodes;
-vector <Node> tempNodes;
-vector <gear> theGears;
+//vector<Node> Nodes;
+//vector <Node> theNodes;
+//vector <Node> optimizedGears;
+//vector <Node> tempNodes;
+//vector <gear> theGears;
+vector <gear> Gears;
+vector <gear> optimizedGears;
+vector <gear> tempGears;
 bool read = true;
 bool notoptimized = true;
 bool optimized = false;
@@ -30,79 +33,79 @@ ViewManager::ViewManager()
 
 vector<Node> ViewManager::fileread()
 {
-	vector<Node> readNodes;
-	string currLine;
-	stringstream currStream;
-	string inFileName = "Circle.fem";
-	ifstream inFile;
-	inFile.open(inFileName);
-	if (inFile.is_open())
-	{
-		while (!inFile.eof())
-		{
-			getline(inFile, currLine);
+	//vector<Node> readNodes;
+	//string currLine;
+	//stringstream currStream;
+	//string inFileName = "Circle.fem";
+	//ifstream inFile;
+	//inFile.open(inFileName);
+	//if (inFile.is_open())
+	//{
+	//	while (!inFile.eof())
+	//	{
+	//		getline(inFile, currLine);
 
-			if (currLine.find("Circles:") != string::npos)
-			{
-				string label;
-				double xCoord, yCoord, zCoord, rad, irad, T, TD;
-				getline(inFile, currLine);
-				while (!inFile.eof() && currLine.find("End Circles:") == string::npos)
-				{
-					currStream.str(currLine);
-					currStream >> label >> xCoord >> yCoord >> zCoord >> rad >> irad >> T >> TD;
-					currStream.clear();
-					Node newNode(label, xCoord * 20, yCoord * 20, zCoord, rad);
-					gear newGear(label, xCoord * 20, yCoord * 20, zCoord, rad, irad, T, TD);
-					//readNodes.push_back(newNode);
-					Nodes.push_back(newNode);
-					theGears.push_back(newGear);
-					getline(inFile, currLine);
-				}
-			}
-		}
-		cout << "File Reading Done....." << endl;
-	}
-	else
-	{
-		cout << "Was not able to open " << inFileName << " for input. " << endl;
-	}
+	//		if (currLine.find("Circles:") != string::npos)
+	//		{
+	//			string label;
+	//			double xCoord, yCoord, zCoord, rad, irad, T, TD;
+	//			getline(inFile, currLine);
+	//			while (!inFile.eof() && currLine.find("End Circles:") == string::npos)
+	//			{
+	//				currStream.str(currLine);
+	//				currStream >> label >> xCoord >> yCoord >> zCoord >> rad >> irad >> T >> TD;
+	//				currStream.clear();
+	//				Node newNode(label, xCoord * 20, yCoord * 20, zCoord, rad);
+	//				gear newGear(label, xCoord * 20, yCoord * 20, zCoord, rad, irad, T, TD);
+	//				//readNodes.push_back(newNode);
+	//				Nodes.push_back(newNode);
+	//				theGears.push_back(newGear);
+	//				getline(inFile, currLine);
+	//			}
+	//		}
+	//	}
+	//	cout << "File Reading Done....." << endl;
+	//}
+	//else
+	//{
+	//	cout << "Was not able to open " << inFileName << " for input. " << endl;
+	//}
 
-	inFile.close();
-	return Nodes;
+	//inFile.close();
+	//return Nodes;
 }
 
 vector<Node> ViewManager::setinitposition()
 {
-	for (int i = 0; i < Nodes.size(); i++)
+	for (int i = 0; i < theGears.size(); i++)
 	{
-		double x1 = Nodes[i].getX();
-		double y1 = Nodes[i].getY();
-		double r1 = Nodes[i].getRadius();
-		Nodes[i].setX(r1);
-		Nodes[i].setY(r1);
+		double x1 = theGears[i].getX();
+		double y1 = theGears[i].getY();
+		double r1 = theGears[i].getRadius();
+		theGears[i].setX(r1);
+		theGears[i].setY(r1);
 	}
 	
-	return Nodes;
+	return theGears;
 }
 
-vector<Node> ViewManager::optimize(std::vector <Node> Nodes)
+vector<Node> ViewManager::optimize(std::vector <gear> Gears)
 {
 	int signx, signy;
-	for (int i = 0; i < Nodes.size(); i++)
+	for (int i = 0; i < Gears.size(); i++)
 	{
-		for (int j = 0; j < Nodes.size(); j++)
+		for (int j = 0; j < Gears.size(); j++)
 		{
-			if (j > Nodes.size())
+			if (j > Gears.size())
 			{
 				j = 0;
 			}
-			double x1 = Nodes[i].getX();
-			double y1 = Nodes[i].getY();
-			double r1 = Nodes[i].getRadius();
-			double x2 = Nodes[j].getX();
-			double y2 = Nodes[j].getY();
-			double r2 = Nodes[j].getRadius();
+			double x1 = Gears[i].getX();
+			double y1 = Gears[i].getY();
+			double r1 = Gears[i].getRadius();
+			double x2 = Gears[j].getX();
+			double y2 = Gears[j].getY();
+			double r2 = Gears[j].getRadius();
 
 			while (pow((pow((x2 - x1), 2) + pow((y2 - y1), 2)), 0.5) < (r1 + r2))
 			{
@@ -154,53 +157,53 @@ vector<Node> ViewManager::optimize(std::vector <Node> Nodes)
 					}
 					//x1 = x1 + signx * randomx;
 					//y1 = y1 + signy * randomy;
-					Nodes[i].setX(x1);
-					Nodes[i].setY(y1);
+					Gears[i].setX(x1);
+					Gears[i].setY(y1);
 				}
 			}
 		}
 
 	}
 
-	return Nodes;
+	return Gears;
 }
 
-vector<Node> ViewManager::center(std::vector <Node> Nodes)
+vector<Node> ViewManager::center(std::vector <gear> Gears)
 {
-	for (int i = 0; i < Nodes.size(); i++)
+	for (int i = 0; i < Gears.size(); i++)
 	{
-		double x = Nodes[i].getX();
-		double y = Nodes[i].getY();
-		double r = Nodes[i].getRadius();
+		double x = Gears[i].getX();
+		double y = Gears[i].getY();
+		double r = Gears[i].getRadius();
 		if ((x - r) < 0 || (y - r) < 0 || (x + r) > WINDOW_WIDTH || (y + r) > WINDOW_HEIGHT || (y - r) < -WINDOW_HEIGHT)
 		{
-			Nodes[i].setX(r + 10);
-			Nodes[i].setY(r + 10);
+			Gears[i].setX(r + 10);
+			Gears[i].setY(r + 10);
 		}
 	}
-	return Nodes;
+	return Gears;
 }
 
-bool ViewManager::checkintersection(std::vector <Node> Nodes)
+bool ViewManager::checkintersection(std::vector <gear> Gears)
 {
 	bool check;
 	bool allchecks = true;
-	for (int i = 0; i < Nodes.size(); i++)
+	for (int i = 0; i < Gears.size(); i++)
 	{
-		for (int j = 0; j < Nodes.size(); j++)
+		for (int j = 0; j < Gears.size(); j++)
 		{
-			if (j > Nodes.size())
+			if (j > Gears.size())
 			{
 				j = 0;
 			}
 			if (j != i)
 			{
-				double x1 = Nodes[i].getX();
-				double y1 = Nodes[i].getY();
-				double r1 = Nodes[i].getRadius();
-				double x2 = Nodes[j].getX();
-				double y2 = Nodes[j].getY();
-				double r2 = Nodes[j].getRadius();
+				double x1 = Gears[i].getX();
+				double y1 = Gears[i].getY();
+				double r1 = Gears[i].getRadius();
+				double x2 = Gears[j].getX();
+				double y2 = Gears[j].getY();
+				double r2 = Gears[j].getRadius();
 				if (pow((pow((x2 - x1), 2) + pow((y2 - y1), 2)), 0.5) >= (r1 + r2))
 				{
 					check = true;
@@ -241,12 +244,12 @@ void ViewManager::draw() // Only for testing
 
 	if (notoptimized)
 	{
-		tempNodes = this->setinitposition();
-		optimizedNodes = this->optimize(tempNodes);
+		tempGears = this->setinitposition();
+		optimizedGears = this->optimize(tempGears);
 		while (!optimized)
 		{
 
-			optimized = this->checkintersection(optimizedNodes);
+			optimized = this->checkintersection(optimizedGears);
 			if (optimized)
 			{
 				notoptimized = false;
@@ -254,28 +257,28 @@ void ViewManager::draw() // Only for testing
 			}
 			else
 			{
-				tempNodes = optimizedNodes;
+				tempGears = optimizedGears;
 			}
 
-			optimizedNodes = this->optimize(tempNodes);
+			optimizedGears = this->optimize(tempGears);
 		
 		}
 	}
 
-	for (int i = 0; i < optimizedNodes.size(); i++)
+	for (int i = 0; i < optimizedGears.size(); i++)
 	{
-		theGears[i].setPosition(optimizedNodes[i].getX(), optimizedNodes[i].getY(), 0);
+		theGears[i].setPosition(optimizedGears[i].getX(), optimizedGears[i].getY(), 0);
 		/*Nodes[i].draw(Nodes[i], 0);*/
 		int size = 2;
 		double halfSize = size * sqrt(2.);
-		double x_test = optimizedNodes[i].getX();
-		double y_test = optimizedNodes[i].getY();
+		double x_test = optimizedGears[i].getX();
+		double y_test = optimizedGears[i].getY();
 		/*glBegin(GL_QUADS);*/
 		glColor3f(1.0f, 1.0f, 1.0f);
 		double screenX, screenY, r;
-		screenX = optimizedNodes[i].getX() + 0;
-		screenY = -optimizedNodes[i].getY() + WINDOW_HEIGHT;
-		r = optimizedNodes[i].getRadius();
+		screenX = optimizedGears[i].getX() + 0;
+		screenY = -optimizedGears[i].getY() + WINDOW_HEIGHT;
+		r = optimizedGears[i].getRadius();
 
 
 	/*	glVertex2f(screenX - halfSize, screenY);
