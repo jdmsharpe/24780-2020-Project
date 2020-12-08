@@ -130,6 +130,31 @@ namespace OpenGLForm
 
 		ViewManager* theManager;
 
+		GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize and initialise the gl window
+		{
+			this->Width = width;
+			this->Height = height;
+			if (height == 0) {										// Prevent A Divide By Zero By
+				height = 1;										// Making Height Equal One
+			}
+			GLfloat aspect = (GLfloat)width / (GLfloat)height;
+
+			glViewport(0, 0, width, height);						// Reset The Current Viewport
+
+			glMatrixMode(GL_PROJECTION);						// Select The Projection Matrix
+			glLoadIdentity();									// Reset The Projection Matrix
+
+			//gluOrtho2D(0.0, WINDOW_WIDTH, 0.0, WINDOW_HEIGHT);	// (0,0) is at bottom left of screen
+			gluOrtho2D(0.0, width, 0.0, height);
+
+
+			glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
+			glLoadIdentity();									// Reset The Modelview Matrix
+
+		}
+
+
+
 	private:
 		HDC m_hDC;
 		HGLRC m_hglrc;
@@ -199,7 +224,7 @@ namespace OpenGLForm
 		bool InitGL(GLvoid)										// All setup for opengl goes here
 		{
 			glShadeModel(GL_SMOOTH);							// Enable smooth shading
-			glClearColor(0.0f, 0.0f, 0.0f, 0.5f);			// Grey background
+			glClearColor(1.0f, 1.0f, 1.0f, 0.5f);			// Grey background
 			glClearDepth(1.0f);									// Depth buffer setup
 			glEnable(GL_DEPTH_TEST);							// Enables depth testing
 			glDepthFunc(GL_LEQUAL);								// The type of depth testing to do
@@ -207,23 +232,25 @@ namespace OpenGLForm
 			return TRUE;										// Initialisation went ok
 		}
 
-		GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize and initialise the gl window
-		{
-			if (height == 0){										// Prevent A Divide By Zero By
-				height = 1;										// Making Height Equal One
-			}
-			GLfloat aspect = (GLfloat)width / (GLfloat)height;
+		//GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize and initialise the gl window
+		//{
+		//	if (height == 0){										// Prevent A Divide By Zero By
+		//		height = 1;										// Making Height Equal One
+		//	}
+		//	GLfloat aspect = (GLfloat)width / (GLfloat)height;
 
-			glViewport(0, 0, width, height);						// Reset The Current Viewport
+		//	glViewport(0, 0, width, height);						// Reset The Current Viewport
 
-			glMatrixMode(GL_PROJECTION);						// Select The Projection Matrix
-			glLoadIdentity();									// Reset The Projection Matrix
+		//	glMatrixMode(GL_PROJECTION);						// Select The Projection Matrix
+		//	glLoadIdentity();									// Reset The Projection Matrix
 
-			gluOrtho2D(0.0, WINDOW_WIDTH, 0.0, WINDOW_HEIGHT);	// (0,0) is at bottom left of screen
+		//	//gluOrtho2D(0.0, WINDOW_WIDTH, 0.0, WINDOW_HEIGHT);	// (0,0) is at bottom left of screen
+		//	gluOrtho2D(0.0, this->Width, 0.0, this->Height);
 
-			glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
-			glLoadIdentity();									// Reset The Modelview Matrix
-		}
+
+		//	glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
+		//	glLoadIdentity();									// Reset The Modelview Matrix
+		//}
 
 	private: System::Void COpenGL_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
 	private: System::Void COpenGL_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
