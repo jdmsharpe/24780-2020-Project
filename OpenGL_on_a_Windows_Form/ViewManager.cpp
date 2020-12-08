@@ -31,51 +31,7 @@ ViewManager::ViewManager()
 {
 }
 
-vector<Node> ViewManager::fileread()
-{
-	//vector<Node> readNodes;
-	//string currLine;
-	//stringstream currStream;
-	//string inFileName = "Circle.fem";
-	//ifstream inFile;
-	//inFile.open(inFileName);
-	//if (inFile.is_open())
-	//{
-	//	while (!inFile.eof())
-	//	{
-	//		getline(inFile, currLine);
-
-	//		if (currLine.find("Circles:") != string::npos)
-	//		{
-	//			string label;
-	//			double xCoord, yCoord, zCoord, rad, irad, T, TD;
-	//			getline(inFile, currLine);
-	//			while (!inFile.eof() && currLine.find("End Circles:") == string::npos)
-	//			{
-	//				currStream.str(currLine);
-	//				currStream >> label >> xCoord >> yCoord >> zCoord >> rad >> irad >> T >> TD;
-	//				currStream.clear();
-	//				Node newNode(label, xCoord * 20, yCoord * 20, zCoord, rad);
-	//				gear newGear(label, xCoord * 20, yCoord * 20, zCoord, rad, irad, T, TD);
-	//				//readNodes.push_back(newNode);
-	//				Nodes.push_back(newNode);
-	//				theGears.push_back(newGear);
-	//				getline(inFile, currLine);
-	//			}
-	//		}
-	//	}
-	//	cout << "File Reading Done....." << endl;
-	//}
-	//else
-	//{
-	//	cout << "Was not able to open " << inFileName << " for input. " << endl;
-	//}
-
-	//inFile.close();
-	//return Nodes;
-}
-
-vector<Node> ViewManager::setinitposition()
+vector<gear> ViewManager::setinitposition()
 {
 	for (int i = 0; i < theGears.size(); i++)
 	{
@@ -89,7 +45,7 @@ vector<Node> ViewManager::setinitposition()
 	return theGears;
 }
 
-vector<Node> ViewManager::optimize(std::vector <gear> Gears)
+vector<gear> ViewManager::optimize(std::vector<gear> Gears)
 {
 	int signx, signy;
 	for (int i = 0; i < Gears.size(); i++)
@@ -168,7 +124,7 @@ vector<Node> ViewManager::optimize(std::vector <gear> Gears)
 	return Gears;
 }
 
-vector<Node> ViewManager::center(std::vector <gear> Gears)
+vector<gear> ViewManager::center(std::vector <gear> Gears)
 {
 	for (int i = 0; i < Gears.size(); i++)
 	{
@@ -236,12 +192,6 @@ bool ViewManager::checkintersection(std::vector <gear> Gears)
 
 void ViewManager::draw() // Only for testing
 {
-	if (read)
-	{
-		this->fileread();
-		read = false;
-	}
-
 	if (notoptimized)
 	{
 		tempGears = this->setinitposition();
@@ -274,7 +224,6 @@ void ViewManager::draw() // Only for testing
 		double x_test = optimizedGears[i].getX();
 		double y_test = optimizedGears[i].getY();
 		/*glBegin(GL_QUADS);*/
-		glColor3f(1.0f, 1.0f, 1.0f);
 		double screenX, screenY, r;
 		screenX = optimizedGears[i].getX() + 0;
 		screenY = -optimizedGears[i].getY() + WINDOW_HEIGHT;
@@ -291,14 +240,14 @@ void ViewManager::draw() // Only for testing
 		const double pi = 3.1415927;
 
 		glBegin(GL_LINE_LOOP);
-		glColor3f(1.0f, 1.0f, 1.0f);
+		glColor3f(0.0f, 0.0f, 0.0f);
 		for (int i = 0; i < 64; i++)
 		{
 			double angle = (double)i * pi / 32.0;
 			double x_new = (double)screenX + cos(angle) * (double)r;
 			double y_new = (double)screenY + sin(angle) * (double)r;
 
-			glColor3d(0.5, 0.8, 0.7);
+			//glColor3d(0.5, 0.8, 0.7);
 			glVertex2d(x_new, y_new);
 
 		}
@@ -323,7 +272,7 @@ void ViewManager::draw() // Only for testing
 
 		//glShadeModel(GL_FLAT);
 
-		glNormal3f(0.0, 0.0, 1.0);
+		//glNormal3f(0.0, 0.0, 1.0);
 
 		/* draw front face */
 		glBegin(GL_QUAD_STRIP);
@@ -354,45 +303,17 @@ void ViewManager::draw() // Only for testing
 		}
 		glEnd();
 
-		glNormal3f(0.0, 0.0, -1.0);
+		//glNormal3f(0.0, 0.0, -1.0);
 
 
 		/* draw inside radius cylinder */
 		glBegin(GL_QUAD_STRIP);
 		for (i = 0; i <= teeth; i++) {
 			angle = i * 2.0 * M_PI / teeth;
-			glNormal3f(-cos(angle), -sin(angle), 0.0);
+			//glNormal3f(-cos(angle), -sin(angle), 0.0);
 			glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
 			glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
 		}
 		glEnd();
 	}
-	//glLoadIdentity();
-	//glTranslatef(0.0f, 0.0f, -10.0f);						// Move left 1.5 units and into the screen 6.0
-	//glBegin(GL_TRIANGLES);								// Start drawing a triangle
-	//glColor3f(1.0f, 1.0f, 1.0f);						// Red
-	//glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (front)
-	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
-	//glVertex3f(-1.0f, -1.0f, 1.0f);					// Left of triangle (front)
-	//glColor3f(0.0f, 0.0f, 1.0f);						// Blue
-	//glVertex3f(1.0f, -1.0f, 1.0f);					// Right of triangle (front)
-	//glColor3f(1.0f, 0.0f, 0.0f);						// Red
-	//glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (right)
-	//glColor3f(0.0f, 0.0f, 1.0f);						// Blue
-	//glVertex3f(1.0f, -1.0f, 1.0f);					// Left of triangle (right)
-	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
-	//glVertex3f(1.0f, -1.0f, -1.0f);					// Right of triangle (right)
-	//glColor3f(1.0f, 0.0f, 0.0f);						// Red
-	//glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (back)
-	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
-	//glVertex3f(1.0f, -1.0f, -1.0f);					// Left of triangle (back)
-	//glColor3f(0.0f, 0.0f, 1.0f);						// Blue
-	//glVertex3f(-1.0f, -1.0f, -1.0f);					// Right of triangle (back)
-	//glColor3f(1.0f, 0.0f, 0.0f);						// Red
-	//glVertex3f(0.0f, 1.0f, 0.0f);					// Top Of triangle (left)
-	//glColor3f(0.0f, 0.0f, 1.0f);						// Blue
-	//glVertex3f(-1.0f, -1.0f, -1.0f);					// Left of triangle (left)
-	//glColor3f(0.0f, 1.0f, 0.0f);						// Green
-	//glVertex3f(-1.0f, -1.0f, 1.0f);					// Right of triangle (left)
-											// Done drawing the pyramid
 }
