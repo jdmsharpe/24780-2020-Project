@@ -2,6 +2,7 @@
 
 #include "OpenGL.h"
 
+
 namespace OpenGL_on_a_Windows_Form {
 
 	using namespace System;
@@ -38,8 +39,8 @@ namespace OpenGL_on_a_Windows_Form {
 		}
 
 	public:
-		// temporary
-		int gearNum = 0;
+		System::Collections::Generic::List<NumericUpDown^> gearQtys;
+		System::Collections::Generic::List<Label^> gearLabels;
 
 
 
@@ -461,7 +462,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->openGLPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->openGLPanel->Location = System::Drawing::Point(194, 0);
 			this->openGLPanel->Name = L"openGLPanel";
-			this->openGLPanel->Size = System::Drawing::Size(775, 675); // Resized from original
+			this->openGLPanel->Size = System::Drawing::Size(1068, 673);
 			this->openGLPanel->TabIndex = 1;
 			this->openGLPanel->Visible = false;
 			// 
@@ -554,6 +555,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearTableCol2Label->Size = System::Drawing::Size(57, 30);
 			this->gearTableCol2Label->TabIndex = 1;
 			this->gearTableCol2Label->Text = L"QTY";
+			this->gearTableCol2Label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// gearTableCol3Label
 			// 
@@ -566,6 +568,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearTableCol3Label->Size = System::Drawing::Size(205, 30);
 			this->gearTableCol3Label->TabIndex = 2;
 			this->gearTableCol3Label->Text = L"Gear Description";
+			this->gearTableCol3Label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// GearWorksGUI
 			// 
@@ -648,52 +651,111 @@ private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 
 	}
 private: System::Void addGearButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	gearNum++;
 
-	// populate the 'gear table'
-	Label^ aLabel = gcnew Label();
-	aLabel->AutoSize = true;
-	aLabel->Dock = System::Windows::Forms::DockStyle::Fill;
-	aLabel->Location = System::Drawing::Point(3, 3);
-	aLabel->Margin = System::Windows::Forms::Padding(3);
-	aLabel->Size = System::Drawing::Size(34, 30);
-	aLabel->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-	aLabel->Text = gearNum.ToString();
-	gearListTable->Controls->Add(aLabel, 0, gearNum);
+	// collect inputs from controls and prepare to pass to ViewManager
+	double pitch = double::Parse(pitchInput->Text->ToString());
+	double pressureAngle = double::Parse(pressureInput->Text->ToString());
+	int teeth = int::Parse(teethInput->Text->ToString());
 
-	// qty for each gear
-	NumericUpDown^ aBox = gcnew NumericUpDown();
-	aBox->AutoSize = true;
-	aBox->Dock = System::Windows::Forms::DockStyle::Fill;
-	aBox->Location = System::Drawing::Point(3, 3);
-	aBox->Margin = System::Windows::Forms::Padding(3);
-	aBox->Size = System::Drawing::Size(34, 30);
-	aBox->Value = 1;
-	gearListTable->Controls->Add(aBox, 1, gearNum);
+	// set hub input text boxes to zero if no input
+	if (hubInputA->Text->Length == 0)
+		hubInputA->Text = "0";
+	if (hubInputB->Text->Length == 0)
+		hubInputB->Text = "0";
 
-	// description for each gear
-	String^ output;
-	if (unitsComboBox->SelectedIndex == 0)
-		output = "P: ";
-	else
-		output = "M: ";
-	output += pitchInput->Text->ToString();
-	output += ", A: ";
-	output += pressureInput->Text->ToString();
-	output += ", T: ";
-	output += teethInput->Text->ToString();
-	output += ", Hub: ";
-	output += hubComboBox->Text->ToString();
+	// get hub text box values
+	double hubA = double::Parse(hubInputA->Text->ToString());
+	double hubB = double::Parse(hubInputB->Text->ToString());
+	
+	// The initial qty is 1
+	int qty = 1;
 
-	Label^ gearDescription = gcnew Label();
-	gearDescription->Dock = System::Windows::Forms::DockStyle::Fill;
-	gearDescription->Location = System::Drawing::Point(3, 3);
-	gearDescription->Margin = System::Windows::Forms::Padding(3);
-	gearDescription->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-	gearDescription->Text = output;
-	gearDescription->AutoEllipsis = true;
-	gearListTable->Controls->Add(gearDescription, 2, gearNum);
+	int hubType = hubComboBox->SelectedIndex;
+	HubShape thisHub;
+
+	// set hub type and create gear in view manager
+	if (hubType == 0) {
+		thisHub = none;
+		hubA = 0; hubB = 0;
+	}
+	else if (hubType == 1) {
+		thisHub = circle;
+		hubB = 0;
+	}
+	else if (hubType == 2) {
+		thisHub = rectangle;
+	}
+
+	// create new gear in view manager
+	int newGearCriteria = OpenGL->theManager->addGear(pitch, pressureAngle, teeth, qty, thisHub, hubA, hubB);
+
+
+	//// delete controls
+	//while (3 < gearListTable->Controls->Count)
+	//	gearListTable->Controls->RemoveAt((gearListTable->Controls->Count) - 1);
+	//gearQtys.Clear();
+
+	// Add control 
+	//int listLength = OpenGL->theManager->gearEntries();
+	//for (int i = 0; i < listLength; i++){
+	if (newGearCriteria == -1){
+		int i = OpenGL->theManager->gearEntries() - 1;
+		// entry number
+		Label^ aLabel = gcnew Label();
+		aLabel->AutoSize = true;
+		aLabel->Dock = System::Windows::Forms::DockStyle::Fill;
+		aLabel->Location = System::Drawing::Point(3, 3);
+		aLabel->Margin = System::Windows::Forms::Padding(3);
+		//aLabel->Size = System::Drawing::Size(34, 30);
+		aLabel->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+		aLabel->Text = (i + 1).ToString();
+		gearListTable->Controls->Add(aLabel, 0, i + 1);
+
+		gearLabels.Add(aLabel);
+		
+		// qty box
+		NumericUpDown^ aBox = gcnew NumericUpDown();
+		aBox->AutoSize = true;
+		aBox->Dock = System::Windows::Forms::DockStyle::Fill;
+		aBox->Location = System::Drawing::Point(3, 3);
+		aBox->Margin = System::Windows::Forms::Padding(3);
+		//aBox->Size = System::Drawing::Size(34, 30);
+		aBox->Value = OpenGL->theManager->getQTY(i);
+		aBox->ValueChanged += gcnew System::EventHandler(this, &GearWorksGUI::qtyChange);
+		gearListTable->Controls->Add(aBox, 1, i + 1);
+		
+		gearQtys.Add(aBox);
+
+		// description box
+		Label^ gearDescription = gcnew Label();
+		gearDescription->Dock = System::Windows::Forms::DockStyle::Fill;
+		gearDescription->Location = System::Drawing::Point(3, 3);
+		gearDescription->Margin = System::Windows::Forms::Padding(3);
+		gearDescription->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+		String^ label = gcnew String((OpenGL->theManager->getLabel(i)).c_str());
+		gearDescription->Text = label;
+		gearDescription->AutoEllipsis = true;
+		gearDescription->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &GearWorksGUI::clickOnDescription);
+		gearListTable->Controls->Add(gearDescription, 2, i + 1);
+	}
+	else {
+		// if the gear already exists, just update the quantity
+		gearQtys[newGearCriteria]->Value = OpenGL->theManager->getQTY(newGearCriteria);
+	}
 }
+
+private: System::Void clickOnDescription(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	e->X;
+	e->Y;
+}
+
+private: System::Void qtyChange(System::Object^ sender, System::EventArgs^ e) {
+	// iterate through all the numericUpDown boxes and set in viewManager
+	for (int i = 0; i < gearQtys.Count; i++) {
+		OpenGL->theManager->setQTY(i, int::Parse((gearQtys[i]->Value).ToString()));
+	}
+}
+
 private: System::Void exportButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	saveFileDialog1->ShowDialog();
 }
@@ -769,6 +831,7 @@ private: System::Void materialHeightInput_KeyPress(System::Object^ sender, Syste
 		e->Handled = true;
 	}
 }
+
 };
 }
 
