@@ -39,6 +39,9 @@ public:
 	double getX() { return x; }
 	double getY() { return y; }
 	double getT() { return teeth; }
+	double getRadius() { return OR; }
+	void setX(double x_cord) { x = x_cord; }
+	void setY(double y_cord) { y = y_cord; }
 	int getN() const;
 	void draw(float inner_radius, float outer_radius,
 		int teeth, float tooth_depth);
