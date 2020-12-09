@@ -6,28 +6,23 @@
 #define MM_TO_PX 3.7795
 
 #include "simple_svg_1.0.0.hpp"
-#include "ViewManager.h"
 
 using namespace svg;
 
-class GearGenerator;
+class ViewManager;
 
 class Exporter
 {
 private:
-	std::string filename;
-	UnitSystem unitSys;
 	double strokeWidth;
 	int pointResolution;
 	double clearance;
 
 public:
-	Exporter(std::string filename, UnitSystem unitsys) :
-		filename(filename), unitSys(unitSys), pointResolution(20), strokeWidth(0.5), clearance(0.03) {}
+	Exporter() :
+		pointResolution(20), strokeWidth(0.5), clearance(0.03) {}
 
-	~Exporter();
-
-	void exportSVG(ViewManager& aManager);
+	void exportSVG(ViewManager &aManager, std::string filename);
 
 	std::vector<std::pair<double, double>> getToothProfile(double toothMax, double toothMin, double baseRadius);
 };

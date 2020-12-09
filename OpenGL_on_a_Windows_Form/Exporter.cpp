@@ -1,12 +1,12 @@
 #include "Exporter.h"
+#include "ViewManager.h"
 
 using namespace svg;
 
-void Exporter::exportSVG(ViewManager& aManager)
+void Exporter::exportSVG(ViewManager &aManager, std::string filename)
 {
-	//std::vector<GearGenerator> gears = aManager.getGearInfo();
-	//int numGears = (int)gears.size();
-	int numGears = 1;
+	std::vector<gear> gears = aManager.getGearVector();
+	int numGears = (int)gears.size();
 
 	//if (unitSys == imperial) {
 	//	int width = aManager.width * INCH_TO_PX;
@@ -16,8 +16,10 @@ void Exporter::exportSVG(ViewManager& aManager)
 	//	int width = aManager.width * MM_TO_PX;
 	//	int height = aManager.height * MM_TO_PX;
 	//}
-	//Dimensions dimensions(width, height);
-	Dimensions dimensions(500, 500); // Until ready to incorporate ViewManager
+
+	std::pair<double, double> materialDimensions = aManager.getMaterialDimensions();
+
+	Dimensions dimensions(materialDimensions.first * INCH_TO_PX, materialDimensions.second * INCH_TO_PX);
 
 	// Create document with input filename and dimensions
 	Document doc(filename, Layout(dimensions, Layout::BottomLeft));
@@ -32,26 +34,26 @@ void Exporter::exportSVG(ViewManager& aManager)
 		Path pathObject(Color::Transparent, Stroke(strokeWidth, Color::Black));
 
 		// Fetch gear parameters for drawing calculations
-		//int numTeeth = gears[i].getNumTeeth();
+		int numTeeth = gears[i].getT();
 		//if (unitSys == imperial) {
-			//double pitch = gears[i].getPitch() * INCH_TO_PX;
+		double pitch = gears[i].getPitch() * INCH_TO_PX;
 		//} 
 		//else if (unitSys == metric) {
-			//double pitch = gears[i].getPitch() * MM_TO_PX;
+		//	double pitch = gears[i].getPitch() * MM_TO_PX;
 		//}
-		//double pressureAngle = gears[i].getPressureAngle();
-		//std::pair<double, double> offset = gears[i].getPosition();
+		double pressureAngle = gears[i].getPR();
+		std::pair<double, double> offset = { gears[i].getX(), gears[i].getY() };
 
-		//double diametralPitch = PI / pitch;
-		//double pitchRadius = (numTeeth / diametralPitch) / 2.0;
-		//double addendum = 1.0 / diametralPitch;
-		//double outsideRadius = pitchRadius + addendum;
-		int numTeeth = 25;
-		std::pair<double, double> offset = { 250.0, 250.0 };
-		double outerRadius = 68.0;
-		double pitchRadius = 64.0;
-		double pitch = 15.0;
-		double pressureAngle = 20.0 * (PI / 180.0);
+		double diametralPitch = PI / pitch;
+		double pitchRadius = (numTeeth / diametralPitch) / 2.0;
+		double addendum = 1.0 / diametralPitch;
+		double outerRadius = pitchRadius + addendum;
+		//int numTeeth = 25;
+		//std::pair<double, double> offset = { 250.0, 250.0 };
+		//double outerRadius = 68.0;
+		//double pitchRadius = 64.0;
+		//double pitch = 15.0;
+		//double pressureAngle = 20.0 * (PI / 180.0);
 
 		// Calculate additional parameters
 		double inverseDiametralPitch = pitch / PI;

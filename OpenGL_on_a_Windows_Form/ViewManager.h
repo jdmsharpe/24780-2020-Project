@@ -14,11 +14,8 @@
 #include <sstream>
 #include <vector>
 
-#include "Node.h"
 #include "gear.h"
-
-//#define WINDOW_WIDTH 775
-//#define WINDOW_HEIGHT 675
+#include "Exporter.h"
 
 enum UnitSystem { inch = 0, millimeter = 1 };
 
@@ -28,16 +25,6 @@ private:
 
 	int panChange;
 	double zoomFactor;
-
-	// Do we need the following?
-	int shapeColor;  // H value for slider color (S = 1, V = 1)
-	int nodeColor;  // H value for node color (S = 1, V = 1)
-	int lineWidth;
-	bool showNodes;
-	bool isFilled;
-
-	int xOrigin, yOrigin; // screen coords of model coords 0,0
-	int prevLocX, prevLocY; // for zoom and pan, and for node edit
 	double viewScale; // must be greater than zero
 
 	struct gearType {
@@ -68,12 +55,9 @@ private:
 	// define object location
 	double objectX, objectY;
 
+	Exporter exporter;
+
 public:
-
-
-	ViewManager();
-	
-	bool manage();
 
 	// addGear returns -1 if this is a new gear, else returns index of gear in vector 
 	int addGear(double pitch, double pressureAngle, int teeth, int qty, HubShape hub, 
@@ -226,6 +210,14 @@ public:
 		return gearSpecifications.at(index).label;
 	}
 
+	std::vector<gear> getGearVector() {
+		return theGears;
+	}
+
+	std::pair<double, double> getMaterialDimensions() {
+		return { materialWidth, materialHeight };
+	}
+
 	void defineMaterial(double windowWidth, double windowHeight, double materialWidth, double materialHeight) {
 		// set public ViewManager variables
 		this->windowWidth = windowWidth;
@@ -300,44 +292,18 @@ public:
 		glEnd();
 	}
 
-	void getScreenCoords(double modelX, double modelY,
-		double& screenX, double& screenY);
-	// given model coordinates, function calculates screen coordinates
-	// converting for translation and scale
-
-	void getModelCoords(double& modelX, double& modelY,
-		double screenX, double screenY);
-	// given screen coordinates, function calculates model coordinates
-	// converting for translation and scale
-
-	void screenVertex(double modelX, double modelY);
-	// given model coordinates, function adds a vertex on screen
-	// after converting for translation and scale
+	void Export(std::string filename) {
+		exporter.exportSVG(*this, filename);
+	}
 
 	//Optimizer
-	//std::vector<Node> setinitposition(std::vector<Node> Nodes);
-	//std::vector<Node> optimize(std::vector <Node> Nodes);
-	//std::vector<Node> center(std::vector <Node> Nodes);
-	//bool checkintersection(std::vector<Node> Nodes);
-	//void draw(std::vector<Node> Nodes);
 	std::vector<gear> setinitposition();
 	std::vector<gear> optimize(std::vector<gear> Gears);
 	std::vector<gear> center(std::vector<gear> Gears);
 	bool checkintersection(std::vector<gear> Gears);
-	//void draw();
 	// End Optimizer
 
-	void draw(); // Only for testing
-
-private:
-	void load();
-	// asks for a filename and loads a file into model
-
-	void save();
-	// asks for a filename and loads a file into model
-
-	void centerOnScreen();
-	// sets view parameters so that the model is centered on screen
+	void draw();
 };
 
 #endif

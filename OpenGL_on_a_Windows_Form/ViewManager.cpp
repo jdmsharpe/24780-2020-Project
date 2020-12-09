@@ -28,9 +28,6 @@ bool notoptimized = true;
 bool optimized = false;
 int ini_size_theGears = 0;
 int size_theGears;
-ViewManager::ViewManager()
-{
-}
 
 vector<gear> ViewManager::setinitposition()
 {
