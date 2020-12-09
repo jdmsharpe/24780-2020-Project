@@ -40,7 +40,7 @@ public:
 	double getX() { return x; }
 	double getY() { return y; }
 	double getT() { return teeth; }
-	double getRadius() { return OR + 5; }
+	double getRadius() { return OR + .02; }
 	std::string getLabel() { return label; }
 	void setX(double x_cord) { x = x_cord; }
 	void setY(double y_cord) { y = y_cord; }
