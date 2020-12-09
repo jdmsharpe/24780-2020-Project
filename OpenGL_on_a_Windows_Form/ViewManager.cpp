@@ -72,8 +72,8 @@ vector<gear> ViewManager::optimize(std::vector<gear> Gears)
 				}
 				else
 				{
-					int randomx = 3 * (rand() % 10);
-					int randomy = 3 * (rand() % 10);
+					int randomx = (rand() % 10);
+					int randomy = (rand() % 10);
 					if (randomx % 2 == 0)
 					{
 						signx = 1;
