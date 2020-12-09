@@ -17,6 +17,7 @@ protected:
 	double w;
 	int r, g, b;
 	double teeth, tooth_depth;
+	double pitch, pressureAngle;
 	HubShape shape;
 	double shapeParameter[2];
 
@@ -25,7 +26,7 @@ public:
 	gear(const std::string& aLabel, double xCoord, double yCoord,
 		double zCoord, double rad, double irad, int T, double TD);
 	//pitch pressure angle teeth hubshape
-	gear(const std::string& aLabel, double xCoord = 0, double yCoord = 0, double pitch = 0, 
+	gear(const std::string& aLabel, double xCoord = 0, double yCoord = 0, double ptch = 0, 
 		double pr_angle = 0, int N = 0, HubShape gear_shape = none, double hubD1 = 0, double hubD2 = 0);
 	void setN(int Ni);
 	void setinner_radius(double rad) { R = rad; }
@@ -41,9 +42,14 @@ public:
 	double getY() { return y; }
 	double getT() { return teeth; }
 	double getRadius() { return OR + .02; }
+	double getPitch() { return pitch; }
+	double getPR() { return pressureAngle; }
 	std::string getLabel() { return label; }
 	void setX(double x_cord) { x = x_cord; }
 	void setY(double y_cord) { y = y_cord; }
+	HubShape getHubShape() { return shape; }
+	double getHubD1() { return shapeParameter[0]; }
+	double getHubD2() { return shapeParameter[1]; }
 	int getN() const;
 	void draw(float inner_radius, float outer_radius,
 		int teeth, float tooth_depth);

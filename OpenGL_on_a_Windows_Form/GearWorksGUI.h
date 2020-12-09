@@ -2,6 +2,7 @@
 
 #include "OpenGL.h"
 
+#include <msclr\marshal_cppstd.h>
 
 namespace OpenGL_on_a_Windows_Form {
 
@@ -751,7 +752,12 @@ private: System::Void qtyChange(System::Object^ sender, System::EventArgs^ e) {
 }
 
 private: System::Void exportButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	saveFileDialog1->ShowDialog();
+	System::Windows::Forms::DialogResult result = saveFileDialog1->ShowDialog();
+	if (result == System::Windows::Forms::DialogResult::OK)
+	{
+		String^ filename = saveFileDialog1->FileName;
+		OpenGL->theManager->Export(msclr::interop::marshal_as<std::string>(filename));
+	}
 }
 private: System::Void pitchInput_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 	// https://stackoverflow.com/questions/24491883/visual-c-2010-only-allow-numbers-in-textbox
