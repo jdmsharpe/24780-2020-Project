@@ -57,7 +57,8 @@ gear::gear(const std::string& aLabel, double xCoord, double yCoord, double pitch
     shape = gear_shape;
     R = D1/2;
     OR = pitchRadius + addendum;
-
+    shapeParameter[0] = D1;
+    shapeParameter[1] = D2;
 }
 
 void gear::setN(int Ni)

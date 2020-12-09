@@ -44,6 +44,9 @@ public:
 	std::string getLabel() { return label; }
 	void setX(double x_cord) { x = x_cord; }
 	void setY(double y_cord) { y = y_cord; }
+	HubShape getHubShape() { return shape; }
+	double getHubD1() { return shapeParameter[0]; }
+	double getHubD2() { return shapeParameter[1]; }
 	int getN() const;
 	void draw(float inner_radius, float outer_radius,
 		int teeth, float tooth_depth);
