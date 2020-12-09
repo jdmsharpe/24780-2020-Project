@@ -513,7 +513,7 @@ namespace OpenGL_on_a_Windows_Form {
 				40)));
 			this->gearListTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle()));
 			this->gearListTable->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				211)));
+				227)));
 			this->gearListTable->Controls->Add(this->gearTableCol1Label, 0, 0);
 			this->gearListTable->Controls->Add(this->gearTableCol2Label, 1, 0);
 			this->gearListTable->Controls->Add(this->gearTableCol3Label, 2, 0);
@@ -559,7 +559,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearTableCol3Label->Location = System::Drawing::Point(106, 3);
 			this->gearTableCol3Label->Margin = System::Windows::Forms::Padding(3);
 			this->gearTableCol3Label->Name = L"gearTableCol3Label";
-			this->gearTableCol3Label->Size = System::Drawing::Size(205, 30);
+			this->gearTableCol3Label->Size = System::Drawing::Size(221, 30);
 			this->gearTableCol3Label->TabIndex = 2;
 			this->gearTableCol3Label->Text = L"Gear Description";
 			this->gearTableCol3Label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -575,6 +575,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->Controls->Add(this->gearListPanel);
 			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Margin = System::Windows::Forms::Padding(6);
 			this->MinimumSize = System::Drawing::Size(1000, 480);
 			this->Name = L"GearWorksGUI";
