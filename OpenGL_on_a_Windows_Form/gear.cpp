@@ -32,7 +32,7 @@ gear::gear(const std::string& aLabel, double xCoord, double yCoord, double zCoor
 //}
 
 
-gear::gear(const std::string& aLabel, double xCoord, double yCoord, double ptch, double pr_angle, int N,
+gear::gear(const std::string& aLabel, double xCoord, double yCoord, double pitch, double pr_angle, int N,
     HubShape gear_shape, double D1, double D2)
 {
     double diametralPitch = 0;
@@ -61,7 +61,7 @@ gear::gear(const std::string& aLabel, double xCoord, double yCoord, double ptch,
     shapeParameter[0] = D1;
     shapeParameter[1] = D2;
 
-    pitch = ptch;
+    pitch_ = pitch;
     pressureAngle = pr_angle;
 }
 
