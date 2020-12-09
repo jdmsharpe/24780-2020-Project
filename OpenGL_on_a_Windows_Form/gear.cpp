@@ -32,7 +32,8 @@ gear::gear(const std::string& aLabel, double xCoord, double yCoord, double zCoor
 //}
 
 
-gear::gear(const std::string& aLabel, double xCoord, double yCoord, double pitch, double pr_angle, int N, HubShape gear_shape, double hub_radius)
+gear::gear(const std::string& aLabel, double xCoord, double yCoord, double pitch, double pr_angle, int N,
+    HubShape gear_shape, double D1, double D2)
 {
     double diametralPitch = 0;
     double pitchRadius = 0;
@@ -43,7 +44,7 @@ gear::gear(const std::string& aLabel, double xCoord, double yCoord, double pitch
 
     if (pitch != 0)
     {
-        diametralPitch = M_PI / pitch;
+        diametralPitch = pitch;// M_PI / pitch;
         pitchRadius = (teeth / diametralPitch) / 2.0;
         addendum = 1.0 / diametralPitch;
         dedendum = 1.25 * addendum;
@@ -54,7 +55,7 @@ gear::gear(const std::string& aLabel, double xCoord, double yCoord, double pitch
     y = yCoord;
     tooth_depth = addendum + dedendum;
     shape = gear_shape;
-    R = hub_radius;
+    R = D1/2;
     OR = pitchRadius + addendum;
 
 }

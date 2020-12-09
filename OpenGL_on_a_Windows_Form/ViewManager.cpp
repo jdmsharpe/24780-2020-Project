@@ -102,7 +102,7 @@ vector<gear> ViewManager::optimize(std::vector<gear> Gears)
 						x1 = r1;
 						y1 = r1;
 					}
-					if ((x1 + r1) > WINDOW_WIDTH || (y1 + r1) > WINDOW_HEIGHT || (y1 - r1) < -WINDOW_HEIGHT)
+					if ((x1 + r1) > materialWidth || (y1 + r1) > materialHeight || (y1 - r1) < -materialHeight)
 					{
 						//signx = -1;
 						//signy = -1;
@@ -131,7 +131,7 @@ vector<gear> ViewManager::center(std::vector <gear> Gears)
 		double x = Gears[i].getX();
 		double y = Gears[i].getY();
 		double r = Gears[i].getRadius();
-		if ((x - r) < 0 || (y - r) < 0 || (x + r) > WINDOW_WIDTH || (y + r) > WINDOW_HEIGHT || (y - r) < -WINDOW_HEIGHT)
+		if ((x - r) < 0 || (y - r) < 0 || (x + r) > materialWidth || (y + r) > materialHeight || (y - r) < -materialHeight)
 		{
 			Gears[i].setX(r + 10);
 			Gears[i].setY(r + 10);
@@ -196,7 +196,7 @@ void ViewManager::draw() // Only for testing
 	drawMaterial();
 
 	// set color
-	glColor3f(1.0f, 0.0f, 1.0f);
+	glColor3f(1.0f, 0.0f, 0.0f);
 
 
 
@@ -234,7 +234,7 @@ void ViewManager::draw() // Only for testing
 		/*glBegin(GL_QUADS);*/
 		double screenX, screenY, r;
 		screenX = optimizedGears[i].getX() + 0;
-		screenY = -optimizedGears[i].getY() + WINDOW_HEIGHT;
+		screenY = -optimizedGears[i].getY() + materialHeight;
 		r = optimizedGears[i].getRadius();
 
 
@@ -262,6 +262,8 @@ void ViewManager::draw() // Only for testing
 		glEnd();
 	}
 	
+
+	// draw gears
 	for (int k = 0; k < theGears.size(); k++)
 	{
 		int i;
@@ -272,25 +274,28 @@ void ViewManager::draw() // Only for testing
 		r0 = theGears[k].getInner_radius();
 		r1 = theGears[k].getOuter_radius() - theGears[k].getTD() / 2.0;
 		r2 = theGears[k].getOuter_radius() + theGears[k].getTD() / 2.0;
-		double x = theGears[k].getX();
-		double y = theGears[k].getY();
+
+		// specify center of gear object
+		setObjectCenter(theGears[k].getX(), theGears[k].getY());
+	/*	double x = theGears[k].getX();
+		double y = theGears[k].getY();*/
+
 		double teeth = theGears[k].getT();
 
 		da = 2.0 * M_PI / teeth / 4.0;
 
 		//glShadeModel(GL_FLAT);
-
 		//glNormal3f(0.0, 0.0, 1.0);
 
 		/* draw front face */
 		glBegin(GL_QUAD_STRIP);
 		for (i = 0; i <= teeth; i++) {
 			angle = i * 2.0 * M_PI / teeth;
-			glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
-			glVertex3f(x + r1 * cos(angle), y + r1 * sin(angle), 0);
+			makeVertex(r0 * cos(angle), r0 * sin(angle));
+			makeVertex(r1 * cos(angle), r1 * sin(angle));
 			if (i < teeth) {
-				glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
-				glVertex3f(x + r1 * cos(angle + 3 * da), y + r1 * sin(angle + 3 * da), 0);
+				makeVertex(r0 * cos(angle), r0 * sin(angle));
+				makeVertex(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da));
 			}
 		}
 		glEnd();
@@ -301,10 +306,10 @@ void ViewManager::draw() // Only for testing
 		for (i = 0; i < teeth; i++) {
 			angle = i * 2.0 * M_PI / teeth;
 
-			glVertex3f(x + r1 * cos(angle), y + r1 * sin(angle), 0);
-			glVertex3f(x + r2 * cos(angle + da), y + r2 * sin(angle + da), 0);
-			glVertex3f(x + r2 * cos(angle + 2 * da), y + r2 * sin(angle + 2 * da), 0);
-			glVertex3f(x + r1 * cos(angle + 3 * da), y + r1 * sin(angle + 3 * da), 0);
+			makeVertex(r1 * cos(angle), r1 * sin(angle));
+			makeVertex(r2 * cos(angle + da), r2 * sin(angle + da));
+			makeVertex(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da));
+			makeVertex(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da));
 			/* for (int i = 0; i < 100; ++i) {
 				 glVertex3f(outer_radius * (cos(rad(i)) + (rad(i) * sin(rad(i)))), outer_radius * (sin(rad(i)) - (rad(i) * cos(rad(i)))), 0);
 			 }*/
@@ -319,8 +324,8 @@ void ViewManager::draw() // Only for testing
 		for (i = 0; i <= teeth; i++) {
 			angle = i * 2.0 * M_PI / teeth;
 			//glNormal3f(-cos(angle), -sin(angle), 0.0);
-			glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
-			glVertex3f(x + r0 * cos(angle), y + r0 * sin(angle), 0);
+			makeVertex(r0 * cos(angle), r0 * sin(angle));
+			makeVertex(r0 * cos(angle), r0 * sin(angle));
 		}
 		glEnd();
 	}

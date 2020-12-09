@@ -65,7 +65,7 @@ namespace OpenGL_on_a_Windows_Form {
 	private: System::Windows::Forms::ComboBox^ unitsComboBox;
 
 	private: System::Windows::Forms::Panel^ openGLPanel;
-	private: System::Windows::Forms::Panel^ visualizerControlPanel;
+
 	private: System::Windows::Forms::Button^ exportButton;
 	private: System::Windows::Forms::Panel^ gearListPanel;
 	private: System::Windows::Forms::TableLayoutPanel^ gearListTable;
@@ -136,7 +136,6 @@ namespace OpenGL_on_a_Windows_Form {
 			this->unitsGroupBox = (gcnew System::Windows::Forms::GroupBox());
 			this->unitsComboBox = (gcnew System::Windows::Forms::ComboBox());
 			this->openGLPanel = (gcnew System::Windows::Forms::Panel());
-			this->visualizerControlPanel = (gcnew System::Windows::Forms::Panel());
 			this->exportButton = (gcnew System::Windows::Forms::Button());
 			this->gearListPanel = (gcnew System::Windows::Forms::Panel());
 			this->gearListScrollPanel = (gcnew System::Windows::Forms::Panel());
@@ -166,9 +165,9 @@ namespace OpenGL_on_a_Windows_Form {
 			ExportBox->Controls->Add(this->materialWidthInput);
 			ExportBox->Controls->Add(this->materialWidthLabel);
 			ExportBox->Dock = System::Windows::Forms::DockStyle::Bottom;
-			ExportBox->Location = System::Drawing::Point(0, 495);
+			ExportBox->Location = System::Drawing::Point(0, 501);
 			ExportBox->Name = L"ExportBox";
-			ExportBox->Size = System::Drawing::Size(294, 139);
+			ExportBox->Size = System::Drawing::Size(310, 139);
 			ExportBox->TabIndex = 1;
 			ExportBox->TabStop = false;
 			ExportBox->Text = L"Material Size";
@@ -180,7 +179,7 @@ namespace OpenGL_on_a_Windows_Form {
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 			this->materialHeightInput->Location = System::Drawing::Point(3, 106);
 			this->materialHeightInput->Name = L"materialHeightInput";
-			this->materialHeightInput->Size = System::Drawing::Size(288, 30);
+			this->materialHeightInput->Size = System::Drawing::Size(304, 30);
 			this->materialHeightInput->TabIndex = 3;
 			this->materialHeightInput->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::materialHeightInput_KeyPress);
 			// 
@@ -203,7 +202,7 @@ namespace OpenGL_on_a_Windows_Form {
 				static_cast<System::Byte>(0)));
 			this->materialWidthInput->Location = System::Drawing::Point(3, 51);
 			this->materialWidthInput->Name = L"materialWidthInput";
-			this->materialWidthInput->Size = System::Drawing::Size(288, 30);
+			this->materialWidthInput->Size = System::Drawing::Size(304, 30);
 			this->materialWidthInput->TabIndex = 1;
 			this->materialWidthInput->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::materialWidthInput_KeyPress);
 			// 
@@ -234,8 +233,9 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearParametersPanel->Controls->Add(this->unitsGroupBox);
 			this->gearParametersPanel->Dock = System::Windows::Forms::DockStyle::Left;
 			this->gearParametersPanel->Location = System::Drawing::Point(0, 0);
+			this->gearParametersPanel->MinimumSize = System::Drawing::Size(200, 0);
 			this->gearParametersPanel->Name = L"gearParametersPanel";
-			this->gearParametersPanel->Size = System::Drawing::Size(194, 673);
+			this->gearParametersPanel->Size = System::Drawing::Size(200, 673);
 			this->gearParametersPanel->TabIndex = 1;
 			// 
 			// addGearButton
@@ -244,9 +244,9 @@ namespace OpenGL_on_a_Windows_Form {
 			this->addGearButton->Dock = System::Windows::Forms::DockStyle::Top;
 			this->addGearButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->addGearButton->Location = System::Drawing::Point(0, 539);
+			this->addGearButton->Location = System::Drawing::Point(0, 431);
 			this->addGearButton->Name = L"addGearButton";
-			this->addGearButton->Size = System::Drawing::Size(194, 37);
+			this->addGearButton->Size = System::Drawing::Size(200, 35);
 			this->addGearButton->TabIndex = 3;
 			this->addGearButton->Text = L"Add Gear";
 			this->addGearButton->UseVisualStyleBackColor = true;
@@ -265,7 +265,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubGroupBox->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubGroupBox->Location = System::Drawing::Point(0, 256);
 			this->hubGroupBox->Name = L"hubGroupBox";
-			this->hubGroupBox->Size = System::Drawing::Size(194, 283);
+			this->hubGroupBox->Size = System::Drawing::Size(200, 175);
 			this->hubGroupBox->TabIndex = 2;
 			this->hubGroupBox->TabStop = false;
 			this->hubGroupBox->Text = L"Hub";
@@ -275,9 +275,9 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubInputB->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubInputB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->hubInputB->Location = System::Drawing::Point(3, 250);
+			this->hubInputB->Location = System::Drawing::Point(3, 142);
 			this->hubInputB->Name = L"hubInputB";
-			this->hubInputB->Size = System::Drawing::Size(188, 30);
+			this->hubInputB->Size = System::Drawing::Size(194, 30);
 			this->hubInputB->TabIndex = 5;
 			this->hubInputB->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::hubInputB_KeyPress);
 			// 
@@ -287,7 +287,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubLabelB->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubLabelB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->hubLabelB->Location = System::Drawing::Point(3, 225);
+			this->hubLabelB->Location = System::Drawing::Point(3, 117);
 			this->hubLabelB->Name = L"hubLabelB";
 			this->hubLabelB->Size = System::Drawing::Size(64, 25);
 			this->hubLabelB->TabIndex = 4;
@@ -298,9 +298,9 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubInputA->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubInputA->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->hubInputA->Location = System::Drawing::Point(3, 195);
+			this->hubInputA->Location = System::Drawing::Point(3, 87);
 			this->hubInputA->Name = L"hubInputA";
-			this->hubInputA->Size = System::Drawing::Size(188, 30);
+			this->hubInputA->Size = System::Drawing::Size(194, 30);
 			this->hubInputA->TabIndex = 3;
 			this->hubInputA->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::hubInputA_KeyPress);
 			// 
@@ -310,7 +310,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubLabelA->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubLabelA->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->hubLabelA->Location = System::Drawing::Point(3, 170);
+			this->hubLabelA->Location = System::Drawing::Point(3, 62);
 			this->hubLabelA->Name = L"hubLabelA";
 			this->hubLabelA->Size = System::Drawing::Size(64, 25);
 			this->hubLabelA->TabIndex = 2;
@@ -324,7 +324,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubPictureBox->Location = System::Drawing::Point(3, 59);
 			this->hubPictureBox->Name = L"hubPictureBox";
 			this->hubPictureBox->Padding = System::Windows::Forms::Padding(3);
-			this->hubPictureBox->Size = System::Drawing::Size(188, 111);
+			this->hubPictureBox->Size = System::Drawing::Size(194, 3);
 			this->hubPictureBox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->hubPictureBox->TabIndex = 1;
 			this->hubPictureBox->TabStop = false;
@@ -339,7 +339,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubComboBox->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"None", L"Circle", L"Rectangle" });
 			this->hubComboBox->Location = System::Drawing::Point(3, 26);
 			this->hubComboBox->Name = L"hubComboBox";
-			this->hubComboBox->Size = System::Drawing::Size(188, 33);
+			this->hubComboBox->Size = System::Drawing::Size(194, 33);
 			this->hubComboBox->TabIndex = 0;
 			this->hubComboBox->SelectedIndexChanged += gcnew System::EventHandler(this, &GearWorksGUI::hubComboBox_SelectedIndexChanged);
 			// 
@@ -356,7 +356,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearGroupBox->Dock = System::Windows::Forms::DockStyle::Top;
 			this->gearGroupBox->Location = System::Drawing::Point(0, 62);
 			this->gearGroupBox->Name = L"gearGroupBox";
-			this->gearGroupBox->Size = System::Drawing::Size(194, 194);
+			this->gearGroupBox->Size = System::Drawing::Size(200, 194);
 			this->gearGroupBox->TabIndex = 1;
 			this->gearGroupBox->TabStop = false;
 			this->gearGroupBox->Text = L"Gear";
@@ -370,7 +370,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->teethInput->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000, 0, 0, 0 });
 			this->teethInput->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
 			this->teethInput->Name = L"teethInput";
-			this->teethInput->Size = System::Drawing::Size(188, 30);
+			this->teethInput->Size = System::Drawing::Size(194, 30);
 			this->teethInput->TabIndex = 5;
 			this->teethInput->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
 			// 
@@ -393,7 +393,7 @@ namespace OpenGL_on_a_Windows_Form {
 				static_cast<System::Byte>(0)));
 			this->pressureInput->Location = System::Drawing::Point(3, 106);
 			this->pressureInput->Name = L"pressureInput";
-			this->pressureInput->Size = System::Drawing::Size(188, 30);
+			this->pressureInput->Size = System::Drawing::Size(194, 30);
 			this->pressureInput->TabIndex = 3;
 			this->pressureInput->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::pressureInput_KeyPress);
 			// 
@@ -416,7 +416,7 @@ namespace OpenGL_on_a_Windows_Form {
 				static_cast<System::Byte>(0)));
 			this->pitchInput->Location = System::Drawing::Point(3, 51);
 			this->pitchInput->Name = L"pitchInput";
-			this->pitchInput->Size = System::Drawing::Size(188, 30);
+			this->pitchInput->Size = System::Drawing::Size(194, 30);
 			this->pitchInput->TabIndex = 1;
 			this->pitchInput->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &GearWorksGUI::pitchInput_KeyPress);
 			// 
@@ -440,7 +440,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->unitsGroupBox->Dock = System::Windows::Forms::DockStyle::Top;
 			this->unitsGroupBox->Location = System::Drawing::Point(0, 0);
 			this->unitsGroupBox->Name = L"unitsGroupBox";
-			this->unitsGroupBox->Size = System::Drawing::Size(194, 62);
+			this->unitsGroupBox->Size = System::Drawing::Size(200, 62);
 			this->unitsGroupBox->TabIndex = 0;
 			this->unitsGroupBox->TabStop = false;
 			this->unitsGroupBox->Text = L"Units";
@@ -455,35 +455,26 @@ namespace OpenGL_on_a_Windows_Form {
 			this->unitsComboBox->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Inches", L"Millimeters" });
 			this->unitsComboBox->Location = System::Drawing::Point(3, 26);
 			this->unitsComboBox->Name = L"unitsComboBox";
-			this->unitsComboBox->Size = System::Drawing::Size(188, 33);
+			this->unitsComboBox->Size = System::Drawing::Size(194, 33);
 			this->unitsComboBox->TabIndex = 0;
+			this->unitsComboBox->SelectedIndexChanged += gcnew System::EventHandler(this, &GearWorksGUI::unitsComboBox_SelectedIndexChanged);
 			// 
 			// openGLPanel
 			// 
 			this->openGLPanel->BackColor = System::Drawing::Color::Gray;
 			this->openGLPanel->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->openGLPanel->Location = System::Drawing::Point(194, 0);
+			this->openGLPanel->Location = System::Drawing::Point(200, 0);
 			this->openGLPanel->Name = L"openGLPanel";
-			this->openGLPanel->Size = System::Drawing::Size(774, 673);
+			this->openGLPanel->Size = System::Drawing::Size(752, 673);
 			this->openGLPanel->TabIndex = 1;
 			this->openGLPanel->Visible = false;
-			// 
-			// visualizerControlPanel
-			// 
-			this->visualizerControlPanel->AutoSize = true;
-			this->visualizerControlPanel->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			this->visualizerControlPanel->Dock = System::Windows::Forms::DockStyle::Top;
-			this->visualizerControlPanel->Location = System::Drawing::Point(194, 0);
-			this->visualizerControlPanel->Name = L"visualizerControlPanel";
-			this->visualizerControlPanel->Size = System::Drawing::Size(774, 0);
-			this->visualizerControlPanel->TabIndex = 0;
 			// 
 			// exportButton
 			// 
 			this->exportButton->Dock = System::Windows::Forms::DockStyle::Bottom;
-			this->exportButton->Location = System::Drawing::Point(0, 634);
+			this->exportButton->Location = System::Drawing::Point(0, 640);
 			this->exportButton->Name = L"exportButton";
-			this->exportButton->Size = System::Drawing::Size(294, 39);
+			this->exportButton->Size = System::Drawing::Size(310, 33);
 			this->exportButton->TabIndex = 0;
 			this->exportButton->Text = L"Export";
 			this->exportButton->UseVisualStyleBackColor = true;
@@ -496,10 +487,10 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearListPanel->Controls->Add(ExportBox);
 			this->gearListPanel->Controls->Add(this->exportButton);
 			this->gearListPanel->Dock = System::Windows::Forms::DockStyle::Right;
-			this->gearListPanel->Location = System::Drawing::Point(968, 0);
+			this->gearListPanel->Location = System::Drawing::Point(952, 0);
 			this->gearListPanel->MinimumSize = System::Drawing::Size(200, 0);
 			this->gearListPanel->Name = L"gearListPanel";
-			this->gearListPanel->Size = System::Drawing::Size(294, 673);
+			this->gearListPanel->Size = System::Drawing::Size(310, 673);
 			this->gearListPanel->TabIndex = 3;
 			// 
 			// gearListScrollPanel
@@ -509,7 +500,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearListScrollPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->gearListScrollPanel->Location = System::Drawing::Point(0, 0);
 			this->gearListScrollPanel->Name = L"gearListScrollPanel";
-			this->gearListScrollPanel->Size = System::Drawing::Size(294, 495);
+			this->gearListScrollPanel->Size = System::Drawing::Size(310, 501);
 			this->gearListScrollPanel->TabIndex = 4;
 			// 
 			// gearListTable
@@ -532,7 +523,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearListTable->RowCount = 2;
 			this->gearListTable->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 36)));
 			this->gearListTable->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 36)));
-			this->gearListTable->Size = System::Drawing::Size(294, 72);
+			this->gearListTable->Size = System::Drawing::Size(310, 72);
 			this->gearListTable->TabIndex = 3;
 			// 
 			// gearTableCol1Label
@@ -579,9 +570,8 @@ namespace OpenGL_on_a_Windows_Form {
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(1262, 673);
 			this->Controls->Add(this->openGLPanel);
-			this->Controls->Add(this->visualizerControlPanel);
-			this->Controls->Add(this->gearListPanel);
 			this->Controls->Add(this->gearParametersPanel);
+			this->Controls->Add(this->gearListPanel);
 			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->Margin = System::Windows::Forms::Padding(6);
@@ -607,7 +597,6 @@ namespace OpenGL_on_a_Windows_Form {
 			this->gearListTable->ResumeLayout(false);
 			this->gearListTable->PerformLayout();
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -617,12 +606,6 @@ private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 		UNREFERENCED_PARAMETER(e);
 		OpenGL->Render();
 		OpenGL->SwapOpenGLBuffers();
-
-	// Change label of 'pitch' for gear depending on unit system
-	if (unitsComboBox->SelectedIndex == 0)
-		pitchLabel->Text = L"Pitch:";
-	else if (unitsComboBox->SelectedIndex == 1)
-		pitchLabel->Text = L"Module:";
 
 	// change hub picture depending on selection
 	if (hubComboBox->SelectedIndex <= 0) {
@@ -691,9 +674,14 @@ private: System::Void addGearButton_Click(System::Object^ sender, System::EventA
 	else if (hubType == 2) {
 		thisHub = rectangle;
 	}
+	UnitSystem units = inch;
+	if (unitsComboBox->SelectedIndex == 1) {
+		units = millimeter;
+	}
+
 
 	// create new gear in view manager
-	int newGearCriteria = OpenGL->theManager->addGear(pitch, pressureAngle, teeth, qty, thisHub, hubA, hubB);
+	int newGearCriteria = OpenGL->theManager->addGear(pitch, pressureAngle, teeth, qty, thisHub, hubA, hubB, units);
 
 
 	//// delete controls
@@ -850,12 +838,18 @@ private: System::Void updateMaterial() {
 
 	double materialWidth = 0;
 	double materialHeight = 0;
-
+	
+	// get material dimensions if there is an entry in the text box
 	if (materialWidthInput->TextLength != 0)
 		materialWidth = double::Parse(materialWidthInput->Text->ToString());
 	if (materialHeightInput->TextLength != 0)
 		materialHeight = double::Parse(materialHeightInput->Text->ToString());
 
+	// Material size is always defined in inches
+	if (unitsComboBox->SelectedIndex == 1) {
+		materialWidth /= 25.4;
+		materialHeight /= 25.4;
+	}
 
 	OpenGL->theManager->defineMaterial(width, height, materialWidth, materialHeight);
 	// Resize the open gl window
@@ -864,6 +858,77 @@ private: System::Void updateMaterial() {
 
 private: System::Void hubComboBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 }
+private: System::Void unitsComboBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	// Change label of 'pitch' for gear depending on unit system
+	if (unitsComboBox->SelectedIndex == 0) {
+		pitchLabel->Text = L"Pitch:";
+
+		// keep material size the same but change the units
+		if (materialWidthInput->TextLength != 0) {
+			double materialWidth = double::Parse(materialWidthInput->Text->ToString());
+			materialWidth /= 25.4; // in to mm
+			materialWidthInput->Text = materialWidth.ToString();
+		}
+		if (materialHeightInput->TextLength != 0) {
+			double materialHeight = double::Parse(materialHeightInput->Text->ToString());
+			materialHeight /= 25.4; // in to mm
+			materialHeightInput->Text = materialHeight.ToString();
+		}
+		// module to pitch
+		if (pitchInput->TextLength != 0) {
+			double pitch = double::Parse(pitchInput->Text->ToString());
+			double module = 1/(pitch/25.4); // in to mm
+			pitchInput->Text = module.ToString();
+		}
+		// hub dimension D1
+		if (hubInputA->TextLength != 0) {
+			double input = double::Parse(hubInputA->Text->ToString());
+			input /= 25.4;
+			hubInputA->Text = input.ToString();
+		}
+		// hub dimension D2
+		if (hubInputB->TextLength != 0) {
+			double input = double::Parse(hubInputB->Text->ToString());
+			input /= 25.4;
+			hubInputB->Text = input.ToString();
+		}
+	}
+	else if (unitsComboBox->SelectedIndex == 1) {
+		pitchLabel->Text = L"Module:";
+
+		// keep material size the same but change the units
+		if (materialWidthInput->TextLength != 0) {
+			double materialWidth = double::Parse(materialWidthInput->Text->ToString());
+			materialWidth *= 25.4; // in to mm
+			materialWidthInput->Text = materialWidth.ToString();
+		}
+		if (materialHeightInput->TextLength != 0) {
+			double materialHeight = double::Parse(materialHeightInput->Text->ToString());
+			materialHeight *= 25.4; // in to mm
+			materialHeightInput->Text = materialHeight.ToString();
+		}
+		// pitch to module
+		if (pitchInput->TextLength != 0) {
+			double module = double::Parse(pitchInput->Text->ToString());
+			double pitch = 25.4 / module;
+			pitchInput->Text = pitch.ToString();
+		}
+		// hub dimension D1
+		if (hubInputA->TextLength != 0) {
+			double input = double::Parse(hubInputA->Text->ToString());
+			input *= 25.4;
+			hubInputA->Text = input.ToString();
+		}
+		// hub dimension D2
+		if (hubInputB->TextLength != 0) {
+			double input = double::Parse(hubInputB->Text->ToString());
+			input *= 25.4;
+			hubInputB->Text = input.ToString();
+		}
+	
+	}
+}
+
 };
 }
 
