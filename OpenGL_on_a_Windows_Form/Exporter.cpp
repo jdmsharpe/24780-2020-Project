@@ -35,30 +35,19 @@ void Exporter::exportSVG(ViewManager &aManager, std::string filename)
 
 		// Fetch gear parameters for drawing calculations
 		int numTeeth = gears[i].getT();
-		//if (unitSys == imperial) {
 		double pitch = gears[i].getPitch();
-		//} 
-		//else if (unitSys == metric) {
-		//	double pitch = gears[i].getPitch() * MM_TO_PX;
-		//}
 		double pressureAngle = gears[i].getPR() * (PI / 180.0);
-		std::pair<double, double> offset = { gears[i].getX() * INCH_TO_PX, gears[i].getY() * INCH_TO_PX };
+		std::pair<double, double> offset = { gears[i].getX() * INCH_TO_PX, dimensions.height - gears[i].getY() * INCH_TO_PX };
 
-		double diametralPitch = PI / pitch;
-		double pitchRadius = (numTeeth / diametralPitch) / 2.0;
-		double addendum = 1.0 / diametralPitch;
-		double outerRadius = pitchRadius + addendum;
-		//int numTeeth = 25;
-		//std::pair<double, double> offset = { 250.0, 250.0 };
-		//double outerRadius = 68.0;
-		//double pitchRadius = 64.0;
-		//double pitch = 15.0;
-		//double pressureAngle = 20.0 * (PI / 180.0);
+		double pitchRadius = (numTeeth / pitch) / 2.0 * INCH_TO_PX;
+		double addendum = 1.0 / pitch;
+		double dedendum = 1.25 * addendum;
+		double tooth_depth = addendum + dedendum;
+		double outerRadius = gears[i].getOuter_radius() * INCH_TO_PX;
 
 		// Calculate additional parameters
-		double inverseDiametralPitch = pitch / PI;
-		double baseRadius = pitchRadius * std::cos(pressureAngle);
-		double footRadius = pitchRadius - inverseDiametralPitch;
+		double baseRadius = (pitchRadius - dedendum) * std::cos(pressureAngle);
+		double footRadius = (pitchRadius - dedendum) - pitch / PI;
 
 		double toothMax = std::acos(baseRadius / outerRadius);
 		double toothMin = (footRadius < baseRadius) ? 0 : std::acos(baseRadius / footRadius);
@@ -113,14 +102,18 @@ void Exporter::exportSVG(ViewManager &aManager, std::string filename)
 		doc << pathObject;
 
 		// Draw circular or rectangular hub
-		//if (gears[i].getHubShape() == circle) {
-		//	doc << Circle(Point(offset.first, offset.second), gears[i].getHubD1(), false,
-		//				Color::Transparent, Stroke(strokeWidth, Color::Black));
-		//}
-		//else if (gears[i].getHubShape() == rectangle) {
-		//	doc << svg::Rectangle(Point(offset.first - gears[i].getHubD1() / 2.0, offset.second + gears[i].getHubD2() / 2.0),
-		//				gears[i].getHubD1(), gears[i].getHubD2(), Color::Transparent, Stroke(strokeWidth, Color::Black));
-		//}
+		if (gears[i].getHubShape() == circle) {
+			doc << Circle(Point(offset.first, dimensions.height - offset.second), 
+								gears[i].getHubD1() * INCH_TO_PX,
+								Color::Transparent, Stroke(strokeWidth, Color::Black));
+		}
+		else if (gears[i].getHubShape() == rectangle) {
+			doc << svg::Rectangle(Point(offset.first - (gears[i].getHubD1() * INCH_TO_PX) / 2.0,
+										dimensions.height - offset.second + (gears[i].getHubD2() * INCH_TO_PX) / 2.0),
+										gears[i].getHubD1() * INCH_TO_PX,
+										gears[i].getHubD2() * INCH_TO_PX,
+										Color::Transparent, Stroke(strokeWidth, Color::Black));
+		}
 	}
 
 	// Save document to .svg file
