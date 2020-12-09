@@ -36,13 +36,13 @@ void Exporter::exportSVG(ViewManager &aManager, std::string filename)
 		// Fetch gear parameters for drawing calculations
 		int numTeeth = gears[i].getT();
 		//if (unitSys == imperial) {
-		double pitch = gears[i].getPitch() * INCH_TO_PX;
+		double pitch = gears[i].getPitch();
 		//} 
 		//else if (unitSys == metric) {
 		//	double pitch = gears[i].getPitch() * MM_TO_PX;
 		//}
-		double pressureAngle = gears[i].getPR();
-		std::pair<double, double> offset = { gears[i].getX(), gears[i].getY() };
+		double pressureAngle = gears[i].getPR() * (PI / 180.0);
+		std::pair<double, double> offset = { gears[i].getX() * INCH_TO_PX, gears[i].getY() * INCH_TO_PX };
 
 		double diametralPitch = PI / pitch;
 		double pitchRadius = (numTeeth / diametralPitch) / 2.0;
@@ -113,13 +113,13 @@ void Exporter::exportSVG(ViewManager &aManager, std::string filename)
 		doc << pathObject;
 
 		// Draw circular or rectangular hub
-		//if (gears[i].getHubShape == circle) {
-		//	doc << svg::Circle(Point(offset.first, offset.second), gears[i].hubDiameter, false,
+		//if (gears[i].getHubShape() == circle) {
+		//	doc << Circle(Point(offset.first, offset.second), gears[i].getHubD1(), false,
 		//				Color::Transparent, Stroke(strokeWidth, Color::Black));
 		//}
-		//else if (gears[i].getHubShape == rectangle) {
-		//	doc << svg::Rectangle(Point(offset.first - gears[i].hubWidth / 2.0, offset.second + gears[i].hubHeight / 2.0),
-		//				gears[i].hubWidth, gears[i].hubHeight, Color::Transparent, Stroke(strokeWidth, Color::Black));
+		//else if (gears[i].getHubShape() == rectangle) {
+		//	doc << svg::Rectangle(Point(offset.first - gears[i].getHubD1() / 2.0, offset.second + gears[i].getHubD2() / 2.0),
+		//				gears[i].getHubD1(), gears[i].getHubD2(), Color::Transparent, Stroke(strokeWidth, Color::Black));
 		//}
 	}
 
