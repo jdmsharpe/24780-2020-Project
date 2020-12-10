@@ -245,7 +245,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->addGearButton->Dock = System::Windows::Forms::DockStyle::Top;
 			this->addGearButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->addGearButton->Location = System::Drawing::Point(0, 431);
+			this->addGearButton->Location = System::Drawing::Point(0, 528);
 			this->addGearButton->Name = L"addGearButton";
 			this->addGearButton->Size = System::Drawing::Size(200, 35);
 			this->addGearButton->TabIndex = 3;
@@ -266,7 +266,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubGroupBox->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubGroupBox->Location = System::Drawing::Point(0, 256);
 			this->hubGroupBox->Name = L"hubGroupBox";
-			this->hubGroupBox->Size = System::Drawing::Size(200, 175);
+			this->hubGroupBox->Size = System::Drawing::Size(200, 272);
 			this->hubGroupBox->TabIndex = 2;
 			this->hubGroupBox->TabStop = false;
 			this->hubGroupBox->Text = L"Hub";
@@ -276,7 +276,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubInputB->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubInputB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->hubInputB->Location = System::Drawing::Point(3, 142);
+			this->hubInputB->Location = System::Drawing::Point(3, 239);
 			this->hubInputB->Name = L"hubInputB";
 			this->hubInputB->Size = System::Drawing::Size(194, 30);
 			this->hubInputB->TabIndex = 5;
@@ -288,7 +288,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubLabelB->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubLabelB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->hubLabelB->Location = System::Drawing::Point(3, 117);
+			this->hubLabelB->Location = System::Drawing::Point(3, 214);
 			this->hubLabelB->Name = L"hubLabelB";
 			this->hubLabelB->Size = System::Drawing::Size(64, 25);
 			this->hubLabelB->TabIndex = 4;
@@ -299,7 +299,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubInputA->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubInputA->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->hubInputA->Location = System::Drawing::Point(3, 87);
+			this->hubInputA->Location = System::Drawing::Point(3, 184);
 			this->hubInputA->Name = L"hubInputA";
 			this->hubInputA->Size = System::Drawing::Size(194, 30);
 			this->hubInputA->TabIndex = 3;
@@ -311,7 +311,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubLabelA->Dock = System::Windows::Forms::DockStyle::Top;
 			this->hubLabelA->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->hubLabelA->Location = System::Drawing::Point(3, 62);
+			this->hubLabelA->Location = System::Drawing::Point(3, 159);
 			this->hubLabelA->Name = L"hubLabelA";
 			this->hubLabelA->Size = System::Drawing::Size(64, 25);
 			this->hubLabelA->TabIndex = 2;
@@ -325,7 +325,7 @@ namespace OpenGL_on_a_Windows_Form {
 			this->hubPictureBox->Location = System::Drawing::Point(3, 59);
 			this->hubPictureBox->Name = L"hubPictureBox";
 			this->hubPictureBox->Padding = System::Windows::Forms::Padding(3);
-			this->hubPictureBox->Size = System::Drawing::Size(194, 3);
+			this->hubPictureBox->Size = System::Drawing::Size(194, 100);
 			this->hubPictureBox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->hubPictureBox->TabIndex = 1;
 			this->hubPictureBox->TabStop = false;
@@ -618,8 +618,9 @@ private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 		hubInputB->Hide();
 	}
 	else if (hubComboBox->SelectedIndex == 1) {
-		hubPictureBox->Show();
+		
 		hubPictureBox->ImageLocation = "circleHub.png";
+		hubPictureBox->Show();
 		hubLabelA->Text = L"Diameter:";
 		hubLabelA->Show();
 		hubLabelB->Hide();
@@ -627,8 +628,9 @@ private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 		hubInputB->Hide();
 	}
 	else if (hubComboBox->SelectedIndex == 2) {
-		hubPictureBox->Show();
+		
 		hubPictureBox->ImageLocation = "rectangleHub.png";
+		hubPictureBox->Show();
 		hubLabelA->Text = L"W:";
 		hubLabelB->Text = L"H:";
 		hubLabelA->Show();
