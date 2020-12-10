@@ -20,7 +20,7 @@ private:
 
 public:
 	Exporter() :
-		pointResolution(20), strokeWidth(0.5), clearance(0.03) {}
+		pointResolution(20), strokeWidth(1), clearance(0.03) {}
 
 	void exportSVG(ViewManager &aManager, std::string filename);
 
