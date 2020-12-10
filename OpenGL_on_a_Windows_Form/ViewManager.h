@@ -235,6 +235,7 @@ public:
 	}
 
 	void Export(std::string filename) {
+		filename += ".svg";
 		exporter.exportSVG(*this, filename);
 	}
 
